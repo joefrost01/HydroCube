@@ -1,5 +1,5 @@
 [![CI Pipeline](https://github.com/joefrost01/HydroCube/actions/workflows/build.yml/badge.svg)](https://github.com/joefrost01/HydroCube/actions/workflows/build.yml)
-[![Quarto Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://joefrost01.github.io/hydrocube/)
+[![Quarto Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://joefrost01.github.io/HydroCube/)
 
 # HydroCube
 
