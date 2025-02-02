@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HydroCube Overview – HydroCube</title>
+<title>Core Concepts &amp; Architecture – HydroCube</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./core-concepts-and-architecture.html">Core Concepts and Architecture</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -143,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./core-concepts-and-architecture.html" class="sidebar-item-text sidebar-link">
+  <a href="./core-concepts-and-architecture.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Core Concepts and Architecture</span></a>
   </div>
 </li>
@@ -193,13 +193,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#datasets-ingestion" id="toc-datasets-ingestion" class="nav-link" data-scroll-target="#datasets-ingestion">1. Datasets (Ingestion)</a>
   <ul class="collapse">
-  <li><a href="#why-hydrocube" id="toc-why-hydrocube" class="nav-link" data-scroll-target="#why-hydrocube">Why “HydroCube”?</a></li>
+  <li><a href="#insert-timestamp" id="toc-insert-timestamp" class="nav-link" data-scroll-target="#insert-timestamp">Insert Timestamp</a></li>
   </ul></li>
-  <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a></li>
-  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  <li><a href="#aggregation" id="toc-aggregation" class="nav-link" data-scroll-target="#aggregation">2. Aggregation</a></li>
+  <li><a href="#publishing" id="toc-publishing" class="nav-link" data-scroll-target="#publishing">3. Publishing</a>
+  <ul class="collapse">
+  <li><a href="#websockets-subscriptions" id="toc-websockets-subscriptions" class="nav-link" data-scroll-target="#websockets-subscriptions">WebSockets &amp; Subscriptions</a></li>
+  </ul></li>
+  <li><a href="#ui-reports" id="toc-ui-reports" class="nav-link" data-scroll-target="#ui-reports">4. UI &amp; Reports</a></li>
+  <li><a href="#example-data-flow-in-detail" id="toc-example-data-flow-in-detail" class="nav-link" data-scroll-target="#example-data-flow-in-detail">5. Example Data Flow in Detail</a></li>
+  <li><a href="#summary-next-steps" id="toc-summary-next-steps" class="nav-link" data-scroll-target="#summary-next-steps">Summary &amp; Next Steps</a></li>
   </ul>
 </nav>
     </div>
@@ -208,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HydroCube Overview</h1>
+<h1 class="title">Core Concepts &amp; Architecture</h1>
 </div>
 
 
@@ -225,46 +231,27 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p><strong>HydroCube</strong> is a <strong>near-real-time OLAP server</strong> designed to ingest, aggregate, and query data rapidly from multiple sources. Written in <strong>Rust</strong> and powered by <strong>DuckDB</strong>, it offers a fast, memory-efficient analytics engine that you can deploy as a <strong>single binary</strong>—no separate services or complex dependencies required. HydroCube’s UI, built on <strong>FINOS Perspective</strong>, provides rich visualizations for real-time analytics and collaborative data exploration.</p>
-<section id="why-hydrocube" class="level3">
-<h3 class="anchored" data-anchor-id="why-hydrocube">Why “HydroCube”?</h3>
-<p>We wanted a name that reflects both lightness and the concept of an analytics “cube.” - <strong>Hydro</strong>: Inspired by <strong>hydrogen</strong>, the lightest element—evoking HydroCube’s minimal footprint. It also evokes a sense of flow in the same way that your data flows through HydroCube - <strong>Cube</strong>: Signifying the <strong>OLAP cube</strong> concept, where data is sliced and diced across multiple dimensions.</p>
-</section>
-</section>
-<section id="key-features" class="level2">
-<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
-<ul>
-<li><p><strong>Continuous Data Ingest</strong> Seamlessly pull from CSV, Parquet, JSON, or other file-based sources. Real-time ingestion from Kafka is in the works</p></li>
-<li><p><strong>Fast &amp; Memory-Efficient</strong> Uses <strong>DuckDB</strong>’s vectorized execution engine, allowing lightning-fast queries even on large datasets.</p></li>
-<li><p><strong>Full UI with FINOS Perspective</strong> An interactive, in-browser experience for visualizing real-time data. Slice, dice, pivot, and chart your data without extra tools.</p></li>
-<li><p><strong>Single-Binary Deployment</strong> Download and run—no external databases or separate web servers required. Perfect for minimal footprints or container-based deployments.</p></li>
-<li><p><strong>Written in Rust</strong> Leveraging Rust’s safety guarantees and concurrency model ensures robust performance and fewer runtime surprises.</p></li>
-<li><p><strong>Secure by Default</strong> Supports <strong>HTTPS</strong> out of the box, and can integrate with <strong>OAuth</strong> for authentication. Securely share analytics with your team.</p></li>
-<li><p><strong>Multi-User Friendly</strong> Enable multiple users to view and interact with real-time dashboards simultaneously.</p></li>
-<li><p><strong>Docker-Ready</strong> Bundle HydroCube as a <strong>distroless</strong> container—no OS overhead needed for a flexible and compact deployment.</p></li>
-</ul>
-</section>
-<section id="high-level-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h2>
-<p>Below is a simple Mermaid diagram illustrating how HydroCube fits into your data flow:</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p><strong>HydroCube</strong> provides a near-real-time data pipeline, letting you ingest raw data from multiple sources, transform and aggregate it on schedule (or on demand), and then publish the results to connected clients. The diagram below shows the big picture in a <strong>vertical</strong> layout:</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
-flowchart LR
-    subgraph Sources
-        A["CSV/Parquet Files"] --&gt;|File Watch| HC
-        B["Kafka (Coming soon)"] --&gt;|Consumer| HC
+flowchart TB
+    subgraph Ingestion
+        A["File Sources (CSV, Parquet)"] --&gt;|Directory Watch| DB[(DuckDB)]
+        B["Kafka (Streaming)"] --&gt;|Consumer| DB
     end
+
     subgraph HydroCube
-        HC["HydroCube (Rust + DuckDB)"]
-        UI["FINOS Perspective (UI)"]
+        DB --&gt; AGG["Aggregator (Scheduled/On-Demand)"]
+        AGG --&gt; MAT["Materialized Table (Aggregates)"]
+        MAT --&gt;|Change Detection| PUB["Publisher (WebSockets)"]
+        PUB --&gt; UI["FINOS Perspective (UI)"]
     end
-    HC --&gt;|WebSockets| UI
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -272,22 +259,106 @@ flowchart LR
 </div>
 </div>
 <ol type="1">
-<li><strong>Sources</strong>: You configure one or more datasets—local files (CSV, Parquet) or streaming data (Kafka).</li>
-<li><strong>HydroCube</strong>:
-<ul>
-<li>Loads raw data into <strong>DuckDB</strong> tables.</li>
-<li>Aggregates and transforms your data in near real time.</li>
-<li>Serves the embedded UI for exploration and dashboards.</li>
-</ul></li>
-<li><strong>UI</strong>: The <strong>FINOS Perspective</strong>-powered frontend connects via <strong>WebSockets</strong> for live updates to your analytics views.</li>
+<li><p><strong>Ingestion</strong> HydroCube watches directories for CSV or Parquet files and connects to streaming data (e.g., Kafka). Incoming rows are inserted into <strong>DuckDB</strong> tables, each tied to a dataset definition in your config.</p></li>
+<li><p><strong>Aggregation</strong> A lightweight “aggregator” runs SQL queries against DuckDB—either on a schedule or on demand—grouping data by dimension columns and computing measures (sum, count, average, etc.).</p></li>
+<li><p><strong>Publishing</strong> Once aggregates are ready, the <strong>publisher</strong> pushes incremental changes (deltas) over WebSockets to the <strong>FINOS Perspective</strong> UI (or any other subscribing client). This means users see data updates in near real time.</p></li>
 </ol>
+<p>Read on for more detail about each piece.</p>
+<hr>
 </section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
+<section id="datasets-ingestion" class="level2">
+<h2 class="anchored" data-anchor-id="datasets-ingestion">1. Datasets (Ingestion)</h2>
+<p>A <strong>dataset</strong> in HydroCube is a configuration block that describes:</p>
 <ul>
-<li>Head over to <strong><a href="./getting-started.html">Getting Started</a></strong> for installation instructions and your first HydroCube run.</li>
-<li>Explore how to configure ingestion, define aggregates, and publish live data to your dashboards.</li>
+<li><strong>Format</strong>: <code>csv</code>, <code>parquet</code>, or <code>kafka</code></li>
+<li><strong>Location</strong>: a directory/pattern or a Kafka topic/broker</li>
+<li><strong>Table Name</strong>: where rows should be stored in DuckDB</li>
 </ul>
+<p>When HydroCube starts, it spawns the ingestion pipeline for each dataset. For file-based datasets, it uses a <strong>directory watcher</strong>—any new or updated files matching the pattern are (re)ingested into the specified table. For Kafka, it uses a <strong>consumer</strong> that continuously pulls new messages.</p>
+<section id="insert-timestamp" class="level3">
+<h3 class="anchored" data-anchor-id="insert-timestamp">Insert Timestamp</h3>
+<p>Every row ingested gets an <code>insert_timestamp</code>, which becomes crucial for <strong>change detection</strong> later on.</p>
+<hr>
+</section>
+</section>
+<section id="aggregation" class="level2">
+<h2 class="anchored" data-anchor-id="aggregation">2. Aggregation</h2>
+<p>The <strong>aggregator</strong> transforms raw data into summarized form (think OLAP-style group-bys and measures). HydroCube supports a “simple” aggregator config where you define:</p>
+<ul>
+<li><strong>Measures</strong>: e.g.&nbsp;<code>SUM(quantity)</code>, <code>COUNT(*)</code>, <code>AVG(price)</code></li>
+<li><strong>Dimensions</strong>: All other columns become grouping keys by default (or you can specify them explicitly)</li>
+</ul>
+<p>When the aggregator runs:</p>
+<ol type="1">
+<li>It queries the base table (e.g., <code>sales</code>).</li>
+<li>Groups rows by each dimension column.</li>
+<li>Calculates the measures (sum, count, average, etc.).</li>
+<li>Writes the results to an <strong>aggregated table</strong>, along with a “last_update” value (like <code>MAX(insert_timestamp)</code>).</li>
+</ol>
+<p><em>(In future releases, you can define a <strong>custom aggregator</strong> with freeform SQL for advanced joins and transformations.)</em></p>
+<hr>
+</section>
+<section id="publishing" class="level2">
+<h2 class="anchored" data-anchor-id="publishing">3. Publishing</h2>
+<p>HydroCube’s publisher watches the <strong>aggregated table</strong>. Whenever new or updated rows appear (based on <code>last_update</code>), it sends <strong>incremental updates</strong> over a WebSocket connection to any subscribed clients. Each row includes:</p>
+<ul>
+<li><strong>Key column(s)</strong> for partial updates in the front-end (e.g.&nbsp;<code>product_id</code>)</li>
+<li><strong>Measure columns</strong> (e.g.&nbsp;<code>total_quantity</code>, <code>avg_price</code>)</li>
+<li><strong><code>last_update</code></strong> to track changes</li>
+</ul>
+<section id="websockets-subscriptions" class="level3">
+<h3 class="anchored" data-anchor-id="websockets-subscriptions">WebSockets &amp; Subscriptions</h3>
+<p>Clients (like the FINOS Perspective UI) subscribe to a “cube” (an aggregator name or table). If no client is subscribed, HydroCube can skip the publisher work. If multiple clients subscribe, they all receive the updates in near real time.</p>
+<hr>
+</section>
+</section>
+<section id="ui-reports" class="level2">
+<h2 class="anchored" data-anchor-id="ui-reports">4. UI &amp; Reports</h2>
+<p>HydroCube embeds a front-end built on <strong>FINOS Perspective</strong>, allowing interactive pivot tables, charts, and filters in your browser.</p>
+<ol type="1">
+<li><p><strong>Automatic UI</strong> By default, starting HydroCube serves the Perspective UI at <code>http://localhost:8080</code> (or your configured port).</p></li>
+<li><p><strong>Reports</strong> You can save specific <strong>views</strong> (pivot layouts, filters, etc.) as “reports.” Teams can share or reload an analysis state quickly.</p></li>
+</ol>
+<p><em>(The UI is optional—if you prefer, you can build your own front-end or integration using the <strong>WebSocket</strong> or future JSON API.)</em></p>
+<hr>
+</section>
+<section id="example-data-flow-in-detail" class="level2">
+<h2 class="anchored" data-anchor-id="example-data-flow-in-detail">5. Example Data Flow in Detail</h2>
+<p>Below is a second diagram focusing on how the aggregator and publisher process interact in a top-to-bottom flow:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
+flowchart TB
+    A["DuckDB Base Table (with insert_timestamp)"] --&gt; AGG["Aggregator"]
+    AGG --&gt; M["Aggregated Table"]
+    M --&gt;|Diff by last_update| PUB["Publisher"]
+    PUB --&gt; W["WebSocket Stream (Arrow or JSON)"]
+    W --&gt; C["Perspective or Custom Clients"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ol type="1">
+<li><strong>Base Table</strong> Rows from CSV, Parquet, or Kafka land here, each with an <code>insert_timestamp</code>.</li>
+<li><strong>Aggregator</strong> Periodically or on demand, it calculates sums, counts, averages, etc., writing results to the aggregated table and tracking <code>MAX(insert_timestamp)</code> as <code>last_update</code>.</li>
+<li><strong>Publisher</strong> Compares <code>last_update</code> to previously published rows. Only changes or new rows are sent over the WebSocket.</li>
+<li><strong>Clients</strong> The UI (Perspective) or any custom subscriber receives partial row updates in near real time.</li>
+</ol>
+<hr>
+</section>
+<section id="summary-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="summary-next-steps">Summary &amp; Next Steps</h2>
+<ul>
+<li><strong>Ingestion</strong>: You define <strong>datasets</strong> with file watchers or Kafka config.</li>
+<li><strong>Aggregation</strong>: A “simple aggregator” runs group-bys, storing results in a new table.</li>
+<li><strong>Publishing</strong>: HydroCube uses WebSockets to broadcast changed data to subscribed clients.</li>
+</ul>
+<p><strong>Where to go next</strong>: - <strong><a href="config-reference.qmd">Configuration Reference</a></strong>: Detailed YAML fields, examples, and defaults. - <strong><a href="./how-to-guides.html">How-To Guides</a></strong>: Step-by-step instructions for CSV ingestion, basic aggregates, UI usage, and more.</p>
 
 
 </section>

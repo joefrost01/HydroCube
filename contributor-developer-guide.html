@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HydroCube Overview – HydroCube</title>
+<title>Contributor &amp; Developer Guide – HydroCube</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -68,9 +102,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -117,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./contributor-developer-guide.html">Contributor / Developer Guide</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -131,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -173,7 +204,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./contributor-developer-guide.html" class="sidebar-item-text sidebar-link">
+  <a href="./contributor-developer-guide.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Contributor / Developer Guide</span></a>
   </div>
 </li>
@@ -193,13 +224,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#contributor-developer-guide" id="toc-contributor-developer-guide" class="nav-link active" data-scroll-target="#contributor-developer-guide">Contributor &amp; Developer Guide</a>
   <ul class="collapse">
-  <li><a href="#why-hydrocube" id="toc-why-hydrocube" class="nav-link" data-scroll-target="#why-hydrocube">Why “HydroCube”?</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">1. Prerequisites</a></li>
+  <li><a href="#cloning-the-repository" id="toc-cloning-the-repository" class="nav-link" data-scroll-target="#cloning-the-repository">2. Cloning the Repository</a></li>
+  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure">3. Project Structure</a></li>
+  <li><a href="#building-running" id="toc-building-running" class="nav-link" data-scroll-target="#building-running">4. Building &amp; Running</a>
+  <ul class="collapse">
+  <li><a href="#standard-development-build" id="toc-standard-development-build" class="nav-link" data-scroll-target="#standard-development-build">4.1. Standard Development Build</a></li>
+  <li><a href="#release-build" id="toc-release-build" class="nav-link" data-scroll-target="#release-build">4.2. Release Build</a></li>
+  <li><a href="#running-hydrocube" id="toc-running-hydrocube" class="nav-link" data-scroll-target="#running-hydrocube">4.3. Running HydroCube</a></li>
   </ul></li>
-  <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a></li>
-  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing">5. Testing</a>
+  <ul class="collapse">
+  <li><a href="#unit-tests" id="toc-unit-tests" class="nav-link" data-scroll-target="#unit-tests">5.1. Unit Tests</a></li>
+  <li><a href="#integration-tests" id="toc-integration-tests" class="nav-link" data-scroll-target="#integration-tests">5.2. Integration Tests</a></li>
+  <li><a href="#test-with-kafka" id="toc-test-with-kafka" class="nav-link" data-scroll-target="#test-with-kafka">5.3. Test with Kafka</a></li>
+  </ul></li>
+  <li><a href="#code-style-standards" id="toc-code-style-standards" class="nav-link" data-scroll-target="#code-style-standards">6. Code Style &amp; Standards</a></li>
+  <li><a href="#submitting-a-pull-request" id="toc-submitting-a-pull-request" class="nav-link" data-scroll-target="#submitting-a-pull-request">7. Submitting a Pull Request</a>
+  <ul class="collapse">
+  <li><a href="#review-merge" id="toc-review-merge" class="nav-link" data-scroll-target="#review-merge">Review &amp; Merge</a></li>
+  </ul></li>
+  <li><a href="#documentation-contributions" id="toc-documentation-contributions" class="nav-link" data-scroll-target="#documentation-contributions">8. Documentation Contributions</a></li>
+  <li><a href="#roadmap-ideas" id="toc-roadmap-ideas" class="nav-link" data-scroll-target="#roadmap-ideas">9. Roadmap &amp; Ideas</a></li>
+  <li><a href="#thank-you-for-contributing" id="toc-thank-you-for-contributing" class="nav-link" data-scroll-target="#thank-you-for-contributing">10. Thank You for Contributing!</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -208,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HydroCube Overview</h1>
+<h1 class="title">Contributor &amp; Developer Guide</h1>
 </div>
 
 
@@ -225,71 +275,152 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p><strong>HydroCube</strong> is a <strong>near-real-time OLAP server</strong> designed to ingest, aggregate, and query data rapidly from multiple sources. Written in <strong>Rust</strong> and powered by <strong>DuckDB</strong>, it offers a fast, memory-efficient analytics engine that you can deploy as a <strong>single binary</strong>—no separate services or complex dependencies required. HydroCube’s UI, built on <strong>FINOS Perspective</strong>, provides rich visualizations for real-time analytics and collaborative data exploration.</p>
-<section id="why-hydrocube" class="level3">
-<h3 class="anchored" data-anchor-id="why-hydrocube">Why “HydroCube”?</h3>
-<p>We wanted a name that reflects both lightness and the concept of an analytics “cube.” - <strong>Hydro</strong>: Inspired by <strong>hydrogen</strong>, the lightest element—evoking HydroCube’s minimal footprint. It also evokes a sense of flow in the same way that your data flows through HydroCube - <strong>Cube</strong>: Signifying the <strong>OLAP cube</strong> concept, where data is sliced and diced across multiple dimensions.</p>
-</section>
-</section>
-<section id="key-features" class="level2">
-<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
+<section id="contributor-developer-guide" class="level1">
+<h1>Contributor &amp; Developer Guide</h1>
+<p>Welcome! We appreciate your interest in contributing to <strong>HydroCube</strong>. This guide explains how to set up a development environment, build from source, run tests, and submit pull requests. Whether you’re fixing a small bug or adding a major feature, we hope this document makes your workflow easier.</p>
+<hr>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">1. Prerequisites</h2>
 <ul>
-<li><p><strong>Continuous Data Ingest</strong> Seamlessly pull from CSV, Parquet, JSON, or other file-based sources. Real-time ingestion from Kafka is in the works</p></li>
-<li><p><strong>Fast &amp; Memory-Efficient</strong> Uses <strong>DuckDB</strong>’s vectorized execution engine, allowing lightning-fast queries even on large datasets.</p></li>
-<li><p><strong>Full UI with FINOS Perspective</strong> An interactive, in-browser experience for visualizing real-time data. Slice, dice, pivot, and chart your data without extra tools.</p></li>
-<li><p><strong>Single-Binary Deployment</strong> Download and run—no external databases or separate web servers required. Perfect for minimal footprints or container-based deployments.</p></li>
-<li><p><strong>Written in Rust</strong> Leveraging Rust’s safety guarantees and concurrency model ensures robust performance and fewer runtime surprises.</p></li>
-<li><p><strong>Secure by Default</strong> Supports <strong>HTTPS</strong> out of the box, and can integrate with <strong>OAuth</strong> for authentication. Securely share analytics with your team.</p></li>
-<li><p><strong>Multi-User Friendly</strong> Enable multiple users to view and interact with real-time dashboards simultaneously.</p></li>
-<li><p><strong>Docker-Ready</strong> Bundle HydroCube as a <strong>distroless</strong> container—no OS overhead needed for a flexible and compact deployment.</p></li>
+<li><strong>Rust 1.84+</strong> (or the latest stable toolchain). Install via <a href="https://www.rust-lang.org/tools/install">rustup</a>.</li>
+<li><strong>Git</strong> for version control.</li>
+<li><strong>Optional</strong>: A local <a href="https://kafka.apache.org/">Kafka</a> instance if you plan to test Kafka ingestion.</li>
+<li><strong>Optional</strong>: Docker, if you want to build &amp; run HydroCube in a container.</li>
 </ul>
+<p>Ensure you have a <strong>GitHub</strong> account if you plan to submit issues or pull requests.</p>
+<hr>
 </section>
-<section id="high-level-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h2>
-<p>Below is a simple Mermaid diagram illustrating how HydroCube fits into your data flow:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
-flowchart LR
-    subgraph Sources
-        A["CSV/Parquet Files"] --&gt;|File Watch| HC
-        B["Kafka (Coming soon)"] --&gt;|Consumer| HC
-    end
-    subgraph HydroCube
-        HC["HydroCube (Rust + DuckDB)"]
-        UI["FINOS Perspective (UI)"]
-    end
-    HC --&gt;|WebSockets| UI
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="cloning-the-repository" class="level2">
+<h2 class="anchored" data-anchor-id="cloning-the-repository">2. Cloning the Repository</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/joefrost01/HydroCube.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> HydroCube</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You now have the HydroCube code on your local machine. For a quick build test:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The compiled binary will appear in <code>target/release/hydrocube</code>.</p>
+<hr>
+</section>
+<section id="project-structure" class="level2">
+<h2 class="anchored" data-anchor-id="project-structure">3. Project Structure</h2>
+<p>Below is a simplified overview of the directories and files:</p>
+<pre><code>HydroCube/
+├── src/
+│   ├── main.rs             # Entry point
+│   ├── config/             # Configuration structs &amp; parsing
+│   ├── ingestion/          # Directory watchers, Kafka consumers
+│   ├── aggregator/         # Aggregation logic
+│   ├── publisher/          # WebSocket publishing
+│   ├── ui/                 # Embedded UI logic (Perspective)
+│   └── ...
+├── tests/                  # Integration tests
+├── docs/                   # Quarto docs (.qmd files)
+├── Cargo.toml              # Rust dependencies &amp; metadata
+└── README.md               # Basic project overview</code></pre>
+<p>Most core logic is under <code>src/</code>, organized by feature (ingestion, aggregator, publisher, etc.). Integration tests live in <code>tests/</code>, and docs in <code>docs/</code>.</p>
+<hr>
+</section>
+<section id="building-running" class="level2">
+<h2 class="anchored" data-anchor-id="building-running">4. Building &amp; Running</h2>
+<section id="standard-development-build" class="level3">
+<h3 class="anchored" data-anchor-id="standard-development-build">4.1. Standard Development Build</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This produces a <strong>debug</strong> build (<code>target/debug/hydrocube</code>), which is faster to compile but larger and less optimized.</p>
+</section>
+<section id="release-build" class="level3">
+<h3 class="anchored" data-anchor-id="release-build">4.2. Release Build</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Produces an optimized binary in <code>target/release/hydrocube</code>. Best for production or performance testing.</p>
+</section>
+<section id="running-hydrocube" class="level3">
+<h3 class="anchored" data-anchor-id="running-hydrocube">4.3. Running HydroCube</h3>
+<p>You can run HydroCube directly:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/debug/hydrocube</span> <span class="at">--config</span> my_config.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If no config is provided, HydroCube either uses a default internal config or tries <code>hydrocube.yaml</code> in the current directory.</p>
+<hr>
+</section>
+</section>
+<section id="testing" class="level2">
+<h2 class="anchored" data-anchor-id="testing">5. Testing</h2>
+<section id="unit-tests" class="level3">
+<h3 class="anchored" data-anchor-id="unit-tests">5.1. Unit Tests</h3>
+<p>Each module may have inline tests. Run them all with:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="integration-tests" class="level3">
+<h3 class="anchored" data-anchor-id="integration-tests">5.2. Integration Tests</h3>
+<p>The <code>tests/</code> folder contains integration tests that launch HydroCube in various scenarios (e.g., CSV ingestion, Kafka ingestion, aggregator checks). They’re also run with:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you need to isolate a single test:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> test test_csv_ingestion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="test-with-kafka" class="level3">
+<h3 class="anchored" data-anchor-id="test-with-kafka">5.3. Test with Kafka</h3>
+<p>Some tests might require a local Kafka broker. You can use Docker or a local Kafka install. For instance:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-p</span> 9092:9092 <span class="at">-e</span> ALLOW_PLAINTEXT_LISTENER=yes bitnami/kafka:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then run the test suite. Some Kafka tests may be skipped if Kafka isn’t available.</p>
+<hr>
+</section>
+</section>
+<section id="code-style-standards" class="level2">
+<h2 class="anchored" data-anchor-id="code-style-standards">6. Code Style &amp; Standards</h2>
+<ul>
+<li><strong>Formatting</strong>: We use Rust’s built-in <code>cargo fmt</code> for code formatting. Please run it before committing.</li>
+<li><strong>Linting</strong>: Run <code>cargo clippy</code> to catch common pitfalls and style issues.</li>
+<li><strong>Comments &amp; Docs</strong>: Where possible, add doc comments (<code>///</code>) for public functions and modules. This helps generate reference documentation with <code>cargo doc</code>.</li>
+</ul>
+<hr>
+</section>
+<section id="submitting-a-pull-request" class="level2">
+<h2 class="anchored" data-anchor-id="submitting-a-pull-request">7. Submitting a Pull Request</h2>
 <ol type="1">
-<li><strong>Sources</strong>: You configure one or more datasets—local files (CSV, Parquet) or streaming data (Kafka).</li>
-<li><strong>HydroCube</strong>:
+<li><strong>Fork</strong> the HydroCube repo and create a new branch for your feature or bug fix.</li>
+<li><strong>Write Code &amp; Tests</strong>: Make your changes in a small, logical commit(s). Add or update tests if relevant.</li>
+<li><strong>Format &amp; Lint</strong>: Ensure <code>cargo fmt</code> and <code>cargo clippy</code> show no critical issues.</li>
+<li><strong>Open a Pull Request</strong>:
 <ul>
-<li>Loads raw data into <strong>DuckDB</strong> tables.</li>
-<li>Aggregates and transforms your data in near real time.</li>
-<li>Serves the embedded UI for exploration and dashboards.</li>
+<li>Include a descriptive title and summary of changes.</li>
+<li>Reference any related issues (e.g., “Fixes #123”).</li>
+<li>The maintainers will review, request changes if needed, and eventually merge.</li>
 </ul></li>
-<li><strong>UI</strong>: The <strong>FINOS Perspective</strong>-powered frontend connects via <strong>WebSockets</strong> for live updates to your analytics views.</li>
 </ol>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
+<section id="review-merge" class="level3">
+<h3 class="anchored" data-anchor-id="review-merge">Review &amp; Merge</h3>
 <ul>
-<li>Head over to <strong><a href="./getting-started.html">Getting Started</a></strong> for installation instructions and your first HydroCube run.</li>
-<li>Explore how to configure ingestion, define aggregates, and publish live data to your dashboards.</li>
+<li><strong>CI</strong>: Our GitHub workflow typically runs <code>cargo build --release</code>, <code>cargo test</code>, and docs checks. Make sure your PR passes these.</li>
+<li><strong>Feedback</strong>: Maintainers may ask for clarity in code, naming, or additional tests.</li>
 </ul>
+<hr>
+</section>
+</section>
+<section id="documentation-contributions" class="level2">
+<h2 class="anchored" data-anchor-id="documentation-contributions">8. Documentation Contributions</h2>
+<p>We use <strong>Quarto</strong> (<code>.qmd</code> files) in the <code>docs/</code> folder. If you want to enhance the user docs or fix typos:</p>
+<ol type="1">
+<li><p><strong>Edit the relevant <code>.qmd</code></strong> file.</p></li>
+<li><p><strong>Build the docs</strong> locally if you want to preview them:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview docs/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Submit a pull request</strong> with your changes.</p></li>
+</ol>
+<hr>
+</section>
+<section id="roadmap-ideas" class="level2">
+<h2 class="anchored" data-anchor-id="roadmap-ideas">9. Roadmap &amp; Ideas</h2>
+<p>We maintain a <strong>Roadmap</strong> in the <a href="https://github.com/joefrost01/HydroCube/issues">GitHub issues</a> or a pinned discussion. Some highlights:</p>
+<ul>
+<li><strong>Custom Aggregator</strong>: Allow user-defined SQL queries beyond the “simple aggregator.”</li>
+<li><strong>Additional Data Sources</strong>: PostgreSQL, ClickHouse, or CDC streams.</li>
+<li><strong>Alerts / Triggers</strong>: Real-time alerting when aggregates cross a threshold.</li>
+<li><strong>Improved Security</strong>: Role-based access control or multi-tenant support.</li>
+</ul>
+<p>Feel free to propose features or improvements—contributions are welcome!</p>
+<hr>
+</section>
+<section id="thank-you-for-contributing" class="level2">
+<h2 class="anchored" data-anchor-id="thank-you-for-contributing">10. Thank You for Contributing!</h2>
+<p>By contributing to HydroCube, you’re helping shape a powerful, lightweight real-time analytics platform. Whether you open a small bug fix, write documentation, or implement a major feature, we appreciate your support.</p>
+<p><strong>Questions?</strong> Join us on GitHub <a href="https://github.com/joefrost01/HydroCube/issues">Issues</a> or open a discussion. We look forward to collaborating with you!</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

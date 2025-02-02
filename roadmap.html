@@ -140,6 +140,42 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./core-concepts-and-architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core Concepts and Architecture</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./configuration-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Configuration Reference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./how-to-guides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How-to Guides</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./security-and-deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Security and Deployment</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./faq-and-troubleshooting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">FAQ and Troubleshooting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contributor-developer-guide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contributor / Developer Guide</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./roadmap.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Roadmap</span></a>
   </div>
@@ -149,8 +185,37 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hydrocube-roadmap" id="toc-hydrocube-roadmap" class="nav-link active" data-scroll-target="#hydrocube-roadmap">HydroCube Roadmap</a>
+  <ul class="collapse">
+  <li><a href="#near-term-goals" id="toc-near-term-goals" class="nav-link" data-scroll-target="#near-term-goals">1. Near-Term Goals</a>
+  <ul class="collapse">
+  <li><a href="#custom-aggregator-queries" id="toc-custom-aggregator-queries" class="nav-link" data-scroll-target="#custom-aggregator-queries">1.1. Custom Aggregator Queries</a></li>
+  <li><a href="#alerts-trigger-logic" id="toc-alerts-trigger-logic" class="nav-link" data-scroll-target="#alerts-trigger-logic">1.2. Alerts &amp; Trigger Logic</a></li>
+  </ul></li>
+  <li><a href="#medium-term-plans" id="toc-medium-term-plans" class="nav-link" data-scroll-target="#medium-term-plans">2. Medium-Term Plans</a>
+  <ul class="collapse">
+  <li><a href="#additional-data-sources" id="toc-additional-data-sources" class="nav-link" data-scroll-target="#additional-data-sources">2.1. Additional Data Sources</a></li>
+  <li><a href="#llm-based-natural-language-querying" id="toc-llm-based-natural-language-querying" class="nav-link" data-scroll-target="#llm-based-natural-language-querying">2.2. LLM-Based Natural Language Querying</a></li>
+  <li><a href="#multi-tenant-role-based-security" id="toc-multi-tenant-role-based-security" class="nav-link" data-scroll-target="#multi-tenant-role-based-security">2.3. Multi-Tenant / Role-Based Security</a></li>
+  <li><a href="#jsonrest-api" id="toc-jsonrest-api" class="nav-link" data-scroll-target="#jsonrest-api">2.4. JSON/REST API</a></li>
+  </ul></li>
+  <li><a href="#long-term-vision" id="toc-long-term-vision" class="nav-link" data-scroll-target="#long-term-vision">3. Long-Term Vision</a>
+  <ul class="collapse">
+  <li><a href="#distributed-clustered-mode" id="toc-distributed-clustered-mode" class="nav-link" data-scroll-target="#distributed-clustered-mode">3.1. Distributed / Clustered Mode</a></li>
+  <li><a href="#ui-builder-enhancements" id="toc-ui-builder-enhancements" class="nav-link" data-scroll-target="#ui-builder-enhancements">3.2. UI Builder Enhancements</a></li>
+  <li><a href="#automated-tuning" id="toc-automated-tuning" class="nav-link" data-scroll-target="#automated-tuning">3.3. Automated Tuning</a></li>
+  </ul></li>
+  <li><a href="#contributing-to-the-roadmap" id="toc-contributing-to-the-roadmap" class="nav-link" data-scroll-target="#contributing-to-the-roadmap">4. Contributing to the Roadmap</a></li>
+  <li><a href="#timelines-releases" id="toc-timelines-releases" class="nav-link" data-scroll-target="#timelines-releases">5. Timelines &amp; Releases</a></li>
+  <li><a href="#stay-involved" id="toc-stay-involved" class="nav-link" data-scroll-target="#stay-involved">6. Stay Involved</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -174,27 +239,118 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Below are planned features and improvements:</p>
+<section id="hydrocube-roadmap" class="level1">
+<h1>HydroCube Roadmap</h1>
+<p>This page outlines major <strong>upcoming features</strong> and <strong>long-term goals</strong> for HydroCube. It’s not set in stone—priorities can shift based on user feedback and contributions. If you have new ideas or want to tackle a feature, please let us know by <a href="https://github.com/joefrost01/HydroCube/issues">opening a GitHub issue</a>.</p>
+<hr>
+<section id="near-term-goals" class="level2">
+<h2 class="anchored" data-anchor-id="near-term-goals">1. Near-Term Goals</h2>
+<section id="custom-aggregator-queries" class="level3">
+<h3 class="anchored" data-anchor-id="custom-aggregator-queries">1.1. Custom Aggregator Queries</h3>
+<ul>
+<li><strong>Description</strong>: Allow advanced SQL definitions, including JOINs, CASE statements, and complex transforms.</li>
+<li><strong>Why It Matters</strong>: The current “simple aggregator” covers basic group-bys. Custom queries will let power users do on-the-fly calculations and merges (similar to ActivePivot’s <em>calculated measures</em>).</li>
+<li><strong>Status</strong>: In design phase; targeting next minor release.</li>
+</ul>
+</section>
+<section id="alerts-trigger-logic" class="level3">
+<h3 class="anchored" data-anchor-id="alerts-trigger-logic">1.2. Alerts &amp; Trigger Logic</h3>
+<ul>
+<li><strong>Description</strong>: Let users define conditions (e.g., “when sum(quantity) &gt; 1000, send Slack/email alert”).</li>
+<li><strong>Why It Matters</strong>: Real-time analytics often needs real-time alerts, so you’re not just visualizing changes but also <strong>responding</strong> to them.</li>
+<li><strong>Status</strong>: Under discussion; awaiting design proposals from the community.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="medium-term-plans" class="level2">
+<h2 class="anchored" data-anchor-id="medium-term-plans">2. Medium-Term Plans</h2>
+<section id="additional-data-sources" class="level3">
+<h3 class="anchored" data-anchor-id="additional-data-sources">2.1. Additional Data Sources</h3>
+<ul>
+<li><strong>Description</strong>: Plugins for Postgres, ClickHouse, or CDC streams. Possibly letting HydroCube connect directly to an external DB or replicate changes in near real time.</li>
+<li><strong>Rationale</strong>: Many trading desks or enterprise systems rely on streaming from relational DBs, so native CDC integration (e.g., Debezium) would be valuable.</li>
+</ul>
+</section>
+<section id="llm-based-natural-language-querying" class="level3">
+<h3 class="anchored" data-anchor-id="llm-based-natural-language-querying">2.2. LLM-Based Natural Language Querying</h3>
+<ul>
+<li><strong>Description</strong>: Enable users to ask questions in plain English (or other languages), with HydroCube translating those queries into SQL automatically via large language models.</li>
+<li><strong>Why It Matters</strong>: Empowers non-technical stakeholders to discover insights without writing SQL, broadening HydroCube’s accessibility.</li>
+<li><strong>Status</strong>: Conceptual exploration. Implementation may involve an embedded or hosted LLM that can safely interpret user prompts and map them to DuckDB queries.</li>
+</ul>
+</section>
+<section id="multi-tenant-role-based-security" class="level3">
+<h3 class="anchored" data-anchor-id="multi-tenant-role-based-security">2.3. Multi-Tenant / Role-Based Security</h3>
+<ul>
+<li><strong>Description</strong>: Adding more granular user roles, dataset-level permissions, or multi-tenant separation.</li>
+<li><strong>Why It Matters</strong>: Larger teams or organizations might want stricter control over who can see or modify certain datasets or aggregates.</li>
+</ul>
+</section>
+<section id="jsonrest-api" class="level3">
+<h3 class="anchored" data-anchor-id="jsonrest-api">2.4. JSON/REST API</h3>
+<ul>
+<li><strong>Description</strong>: Expose a simple REST or GraphQL endpoint for retrieving aggregated data, so that non-WebSocket clients or scripts can pull data programmatically.</li>
+<li><strong>Goal</strong>: Complement the real-time WebSocket with a “pull” mechanism.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="long-term-vision" class="level2">
+<h2 class="anchored" data-anchor-id="long-term-vision">3. Long-Term Vision</h2>
+<section id="distributed-clustered-mode" class="level3">
+<h3 class="anchored" data-anchor-id="distributed-clustered-mode">3.1. Distributed / Clustered Mode</h3>
+<ul>
+<li><strong>Description</strong>: Scale beyond a single-node embedded DuckDB instance, possibly using shared storage or partitioning.</li>
+<li><strong>Challenge</strong>: Preserving real-time analytics speed while ensuring data consistency across nodes.</li>
+<li><strong>Potential Approaches</strong>: Integrate a distributed store or replicate DuckDB files among nodes.</li>
+</ul>
+</section>
+<section id="ui-builder-enhancements" class="level3">
+<h3 class="anchored" data-anchor-id="ui-builder-enhancements">3.2. UI Builder Enhancements</h3>
+<ul>
+<li><strong>Description</strong>: Extend the FINOS Perspective UI with drag-and-drop components, custom charts, or theming.</li>
+<li><strong>Why</strong>: Empower non-technical users to create dashboards on the fly without editing config files.</li>
+</ul>
+</section>
+<section id="automated-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="automated-tuning">3.3. Automated Tuning</h3>
+<ul>
+<li><strong>Description</strong>: Tools to analyze queries and automatically suggest indexing, column reordering, or partitioning.</li>
+<li><strong>Benefit</strong>: Simplify large-scale or complex usage for power users.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="contributing-to-the-roadmap" class="level2">
+<h2 class="anchored" data-anchor-id="contributing-to-the-roadmap">4. Contributing to the Roadmap</h2>
 <ol type="1">
-<li><strong>Additional data formats</strong>
-<ul>
-<li>Avro, Orc, Delta Lake, Arrow, and more.</li>
-</ul></li>
-<li><strong>Kafka ingest</strong>
-<ul>
-<li>Support for ingesting straight from Kafka topics.</li>
-</ul></li>
-<li><strong>Ingest filter</strong>
-<ul>
-<li>Limit the data ingested by filtering.</li>
-</ul></li>
-<li><strong>Save reports</strong>
-<ul>
-<li>Serialise your reports for later use.</li>
-</ul></li>
+<li><strong>Check the Issue Tracker</strong>: We often label future work with <code>enhancement</code> or <code>roadmap</code> tags.</li>
+<li><strong>Open a Proposal</strong>: If you have a big idea—open a GitHub issue titled “Proposal: [Feature Name].” Include motivations, design sketches, or examples.</li>
+<li><strong>Discuss &amp; Refine</strong>: We’ll review, offer feedback, and (if it aligns with HydroCube’s direction) merge it into the official roadmap.</li>
 </ol>
+<hr>
+</section>
+<section id="timelines-releases" class="level2">
+<h2 class="anchored" data-anchor-id="timelines-releases">5. Timelines &amp; Releases</h2>
+<ul>
+<li><strong>Release Cadence</strong>: We aim for a minor release every ~4-6 weeks with improvements, fixes, and new features.</li>
+<li><strong>Versioning</strong>: HydroCube follows <a href="https://semver.org/">SemVer</a> where major changes or backward-incompatible updates increment the major version.</li>
+</ul>
+<hr>
+</section>
+<section id="stay-involved" class="level2">
+<h2 class="anchored" data-anchor-id="stay-involved">6. Stay Involved</h2>
+<ul>
+<li><strong>GitHub Discussions</strong>: For feature brainstorming and design.</li>
+<li><strong>GitHub Issues</strong>: For bug reports, small enhancements, or user support.</li>
+<li><strong>Pull Requests</strong>: If you’re ready to implement a feature from this roadmap, open a PR early and let’s collaborate!</li>
+</ul>
+<p>Thank you for shaping HydroCube’s future!</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

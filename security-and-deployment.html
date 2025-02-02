@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HydroCube Overview – HydroCube</title>
+<title>Security &amp; Deployment – HydroCube</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -68,9 +102,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -117,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./security-and-deployment.html">Security and Deployment</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -131,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -161,7 +192,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./security-and-deployment.html" class="sidebar-item-text sidebar-link">
+  <a href="./security-and-deployment.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Security and Deployment</span></a>
   </div>
 </li>
@@ -193,13 +224,33 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#security-deployment" id="toc-security-deployment" class="nav-link active" data-scroll-target="#security-deployment">Security &amp; Deployment</a>
   <ul class="collapse">
-  <li><a href="#why-hydrocube" id="toc-why-hydrocube" class="nav-link" data-scroll-target="#why-hydrocube">Why “HydroCube”?</a></li>
+  <li><a href="#https-configuration" id="toc-https-configuration" class="nav-link" data-scroll-target="#https-configuration">1. HTTPS Configuration</a>
+  <ul class="collapse">
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">Steps</a></li>
+  <li><a href="#verifying" id="toc-verifying" class="nav-link" data-scroll-target="#verifying">Verifying</a></li>
   </ul></li>
-  <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a></li>
-  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  <li><a href="#oauth-for-authentication" id="toc-oauth-for-authentication" class="nav-link" data-scroll-target="#oauth-for-authentication">2. OAuth for Authentication</a>
+  <ul class="collapse">
+  <li><a href="#flow" id="toc-flow" class="nav-link" data-scroll-target="#flow">Flow</a></li>
+  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices">Best Practices</a></li>
+  </ul></li>
+  <li><a href="#docker-deployment" id="toc-docker-deployment" class="nav-link" data-scroll-target="#docker-deployment">3. Docker Deployment</a>
+  <ul class="collapse">
+  <li><a href="#example-dockerfile" id="toc-example-dockerfile" class="nav-link" data-scroll-target="#example-dockerfile">3.1. Example Dockerfile</a></li>
+  <li><a href="#building-running" id="toc-building-running" class="nav-link" data-scroll-target="#building-running">3.2. Building &amp; Running</a></li>
+  <li><a href="#volumes-data-persistence" id="toc-volumes-data-persistence" class="nav-link" data-scroll-target="#volumes-data-persistence">3.3. Volumes &amp; Data Persistence</a></li>
+  </ul></li>
+  <li><a href="#production-considerations" id="toc-production-considerations" class="nav-link" data-scroll-target="#production-considerations">4. Production Considerations</a>
+  <ul class="collapse">
+  <li><a href="#scaling-performance" id="toc-scaling-performance" class="nav-link" data-scroll-target="#scaling-performance">4.1. Scaling &amp; Performance</a></li>
+  <li><a href="#monitoring-logging" id="toc-monitoring-logging" class="nav-link" data-scroll-target="#monitoring-logging">4.2. Monitoring &amp; Logging</a></li>
+  <li><a href="#updates-downtime" id="toc-updates-downtime" class="nav-link" data-scroll-target="#updates-downtime">4.3. Updates &amp; Downtime</a></li>
+  <li><a href="#high-availability" id="toc-high-availability" class="nav-link" data-scroll-target="#high-availability">4.4. High Availability</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -208,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HydroCube Overview</h1>
+<h1 class="title">Security &amp; Deployment</h1>
 </div>
 
 
@@ -225,71 +276,164 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p><strong>HydroCube</strong> is a <strong>near-real-time OLAP server</strong> designed to ingest, aggregate, and query data rapidly from multiple sources. Written in <strong>Rust</strong> and powered by <strong>DuckDB</strong>, it offers a fast, memory-efficient analytics engine that you can deploy as a <strong>single binary</strong>—no separate services or complex dependencies required. HydroCube’s UI, built on <strong>FINOS Perspective</strong>, provides rich visualizations for real-time analytics and collaborative data exploration.</p>
-<section id="why-hydrocube" class="level3">
-<h3 class="anchored" data-anchor-id="why-hydrocube">Why “HydroCube”?</h3>
-<p>We wanted a name that reflects both lightness and the concept of an analytics “cube.” - <strong>Hydro</strong>: Inspired by <strong>hydrogen</strong>, the lightest element—evoking HydroCube’s minimal footprint. It also evokes a sense of flow in the same way that your data flows through HydroCube - <strong>Cube</strong>: Signifying the <strong>OLAP cube</strong> concept, where data is sliced and diced across multiple dimensions.</p>
-</section>
-</section>
-<section id="key-features" class="level2">
-<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
-<ul>
-<li><p><strong>Continuous Data Ingest</strong> Seamlessly pull from CSV, Parquet, JSON, or other file-based sources. Real-time ingestion from Kafka is in the works</p></li>
-<li><p><strong>Fast &amp; Memory-Efficient</strong> Uses <strong>DuckDB</strong>’s vectorized execution engine, allowing lightning-fast queries even on large datasets.</p></li>
-<li><p><strong>Full UI with FINOS Perspective</strong> An interactive, in-browser experience for visualizing real-time data. Slice, dice, pivot, and chart your data without extra tools.</p></li>
-<li><p><strong>Single-Binary Deployment</strong> Download and run—no external databases or separate web servers required. Perfect for minimal footprints or container-based deployments.</p></li>
-<li><p><strong>Written in Rust</strong> Leveraging Rust’s safety guarantees and concurrency model ensures robust performance and fewer runtime surprises.</p></li>
-<li><p><strong>Secure by Default</strong> Supports <strong>HTTPS</strong> out of the box, and can integrate with <strong>OAuth</strong> for authentication. Securely share analytics with your team.</p></li>
-<li><p><strong>Multi-User Friendly</strong> Enable multiple users to view and interact with real-time dashboards simultaneously.</p></li>
-<li><p><strong>Docker-Ready</strong> Bundle HydroCube as a <strong>distroless</strong> container—no OS overhead needed for a flexible and compact deployment.</p></li>
-</ul>
-</section>
-<section id="high-level-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h2>
-<p>Below is a simple Mermaid diagram illustrating how HydroCube fits into your data flow:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
-flowchart LR
-    subgraph Sources
-        A["CSV/Parquet Files"] --&gt;|File Watch| HC
-        B["Kafka (Coming soon)"] --&gt;|Consumer| HC
-    end
-    subgraph HydroCube
-        HC["HydroCube (Rust + DuckDB)"]
-        UI["FINOS Perspective (UI)"]
-    end
-    HC --&gt;|WebSockets| UI
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
+<section id="security-deployment" class="level1">
+<h1>Security &amp; Deployment</h1>
+<p>This page explains how to run HydroCube in a <strong>secure, production-ready</strong> environment. We cover HTTPS configuration, optional OAuth-based authentication, Docker containerization, and best practices for reliability.</p>
+<hr>
+<section id="https-configuration" class="level2">
+<h2 class="anchored" data-anchor-id="https-configuration">1. HTTPS Configuration</h2>
+<p>By default, HydroCube runs over <strong>HTTP</strong> on port 8080. To enable <strong>HTTPS</strong>, configure the following in your <code>hydrocube.yaml</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">security</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">https</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">cert_path</span><span class="kw">:</span><span class="at"> </span><span class="st">"cert.pem"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">key_path</span><span class="kw">:</span><span class="at"> </span><span class="st">"key.pem"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="steps" class="level3">
+<h3 class="anchored" data-anchor-id="steps">Steps</h3>
 <ol type="1">
-<li><strong>Sources</strong>: You configure one or more datasets—local files (CSV, Parquet) or streaming data (Kafka).</li>
-<li><strong>HydroCube</strong>:
+<li><p><strong>Obtain a Certificate and Key</strong></p>
 <ul>
-<li>Loads raw data into <strong>DuckDB</strong> tables.</li>
-<li>Aggregates and transforms your data in near real time.</li>
-<li>Serves the embedded UI for exploration and dashboards.</li>
+<li><p>For production, use a certificate from a recognized CA (e.g., Let’s Encrypt).</p></li>
+<li><p>For testing, you can generate a self-signed cert via OpenSSL:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openssl</span> req <span class="at">-x509</span> <span class="at">-newkey</span> rsa:4096 <span class="at">-keyout</span> key.pem <span class="at">-out</span> cert.pem <span class="at">-days</span> 365 <span class="at">-nodes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 </ul></li>
-<li><strong>UI</strong>: The <strong>FINOS Perspective</strong>-powered frontend connects via <strong>WebSockets</strong> for live updates to your analytics views.</li>
+<li><p><strong>Point HydroCube</strong> to those files with <code>cert_path</code> and <code>key_path</code>.</p></li>
+<li><p><strong>Start HydroCube</strong> as usual:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./hydrocube</span> <span class="at">--config</span> hydrocube.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>HydroCube will listen on an HTTPS port (default 8443 or specified in <code>server.port</code> if you set it).</p></li>
 </ol>
 </section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
+<section id="verifying" class="level3">
+<h3 class="anchored" data-anchor-id="verifying">Verifying</h3>
+<p>Navigate to <code>https://localhost:8443</code>. - If using self-signed certs, your browser will warn you. - If using a CA-signed cert, the connection should be secured and show a valid TLS lock icon.</p>
+<hr>
+</section>
+</section>
+<section id="oauth-for-authentication" class="level2">
+<h2 class="anchored" data-anchor-id="oauth-for-authentication">2. OAuth for Authentication</h2>
+<p>HydroCube can integrate with <strong>OAuth</strong> providers (like GitHub, Google, etc.) to require user login before accessing the UI or APIs.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">security</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">oauth</span><span class="kw">:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">provider</span><span class="kw">:</span><span class="at"> </span><span class="st">"github"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">client_id</span><span class="kw">:</span><span class="at"> </span><span class="st">"your_client_id"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">client_secret</span><span class="kw">:</span><span class="at"> </span><span class="st">"your_client_secret"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">auth_url</span><span class="kw">:</span><span class="at"> </span><span class="st">"https://github.com/login/oauth/authorize"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">token_url</span><span class="kw">:</span><span class="at"> </span><span class="st">"https://github.com/login/oauth/access_token"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">redirect_url</span><span class="kw">:</span><span class="at"> </span><span class="st">"http://yourdomain.com/auth/callback"</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">scopes</span><span class="kw">:</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"read:user"</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"repo"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="flow" class="level3">
+<h3 class="anchored" data-anchor-id="flow">Flow</h3>
+<ol type="1">
+<li><strong>User Accesses</strong> HydroCube’s UI at <code>https://yourdomain.com</code>.</li>
+<li><strong>Redirect</strong>: HydroCube sends them to the OAuth provider’s login screen.</li>
+<li><strong>Login</strong>: After login, the provider redirects back to <code>redirect_url</code> with a token or code.</li>
+<li><strong>Token Exchange</strong>: HydroCube verifies the token.</li>
+<li><strong>UI Unlocks</strong>: The user can now view real-time dashboards.</li>
+</ol>
+<p><em>(Implementation specifics vary by provider. Ensure your <code>redirect_url</code> matches what you registered in your OAuth settings.)</em></p>
+</section>
+<section id="best-practices" class="level3">
+<h3 class="anchored" data-anchor-id="best-practices">Best Practices</h3>
 <ul>
-<li>Head over to <strong><a href="./getting-started.html">Getting Started</a></strong> for installation instructions and your first HydroCube run.</li>
-<li>Explore how to configure ingestion, define aggregates, and publish live data to your dashboards.</li>
+<li>Always combine OAuth with <strong>HTTPS</strong>.</li>
+<li>Limit requested scopes to the minimum needed for identification.</li>
+<li>Consider adding <strong>role-based</strong> or <strong>group-based</strong> checks in future if you need fine-grained access control.</li>
 </ul>
+<hr>
+</section>
+</section>
+<section id="docker-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="docker-deployment">3. Docker Deployment</h2>
+<p>HydroCube is ideal for containerization since it’s a <strong>single binary</strong> with minimal dependencies. You can build your own image or use a published one (if provided).</p>
+<section id="example-dockerfile" class="level3">
+<h3 class="anchored" data-anchor-id="example-dockerfile">3.1. Example Dockerfile</h3>
+<p>Below is a simple Dockerfile for a <strong>distroless</strong> container:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Build Stage ---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> rust:1.84 as builder</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /app</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> . .</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">cargo</span> build <span class="at">--release</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Final Stage (Distroless) ---</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> gcr.io/distroless/cc</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the binary from the builder stage</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> <span class="op">--from=builder</span> /app/target/release/hydrocube /usr/local/bin/hydrocube</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy config if desired, or mount at runtime</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> hydrocube.yaml /etc/hydrocube.yaml</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Default command: run HydroCube</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"/usr/local/bin/hydrocube"</span>, <span class="st">"--config"</span>, <span class="st">"/etc/hydrocube.yaml"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="building-running" class="level3">
+<h3 class="anchored" data-anchor-id="building-running">3.2. Building &amp; Running</h3>
+<ol type="1">
+<li><p><strong>Build the image</strong>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> hydrocube:latest .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Run the container</strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-p</span> 8080:8080 hydrocube:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>By default, it exposes HTTP on port 8080.</li>
+<li>If using HTTPS, you might map <code>8443:8443</code>.</li>
+</ul></li>
+</ol>
+</section>
+<section id="volumes-data-persistence" class="level3">
+<h3 class="anchored" data-anchor-id="volumes-data-persistence">3.3. Volumes &amp; Data Persistence</h3>
+<p>HydroCube uses <strong>DuckDB</strong>, which by default can store data in memory or in a file. If you want to persist data between container restarts:</p>
+<ol type="1">
+<li><p><strong>Set a file path</strong> for DuckDB in your config or code (e.g., <code>/data/hydrocube.duckdb</code>).</p></li>
+<li><p><strong>Mount a volume</strong> to <code>/data/</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-p</span> 8080:8080 <span class="at">-v</span> /my/local/data:/data hydrocube:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This ensures your DuckDB database and any logs remain available across restarts.</p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="production-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="production-considerations">4. Production Considerations</h2>
+<section id="scaling-performance" class="level3">
+<h3 class="anchored" data-anchor-id="scaling-performance">4.1. Scaling &amp; Performance</h3>
+<ul>
+<li><strong>Concurrency</strong>: DuckDB is embedded but supports concurrent read access. Writes can be queued behind a single writer. For most mid-sized workloads, this is plenty fast.</li>
+<li><strong>Multiple Instances</strong>: If you need more concurrency, you could run multiple HydroCube instances behind a load balancer, though each instance has its own embedded DB. (A shared storage approach or external database might be considered in future expansions.)</li>
+</ul>
+</section>
+<section id="monitoring-logging" class="level3">
+<h3 class="anchored" data-anchor-id="monitoring-logging">4.2. Monitoring &amp; Logging</h3>
+<ul>
+<li><strong>Logs</strong>: By default, HydroCube logs to stdout (info or debug level). Capture these logs in your container orchestration or file system.</li>
+<li><strong>Metrics</strong>: Future versions may integrate with Prometheus or another metrics platform. In the meantime, you can track ingestion rates, aggregator runtimes, etc., by parsing logs or hooking into the code directly.</li>
+</ul>
+</section>
+<section id="updates-downtime" class="level3">
+<h3 class="anchored" data-anchor-id="updates-downtime">4.3. Updates &amp; Downtime</h3>
+<ul>
+<li><strong>Rolling Updates</strong>: Because it’s a single binary, you can simply stop the old version and start the new one—assuming minimal downtime is acceptable.</li>
+<li><strong>Configuration Changes</strong>: If you change <code>hydrocube.yaml</code>, a restart is typically required to reload ingestion watchers, aggregator definitions, etc.</li>
+</ul>
+</section>
+<section id="high-availability" class="level3">
+<h3 class="anchored" data-anchor-id="high-availability">4.4. High Availability</h3>
+<ul>
+<li><strong>Single Node</strong>: HydroCube was designed to be lightweight and self-contained, so it’s not inherently multi-node or distributed.</li>
+<li><strong>Backups</strong>: For mission-critical data, backup your DuckDB file or replicate the source data.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>By combining <strong>HTTPS</strong> for secure transport, <strong>OAuth</strong> for user authentication, and <strong>Docker</strong> for container-based deployments, you can confidently run HydroCube in production environments. Keep in mind DuckDB’s single-writer concurrency model if you expect extremely high ingest rates, and consider additional monitoring or backups for mission-critical deployments.</p>
+<p><strong>Next Steps</strong>: - Return to the <strong><a href="config-reference.qmd">Configuration Reference</a></strong> if you need more detail on security fields. - Check out the <strong><a href="./how-to-guides.html">How-To Guides</a></strong> for practical setup examples.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,42 +1,72 @@
 [
   {
-    "objectID": "roadmap.html",
-    "href": "roadmap.html",
-    "title": "Roadmap",
+    "objectID": "faq-and-troubleshooting.html",
+    "href": "faq-and-troubleshooting.html",
+    "title": "FAQ & Troubleshooting",
     "section": "",
-    "text": "Below are planned features and improvements:\n\nAdditional data formats\n\nAvro, Orc, Delta Lake, Arrow, and more.\n\nKafka ingest\n\nSupport for ingesting straight from Kafka topics.\n\nIngest filter\n\nLimit the data ingested by filtering.\n\nSave reports\n\nSerialise your reports for later use.",
+    "text": "This page addresses common questions, errors, and performance tips for HydroCube. If you don’t see your issue here, feel free to open a GitHub issue.\n\n\n\n\n\nPossible Causes: - The file pattern doesn’t match. For instance, pattern: \"*.csv\" but your file is data.CSV (uppercase). - The directory watcher isn’t triggered if the file has no changes. Try editing the file or create a new one.\nSolutions: - Double-check your directory path and pattern. - Make sure you have write permissions on the directory. - Check HydroCube’s logs (stdout) for any errors.\n\n\n\nPossible Causes: - Wrong broker address or port. - Topic name is incorrect. - Firewall or Docker networking issues.\nSolutions: - Verify you can reach Kafka via kafkacat or a similar CLI tool. - Check that your group_id and topic match the actual Kafka setup. - Look at HydroCube’s logs for any “failed to connect” messages.\n\n\n\n\n\n\n\nPossible Causes: - HydroCube is running on HTTPS but you’re hitting an HTTP URL. - A firewall or reverse proxy is blocking the port.\nSolutions: - Ensure you visit the correct scheme (HTTPS vs. HTTP) and port. - If using a proxy, confirm it’s forwarding requests properly.\n\n\n\nPossible Causes: - No aggregator or publisher defined for your dataset. - No new rows are actually arriving in DuckDB. - The user hasn’t toggled the subscription for that cube in the UI.\nSolutions: - Check you have a publishers: block referencing an aggregate:. - In the UI, look for the “Subscribe” toggle. - Inspect logs for aggregator or WebSocket errors.\n\n\n\n\n\n\n\nIf you used a self-signed certificate, most browsers will warn you. This is normal for local testing. For production, use a CA-signed cert from Let’s Encrypt or another authority.\n\n\n\nPossible Causes: - redirect_url in your config doesn’t match what the provider expects. - The OAuth credentials are invalid or were revoked.\nSolutions: - Update your OAuth provider’s app settings to match HydroCube’s redirect_url. - Double-check the client_id and client_secret.\n\n\n\n\n\n\n\n\nBatch Inserts: HydroCube already batches inserts, but if you’re updating massive CSV files, consider splitting them into smaller chunks or using Parquet for more efficient loading.\nMemory: Provide enough RAM for DuckDB to do vectorized processing.\nSSD / Fast Storage: If your data file is huge, an SSD helps speed ingest.\n\n\n\n\n\nOne Writer Limit: DuckDB has a single-writer concurrency model, so extremely high message rates could form a backlog.\nPartitioning or Sharding: If ingestion becomes a bottleneck, consider splitting topics or running multiple HydroCube instances (though each would have its own embedded DB).\n\n\n\n\n\n\n\n\nHydroCube logs to stdout by default. You’ll see informational messages about ingestion, aggregator runs, and publisher updates. For debugging, you may want to run with higher verbosity or pipe logs into a monitoring system.\n\n\n\n\n“Ingested X rows from file …”: File watcher successfully loaded data.\n“Kafka consumer error …”: A problem with broker connectivity or message parsing.\n“Aggregator updated table …”: The aggregator just recalculated.\n“WebSocket error …”: Potential network issues or unsubscribes.\n\n\n\n\n\n\n\nCheck Security & Deployment for more advanced setups.\nAsk the Community: GitHub Issues or the project’s discussion boards.\nContribute: If you found a bug or want a new feature, please open a pull request or proposal!",
     "crumbs": [
-      "Roadmap"
+      "FAQ and Troubleshooting"
     ]
   },
   {
-    "objectID": "getting-started.html",
-    "href": "getting-started.html",
-    "title": "Getting Started",
+    "objectID": "faq-and-troubleshooting.html#ingestion",
+    "href": "faq-and-troubleshooting.html#ingestion",
+    "title": "FAQ & Troubleshooting",
     "section": "",
-    "text": "Welcome to HydroCube! Below are steps to install and run it.",
+    "text": "Possible Causes: - The file pattern doesn’t match. For instance, pattern: \"*.csv\" but your file is data.CSV (uppercase). - The directory watcher isn’t triggered if the file has no changes. Try editing the file or create a new one.\nSolutions: - Double-check your directory path and pattern. - Make sure you have write permissions on the directory. - Check HydroCube’s logs (stdout) for any errors.\n\n\n\nPossible Causes: - Wrong broker address or port. - Topic name is incorrect. - Firewall or Docker networking issues.\nSolutions: - Verify you can reach Kafka via kafkacat or a similar CLI tool. - Check that your group_id and topic match the actual Kafka setup. - Look at HydroCube’s logs for any “failed to connect” messages.",
     "crumbs": [
-      "Getting Started"
+      "FAQ and Troubleshooting"
     ]
   },
   {
-    "objectID": "getting-started.html#installation",
-    "href": "getting-started.html#installation",
-    "title": "Getting Started",
-    "section": "Installation",
-    "text": "Installation\n\nDownload the latest release from GitHub Releases.\n\nLinux: x86_64-unknown-linux-gnu\nmacOS: x86_64-apple-darwin or aarch64-apple-darwin\nWindows: x86_64-pc-windows-msvc\n\nPlace the executable in your $PATH (e.g., /usr/local/bin) or reference it directly.\n\n\nBuilding from Source\nAlternatively, clone this repository and build:\ngit clone https://github.com/joefrost01/HydroCube.git\ncargo build --release",
+    "objectID": "faq-and-troubleshooting.html#ui-websockets",
+    "href": "faq-and-troubleshooting.html#ui-websockets",
+    "title": "FAQ & Troubleshooting",
+    "section": "",
+    "text": "Possible Causes: - HydroCube is running on HTTPS but you’re hitting an HTTP URL. - A firewall or reverse proxy is blocking the port.\nSolutions: - Ensure you visit the correct scheme (HTTPS vs. HTTP) and port. - If using a proxy, confirm it’s forwarding requests properly.\n\n\n\nPossible Causes: - No aggregator or publisher defined for your dataset. - No new rows are actually arriving in DuckDB. - The user hasn’t toggled the subscription for that cube in the UI.\nSolutions: - Check you have a publishers: block referencing an aggregate:. - In the UI, look for the “Subscribe” toggle. - Inspect logs for aggregator or WebSocket errors.",
     "crumbs": [
-      "Getting Started"
+      "FAQ and Troubleshooting"
     ]
   },
   {
-    "objectID": "getting-started.html#basic-usage",
-    "href": "getting-started.html#basic-usage",
-    "title": "Getting Started",
-    "section": "Basic Usage",
-    "text": "Basic Usage\n# Basic CSV to Parquet conversion\nhydrocube --config config.yaml",
+    "objectID": "faq-and-troubleshooting.html#security-oauth",
+    "href": "faq-and-troubleshooting.html#security-oauth",
+    "title": "FAQ & Troubleshooting",
+    "section": "",
+    "text": "If you used a self-signed certificate, most browsers will warn you. This is normal for local testing. For production, use a CA-signed cert from Let’s Encrypt or another authority.\n\n\n\nPossible Causes: - redirect_url in your config doesn’t match what the provider expects. - The OAuth credentials are invalid or were revoked.\nSolutions: - Update your OAuth provider’s app settings to match HydroCube’s redirect_url. - Double-check the client_id and client_secret.",
     "crumbs": [
-      "Getting Started"
+      "FAQ and Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "faq-and-troubleshooting.html#performance-tips",
+    "href": "faq-and-troubleshooting.html#performance-tips",
+    "title": "FAQ & Troubleshooting",
+    "section": "",
+    "text": "Batch Inserts: HydroCube already batches inserts, but if you’re updating massive CSV files, consider splitting them into smaller chunks or using Parquet for more efficient loading.\nMemory: Provide enough RAM for DuckDB to do vectorized processing.\nSSD / Fast Storage: If your data file is huge, an SSD helps speed ingest.\n\n\n\n\n\nOne Writer Limit: DuckDB has a single-writer concurrency model, so extremely high message rates could form a backlog.\nPartitioning or Sharding: If ingestion becomes a bottleneck, consider splitting topics or running multiple HydroCube instances (though each would have its own embedded DB).",
+    "crumbs": [
+      "FAQ and Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "faq-and-troubleshooting.html#general-errors-logs",
+    "href": "faq-and-troubleshooting.html#general-errors-logs",
+    "title": "FAQ & Troubleshooting",
+    "section": "",
+    "text": "HydroCube logs to stdout by default. You’ll see informational messages about ingestion, aggregator runs, and publisher updates. For debugging, you may want to run with higher verbosity or pipe logs into a monitoring system.\n\n\n\n\n“Ingested X rows from file …”: File watcher successfully loaded data.\n“Kafka consumer error …”: A problem with broker connectivity or message parsing.\n“Aggregator updated table …”: The aggregator just recalculated.\n“WebSocket error …”: Potential network issues or unsubscribes.",
+    "crumbs": [
+      "FAQ and Troubleshooting"
+    ]
+  },
+  {
+    "objectID": "faq-and-troubleshooting.html#still-stuck",
+    "href": "faq-and-troubleshooting.html#still-stuck",
+    "title": "FAQ & Troubleshooting",
+    "section": "",
+    "text": "Check Security & Deployment for more advanced setups.\nAsk the Community: GitHub Issues or the project’s discussion boards.\nContribute: If you found a bug or want a new feature, please open a pull request or proposal!",
+    "crumbs": [
+      "FAQ and Troubleshooting"
     ]
   },
   {
@@ -44,7 +74,17 @@
     "href": "index.html",
     "title": "HydroCube Overview",
     "section": "",
-    "text": "HydroCube is a near realtime OLAP server that allows you to ingest data from multiple sources and query it in a fast and memory-efficient way. It is designed to be easy to use, secure, and scalable. It is written in Rust and uses DuckDB for the query engine. It has a full UI built with FINOS Perspective.\nWhy HydroCube? It’s an analytics cube designed to be very light in every respect so we named it after the lightest element, Hydrogen. It’s also a cube, so we named it HydroCube.",
+    "text": "HydroCube is a near-real-time OLAP server designed to ingest, aggregate, and query data rapidly from multiple sources. Written in Rust and powered by DuckDB, it offers a fast, memory-efficient analytics engine that you can deploy as a single binary—no separate services or complex dependencies required. HydroCube’s UI, built on FINOS Perspective, provides rich visualizations for real-time analytics and collaborative data exploration.\n\n\nWe wanted a name that reflects both lightness and the concept of an analytics “cube.” - Hydro: Inspired by hydrogen, the lightest element—evoking HydroCube’s minimal footprint. It also evokes a sense of flow in the same way that your data flows through HydroCube - Cube: Signifying the OLAP cube concept, where data is sliced and diced across multiple dimensions.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "HydroCube Overview",
+    "section": "",
+    "text": "HydroCube is a near-real-time OLAP server designed to ingest, aggregate, and query data rapidly from multiple sources. Written in Rust and powered by DuckDB, it offers a fast, memory-efficient analytics engine that you can deploy as a single binary—no separate services or complex dependencies required. HydroCube’s UI, built on FINOS Perspective, provides rich visualizations for real-time analytics and collaborative data exploration.\n\n\nWe wanted a name that reflects both lightness and the concept of an analytics “cube.” - Hydro: Inspired by hydrogen, the lightest element—evoking HydroCube’s minimal footprint. It also evokes a sense of flow in the same way that your data flows through HydroCube - Cube: Signifying the OLAP cube concept, where data is sliced and diced across multiple dimensions.",
     "crumbs": [
       "Introduction"
     ]
@@ -54,9 +94,539 @@
     "href": "index.html#key-features",
     "title": "HydroCube Overview",
     "section": "Key Features",
-    "text": "Key Features\n\nContinuous data ingest From multiple formats (CSV, Parquet, JSON)\nFast and Memory-Efficient: Uses DuckDB for the query engine\nFull UI: Uses FINOS Perspective for UI\nSingle Binary: Runs from a single binary, no dependencies, just point it at your data and run!\nWritten in Rust: Fast, safe, and concurrent\nOauth for Authentication: Bring the authentication method of your choice\nSecure: Uses HTTPS by default\nDocker Ready: No dependencies, ideally suited for distroless containers\nMulti User: Supports multiple users, ideal for teams that need up the minute data\n\nPlease see Getting Started to install and run HydroCube.",
+    "text": "Key Features\n\nContinuous Data Ingest Seamlessly pull from CSV, Parquet, JSON, or other file-based sources. Real-time ingestion from Kafka is in the works\nFast & Memory-Efficient Uses DuckDB’s vectorized execution engine, allowing lightning-fast queries even on large datasets.\nFull UI with FINOS Perspective An interactive, in-browser experience for visualizing real-time data. Slice, dice, pivot, and chart your data without extra tools.\nSingle-Binary Deployment Download and run—no external databases or separate web servers required. Perfect for minimal footprints or container-based deployments.\nWritten in Rust Leveraging Rust’s safety guarantees and concurrency model ensures robust performance and fewer runtime surprises.\nSecure by Default Supports HTTPS out of the box, and can integrate with OAuth for authentication. Securely share analytics with your team.\nMulti-User Friendly Enable multiple users to view and interact with real-time dashboards simultaneously.\nDocker-Ready Bundle HydroCube as a distroless container—no OS overhead needed for a flexible and compact deployment.",
     "crumbs": [
       "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#high-level-architecture",
+    "href": "index.html#high-level-architecture",
+    "title": "HydroCube Overview",
+    "section": "High-Level Architecture",
+    "text": "High-Level Architecture\nBelow is a simple Mermaid diagram illustrating how HydroCube fits into your data flow:\n\n\n\n\n\n%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%\nflowchart LR\n    subgraph Sources\n        A[\"CSV/Parquet Files\"] --&gt;|File Watch| HC\n        B[\"Kafka (Coming soon)\"] --&gt;|Consumer| HC\n    end\n    subgraph HydroCube\n        HC[\"HydroCube (Rust + DuckDB)\"]\n        UI[\"FINOS Perspective (UI)\"]\n    end\n    HC --&gt;|WebSockets| UI\n\n\n\n\n\n\n\nSources: You configure one or more datasets—local files (CSV, Parquet) or streaming data (Kafka).\nHydroCube:\n\nLoads raw data into DuckDB tables.\nAggregates and transforms your data in near real time.\nServes the embedded UI for exploration and dashboards.\n\nUI: The FINOS Perspective-powered frontend connects via WebSockets for live updates to your analytics views.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#next-steps",
+    "href": "index.html#next-steps",
+    "title": "HydroCube Overview",
+    "section": "Next Steps",
+    "text": "Next Steps\n\nHead over to Getting Started for installation instructions and your first HydroCube run.\nExplore how to configure ingestion, define aggregates, and publish live data to your dashboards.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html",
+    "href": "configuration-reference.html",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "This document describes all the major fields and sections in HydroCube’s YAML configuration. By default, HydroCube looks for a file named hydrocube.yaml, but you can specify a different path with --config myfile.yaml.\n\n\nA typical HydroCube config might look like:\ndatasets:\n  - name: \"example_csv\"\n    table_name: \"example_data\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\n\n  - name: \"streaming_trades\"\n    table_name: \"trades\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_trades_group\"\n      topic: \"trade_events\"\n\nsecurity:\n  oauth:\n    enabled: false\n    provider: \"github\"\n    # ...\n  https:\n    enabled: false\n    cert_path: \"cert.pem\"\n    key_path: \"key.pem\"\n\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"every_30_seconds\"\nBelow, we break down each section in detail.\n\n\n\n\nEach entry in datasets: defines one ingestion pipeline—pointing to a source (file-based or Kafka) that is loaded into a DuckDB table.\n\n\n\nname (string): A friendly identifier for the dataset.\ntable_name (string): The DuckDB table where ingested rows are stored.\nformat (string): Either csv, parquet, or kafka. (Future formats may include json, websockets, etc.)\n\n\n\n\nIf format is csv or parquet, these fields apply:\n\ndirectory (string): Path to the directory containing files.\npattern (string): File pattern to watch (e.g. *.csv or data_*.parquet).\n\nHydroCube uses a directory watcher to detect new or updated files. Any matching file is loaded into DuckDB. The entire file may be reloaded if it changes—incremental logic will arrive in future versions.\n\n\n- name: \"my_csv_data\"\n  table_name: \"my_table\"\n  format: \"csv\"\n  directory: \"/path/to/csvs\"\n  pattern: \"*.csv\"\n\n\n\n- name: \"my_parquet_data\"\n  table_name: \"my_table\"\n  format: \"parquet\"\n  directory: \"/path/to/parquets\"\n  pattern: \"*.parquet\"\n\n\n\n\nFor streaming data, use format: \"kafka\" and define a kafka: object:\n\nbrokers (string): Comma-separated list of Kafka broker addresses (e.g. localhost:9092).\ngroup_id (string): The Kafka consumer group ID (ensures exactly-once or at-least-once semantics).\ntopic (string): Which topic to subscribe to. (For multiple topics, either define multiple datasets or an array of topics if your code supports it.)\nschema (optional): If you want to parse JSON fields explicitly, you might define columns and json_path entries here. (Implementation details may vary.)\n\n- name: \"trades_stream\"\n  table_name: \"trades\"\n  format: \"kafka\"\n  kafka:\n    brokers: \"localhost:9092\"\n    group_id: \"hydrocube_trades\"\n    topic: \"trade_events\"\n    # schema: # Optional future feature\n    #   - column: \"symbol\"\n    #     type: \"VARCHAR\"\n    #     json_path: \"$.symbol\"\n\n\n\n\n\nHydroCube can operate over HTTPS and optionally integrate with OAuth for user authentication.\n\n\nsecurity:\n  https:\n    enabled: true\n    cert_path: \"cert.pem\"\n    key_path: \"key.pem\"\n\nenabled (bool): If true, HydroCube listens on HTTPS instead of HTTP.\ncert_path (string): Path to your SSL certificate.\nkey_path (string): Path to the matching private key.\n\n\n\n\nsecurity:\n  oauth:\n    enabled: false\n    provider: \"github\"\n    client_id: \"your_client_id\"\n    client_secret: \"your_client_secret\"\n    auth_url: \"https://github.com/login/oauth/authorize\"\n    token_url: \"https://github.com/login/oauth/access_token\"\n    redirect_url: \"http://localhost:8080/auth/callback\"\n    scopes:\n      - \"read:user\"\n      - \"repo\"\n\nenabled (bool): If true, OAuth checks are performed upon UI or API access.\nprovider (string): e.g. github, google, etc.\nclient_id, client_secret: Credentials from your OAuth provider.\nauth_url, token_url: OAuth endpoints (varies by provider).\nredirect_url: Where the OAuth flow returns users after login.\nscopes (list of strings): Additional permissions.\n\n(If you disable OAuth, HydroCube runs without external authentication—fine for local testing, not recommended for production.)\n\n\n\n\n\nHydroCube has a simple aggregator feature where you define:\n\nname (string): The aggregator’s name.\ntable_name (string): Which DuckDB base table to read from.\nmeasures (list): Each measure is a (column, function) pair.\n(Optional) dimension columns or advanced settings.\n\nExample\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\n\n\nHydroCube runs the aggregator query on a schedule or on demand.\nIt groups by all columns not listed as measures (or you can explicitly specify dimensions in the future).\nThe aggregator writes the results to an internal aggregated table, e.g. sales_agg_table, including a last_update based on MAX(insert_timestamp).\n\n(Future features may allow custom SQL aggregators or partial refresh logic.)\n\n\n\n\n\nA publisher defines how aggregated data is pushed to subscribers. You can have multiple publishers, each referencing an aggregator (or a custom query in the future).\n\nname (string): Unique name of the publisher.\ntype (string): Currently \"simple\". A future \"custom\" type will allow user-defined SQL.\naggregate (string): Which aggregator to read from.\nkey_column (string): The column used as a unique key for partial updates in the UI.\nchange_detection_column (string): Typically \"last_update\".\nschedule (string, optional): e.g. \"every_30_seconds\" or \"on_change\".\n\nExample\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\n\n\n\nsimple: The publisher queries the aggregated table regularly (or only when data changes) and sends updated rows to connected WebSocket clients.\nCustom (future): The user provides a SQL statement. They must also specify how to detect changes and which column is used as the key.\n\n\n\n\n\n\nYou may have other top-level fields (e.g. server_port, logging configs, etc.). For instance:\nserver:\n  port: 8080\n  # Possibly more settings\nIf not explicitly defined, HydroCube picks sensible defaults (like 8080 for HTTP, 8443 for HTTPS, etc.).\n\n\n\n\nBelow is a full example combining everything:\n# hydrocube.yaml\n\nserver:\n  port: 8080\n\ndatasets:\n  - name: \"offline_sales\"\n    table_name: \"sales\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\n\n  - name: \"realtime_sales\"\n    table_name: \"sales\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_sales_group\"\n      topic: \"sales_topic\"\n\nsecurity:\n  https:\n    enabled: false\n  oauth:\n    enabled: false\n\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\nWith this config:\n\nHydroCube ingests CSV files from ./data/csv into a sales table.\nIt also ingests real-time messages from Kafka topic sales_topic into the same sales table.\nThe aggregator sales_agg runs a group-by on sales, summing quantity.\nThe publisher sales_cube pushes changes (using last_update for detection) to any UI subscribers, keyed by product_id.\n\n\n\n\n\nThis reference should help you configure HydroCube for various ingestion sources, secure it (if desired), define aggregations, and publish real-time updates. For more practical examples, see the How-To Guides or the Core Concepts & Architecture section to understand how everything fits together.",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#overview",
+    "href": "configuration-reference.html#overview",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "A typical HydroCube config might look like:\ndatasets:\n  - name: \"example_csv\"\n    table_name: \"example_data\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\n\n  - name: \"streaming_trades\"\n    table_name: \"trades\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_trades_group\"\n      topic: \"trade_events\"\n\nsecurity:\n  oauth:\n    enabled: false\n    provider: \"github\"\n    # ...\n  https:\n    enabled: false\n    cert_path: \"cert.pem\"\n    key_path: \"key.pem\"\n\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"every_30_seconds\"\nBelow, we break down each section in detail.",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#datasets",
+    "href": "configuration-reference.html#datasets",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "Each entry in datasets: defines one ingestion pipeline—pointing to a source (file-based or Kafka) that is loaded into a DuckDB table.\n\n\n\nname (string): A friendly identifier for the dataset.\ntable_name (string): The DuckDB table where ingested rows are stored.\nformat (string): Either csv, parquet, or kafka. (Future formats may include json, websockets, etc.)\n\n\n\n\nIf format is csv or parquet, these fields apply:\n\ndirectory (string): Path to the directory containing files.\npattern (string): File pattern to watch (e.g. *.csv or data_*.parquet).\n\nHydroCube uses a directory watcher to detect new or updated files. Any matching file is loaded into DuckDB. The entire file may be reloaded if it changes—incremental logic will arrive in future versions.\n\n\n- name: \"my_csv_data\"\n  table_name: \"my_table\"\n  format: \"csv\"\n  directory: \"/path/to/csvs\"\n  pattern: \"*.csv\"\n\n\n\n- name: \"my_parquet_data\"\n  table_name: \"my_table\"\n  format: \"parquet\"\n  directory: \"/path/to/parquets\"\n  pattern: \"*.parquet\"\n\n\n\n\nFor streaming data, use format: \"kafka\" and define a kafka: object:\n\nbrokers (string): Comma-separated list of Kafka broker addresses (e.g. localhost:9092).\ngroup_id (string): The Kafka consumer group ID (ensures exactly-once or at-least-once semantics).\ntopic (string): Which topic to subscribe to. (For multiple topics, either define multiple datasets or an array of topics if your code supports it.)\nschema (optional): If you want to parse JSON fields explicitly, you might define columns and json_path entries here. (Implementation details may vary.)\n\n- name: \"trades_stream\"\n  table_name: \"trades\"\n  format: \"kafka\"\n  kafka:\n    brokers: \"localhost:9092\"\n    group_id: \"hydrocube_trades\"\n    topic: \"trade_events\"\n    # schema: # Optional future feature\n    #   - column: \"symbol\"\n    #     type: \"VARCHAR\"\n    #     json_path: \"$.symbol\"",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#security",
+    "href": "configuration-reference.html#security",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "HydroCube can operate over HTTPS and optionally integrate with OAuth for user authentication.\n\n\nsecurity:\n  https:\n    enabled: true\n    cert_path: \"cert.pem\"\n    key_path: \"key.pem\"\n\nenabled (bool): If true, HydroCube listens on HTTPS instead of HTTP.\ncert_path (string): Path to your SSL certificate.\nkey_path (string): Path to the matching private key.\n\n\n\n\nsecurity:\n  oauth:\n    enabled: false\n    provider: \"github\"\n    client_id: \"your_client_id\"\n    client_secret: \"your_client_secret\"\n    auth_url: \"https://github.com/login/oauth/authorize\"\n    token_url: \"https://github.com/login/oauth/access_token\"\n    redirect_url: \"http://localhost:8080/auth/callback\"\n    scopes:\n      - \"read:user\"\n      - \"repo\"\n\nenabled (bool): If true, OAuth checks are performed upon UI or API access.\nprovider (string): e.g. github, google, etc.\nclient_id, client_secret: Credentials from your OAuth provider.\nauth_url, token_url: OAuth endpoints (varies by provider).\nredirect_url: Where the OAuth flow returns users after login.\nscopes (list of strings): Additional permissions.\n\n(If you disable OAuth, HydroCube runs without external authentication—fine for local testing, not recommended for production.)",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#aggregates",
+    "href": "configuration-reference.html#aggregates",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "HydroCube has a simple aggregator feature where you define:\n\nname (string): The aggregator’s name.\ntable_name (string): Which DuckDB base table to read from.\nmeasures (list): Each measure is a (column, function) pair.\n(Optional) dimension columns or advanced settings.\n\nExample\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\n\n\nHydroCube runs the aggregator query on a schedule or on demand.\nIt groups by all columns not listed as measures (or you can explicitly specify dimensions in the future).\nThe aggregator writes the results to an internal aggregated table, e.g. sales_agg_table, including a last_update based on MAX(insert_timestamp).\n\n(Future features may allow custom SQL aggregators or partial refresh logic.)",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#publishers",
+    "href": "configuration-reference.html#publishers",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "A publisher defines how aggregated data is pushed to subscribers. You can have multiple publishers, each referencing an aggregator (or a custom query in the future).\n\nname (string): Unique name of the publisher.\ntype (string): Currently \"simple\". A future \"custom\" type will allow user-defined SQL.\naggregate (string): Which aggregator to read from.\nkey_column (string): The column used as a unique key for partial updates in the UI.\nchange_detection_column (string): Typically \"last_update\".\nschedule (string, optional): e.g. \"every_30_seconds\" or \"on_change\".\n\nExample\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\n\n\n\nsimple: The publisher queries the aggregated table regularly (or only when data changes) and sends updated rows to connected WebSocket clients.\nCustom (future): The user provides a SQL statement. They must also specify how to detect changes and which column is used as the key.",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#miscellaneous-global-settings",
+    "href": "configuration-reference.html#miscellaneous-global-settings",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "You may have other top-level fields (e.g. server_port, logging configs, etc.). For instance:\nserver:\n  port: 8080\n  # Possibly more settings\nIf not explicitly defined, HydroCube picks sensible defaults (like 8080 for HTTP, 8443 for HTTPS, etc.).",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#putting-it-all-together",
+    "href": "configuration-reference.html#putting-it-all-together",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "Below is a full example combining everything:\n# hydrocube.yaml\n\nserver:\n  port: 8080\n\ndatasets:\n  - name: \"offline_sales\"\n    table_name: \"sales\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\n\n  - name: \"realtime_sales\"\n    table_name: \"sales\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_sales_group\"\n      topic: \"sales_topic\"\n\nsecurity:\n  https:\n    enabled: false\n  oauth:\n    enabled: false\n\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\nWith this config:\n\nHydroCube ingests CSV files from ./data/csv into a sales table.\nIt also ingests real-time messages from Kafka topic sales_topic into the same sales table.\nThe aggregator sales_agg runs a group-by on sales, summing quantity.\nThe publisher sales_cube pushes changes (using last_update for detection) to any UI subscribers, keyed by product_id.",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "configuration-reference.html#conclusion",
+    "href": "configuration-reference.html#conclusion",
+    "title": "Configuration Reference",
+    "section": "",
+    "text": "This reference should help you configure HydroCube for various ingestion sources, secure it (if desired), define aggregations, and publish real-time updates. For more practical examples, see the How-To Guides or the Core Concepts & Architecture section to understand how everything fits together.",
+    "crumbs": [
+      "Configuration Reference"
+    ]
+  },
+  {
+    "objectID": "how-to-guides.html",
+    "href": "how-to-guides.html",
+    "title": "How-To Guides",
+    "section": "",
+    "text": "This section provides step-by-step tutorials for common HydroCube tasks. Each guide walks you through the required configuration, commands, and expected outcomes—so you can get productive quickly!\n\n\n\n\n\nMake a directory (e.g., ./data/csv) and place one or more CSV files inside it. For example, sales.csv:\nproduct_id,quantity,price\nA100,10,15.5\nB200,25,9.99\nWrite a hydrocube.yaml referencing the CSV directory:\ndatasets:\n  - name: \"offline_sales\"\n    table_name: \"sales\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\nThat’s it! This tells HydroCube to watch the ./data/csv folder for any .csv files and load them into a DuckDB table named sales.\n\n\n\n\n./hydrocube --config hydrocube.yaml\nHydroCube will: 1. Start a directory watcher on ./data/csv. 2. Parse each matching CSV file (like sales.csv) into the sales table in DuckDB. 3. Serve its UI (Perspective) at http://localhost:8080.\n\n\n\nOpen your browser to http://localhost:8080. - You should see HydroCube’s embedded FINOS Perspective UI. - Go to Datasets (or your equivalent navigation). You’ll see sales. - Explore the columns (product_id, quantity, price), then pivot or chart them as desired.\n\n\n\n\n\n\n\nPlace one or more .parquet files in a directory, e.g. ./data/parquet.\n\n\n\ndatasets:\n  - name: \"parquet_data\"\n    table_name: \"my_parquet_table\"\n    format: \"parquet\"\n    directory: \"./data/parquet\"\n    pattern: \"*.parquet\"\n\n\n\nSame command:\n./hydrocube --config hydrocube.yaml\nHydroCube will detect .parquet files and load them into my_parquet_table. You can now query or visualize them in the UI.\n\n\n\n\n\n\n\n\nKafka Broker: Make sure you have a Kafka instance running (e.g., localhost:9092).\nTopic: For example, sales_topic.\nMessages: Your producer is sending JSON or another format to sales_topic.\n\n\n\n\ndatasets:\n  - name: \"realtime_sales\"\n    table_name: \"sales\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_sales_group\"\n      topic: \"sales_topic\"\nThis tells HydroCube to connect to sales_topic, reading messages into the sales table. If you also have offline_sales above, you’ll unify historical CSV data and real-time Kafka data in the same table.\n\n\n\n./hydrocube --config hydrocube.yaml\n\nHydroCube spawns a Kafka consumer.\nAs messages arrive on sales_topic, HydroCube parses them (assuming JSON or another format you’ve implemented) and inserts them into DuckDB.\nThe UI updates in near real time.\n\n\n\n\n\n\n\n\nLet’s say you have a sales table with columns: - product_id (string) - quantity (int) - price (float) - insert_timestamp (timestamp, auto-added by HydroCube)\nAdd an aggregates section to your config:\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\nThis aggregator: 1. Groups by all non-measure columns (i.e., product_id, etc.). 2. Sums the quantity column for each product. 3. Also counts rows (count(*)). 4. Tracks the last_update as MAX(insert_timestamp).\n\n\n\nAfter you start HydroCube, it will create an internal aggregated table (e.g., sales_agg_table). You can query it from the UI or watch it update in real time if you add a publisher (see below).\n\n\n\n\n\n\n\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\nThis publisher references the sales_agg aggregator: - key_column: product_id is the unique key for Perspective partial row updates. - change_detection_column: last_update is used to see which rows have changed since the last publish. - schedule: on_change means it only publishes updates when new data arrives.\n\n\n\nWhen you open the UI in your browser: - You’ll see a “sales_cube” listed among the available cubes/datasets. - Toggling the subscription on or off will connect you to the WebSocket feed. - As new data arrives in the base sales table, and the aggregator is updated, this publisher pushes deltas to Perspective in near real time.\n\n\n\n\n\nA single config might combine everything:\ndatasets:\n  - name: \"offline_sales\"\n    table_name: \"sales\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\n\n  - name: \"realtime_sales\"\n    table_name: \"sales\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_sales\"\n      topic: \"sales_topic\"\n\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\nThis setup: 1. Ingests historical CSV data (offline) + real-time Kafka messages (online) into a single sales table. 2. Aggregates by product_id, summing quantities and counting rows. 3. Publishes updates to the UI whenever new data arrives or old data is updated.",
+    "crumbs": [
+      "How-to Guides"
+    ]
+  },
+  {
+    "objectID": "how-to-guides.html#ingesting-a-csv-dataset",
+    "href": "how-to-guides.html#ingesting-a-csv-dataset",
+    "title": "How-To Guides",
+    "section": "",
+    "text": "Make a directory (e.g., ./data/csv) and place one or more CSV files inside it. For example, sales.csv:\nproduct_id,quantity,price\nA100,10,15.5\nB200,25,9.99\nWrite a hydrocube.yaml referencing the CSV directory:\ndatasets:\n  - name: \"offline_sales\"\n    table_name: \"sales\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\nThat’s it! This tells HydroCube to watch the ./data/csv folder for any .csv files and load them into a DuckDB table named sales.\n\n\n\n\n./hydrocube --config hydrocube.yaml\nHydroCube will: 1. Start a directory watcher on ./data/csv. 2. Parse each matching CSV file (like sales.csv) into the sales table in DuckDB. 3. Serve its UI (Perspective) at http://localhost:8080.\n\n\n\nOpen your browser to http://localhost:8080. - You should see HydroCube’s embedded FINOS Perspective UI. - Go to Datasets (or your equivalent navigation). You’ll see sales. - Explore the columns (product_id, quantity, price), then pivot or chart them as desired.",
+    "crumbs": [
+      "How-to Guides"
+    ]
+  },
+  {
+    "objectID": "how-to-guides.html#ingesting-a-parquet-dataset",
+    "href": "how-to-guides.html#ingesting-a-parquet-dataset",
+    "title": "How-To Guides",
+    "section": "",
+    "text": "Place one or more .parquet files in a directory, e.g. ./data/parquet.\n\n\n\ndatasets:\n  - name: \"parquet_data\"\n    table_name: \"my_parquet_table\"\n    format: \"parquet\"\n    directory: \"./data/parquet\"\n    pattern: \"*.parquet\"\n\n\n\nSame command:\n./hydrocube --config hydrocube.yaml\nHydroCube will detect .parquet files and load them into my_parquet_table. You can now query or visualize them in the UI.",
+    "crumbs": [
+      "How-to Guides"
+    ]
+  },
+  {
+    "objectID": "how-to-guides.html#streaming-data-from-kafka",
+    "href": "how-to-guides.html#streaming-data-from-kafka",
+    "title": "How-To Guides",
+    "section": "",
+    "text": "Kafka Broker: Make sure you have a Kafka instance running (e.g., localhost:9092).\nTopic: For example, sales_topic.\nMessages: Your producer is sending JSON or another format to sales_topic.\n\n\n\n\ndatasets:\n  - name: \"realtime_sales\"\n    table_name: \"sales\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_sales_group\"\n      topic: \"sales_topic\"\nThis tells HydroCube to connect to sales_topic, reading messages into the sales table. If you also have offline_sales above, you’ll unify historical CSV data and real-time Kafka data in the same table.\n\n\n\n./hydrocube --config hydrocube.yaml\n\nHydroCube spawns a Kafka consumer.\nAs messages arrive on sales_topic, HydroCube parses them (assuming JSON or another format you’ve implemented) and inserts them into DuckDB.\nThe UI updates in near real time.",
+    "crumbs": [
+      "How-to Guides"
+    ]
+  },
+  {
+    "objectID": "how-to-guides.html#defining-an-aggregator",
+    "href": "how-to-guides.html#defining-an-aggregator",
+    "title": "How-To Guides",
+    "section": "",
+    "text": "Let’s say you have a sales table with columns: - product_id (string) - quantity (int) - price (float) - insert_timestamp (timestamp, auto-added by HydroCube)\nAdd an aggregates section to your config:\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\nThis aggregator: 1. Groups by all non-measure columns (i.e., product_id, etc.). 2. Sums the quantity column for each product. 3. Also counts rows (count(*)). 4. Tracks the last_update as MAX(insert_timestamp).\n\n\n\nAfter you start HydroCube, it will create an internal aggregated table (e.g., sales_agg_table). You can query it from the UI or watch it update in real time if you add a publisher (see below).",
+    "crumbs": [
+      "How-to Guides"
+    ]
+  },
+  {
+    "objectID": "how-to-guides.html#publishing-a-real-time-cube",
+    "href": "how-to-guides.html#publishing-a-real-time-cube",
+    "title": "How-To Guides",
+    "section": "",
+    "text": "publishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\nThis publisher references the sales_agg aggregator: - key_column: product_id is the unique key for Perspective partial row updates. - change_detection_column: last_update is used to see which rows have changed since the last publish. - schedule: on_change means it only publishes updates when new data arrives.\n\n\n\nWhen you open the UI in your browser: - You’ll see a “sales_cube” listed among the available cubes/datasets. - Toggling the subscription on or off will connect you to the WebSocket feed. - As new data arrives in the base sales table, and the aggregator is updated, this publisher pushes deltas to Perspective in near real time.",
+    "crumbs": [
+      "How-to Guides"
+    ]
+  },
+  {
+    "objectID": "how-to-guides.html#putting-it-all-together",
+    "href": "how-to-guides.html#putting-it-all-together",
+    "title": "How-To Guides",
+    "section": "",
+    "text": "A single config might combine everything:\ndatasets:\n  - name: \"offline_sales\"\n    table_name: \"sales\"\n    format: \"csv\"\n    directory: \"./data/csv\"\n    pattern: \"*.csv\"\n\n  - name: \"realtime_sales\"\n    table_name: \"sales\"\n    format: \"kafka\"\n    kafka:\n      brokers: \"localhost:9092\"\n      group_id: \"hydrocube_sales\"\n      topic: \"sales_topic\"\n\naggregates:\n  - name: \"sales_agg\"\n    table_name: \"sales\"\n    measures:\n      - column: \"quantity\"\n        function: \"sum\"\n      - column: \"*\"\n        function: \"count\"\n\npublishers:\n  - name: \"sales_cube\"\n    type: \"simple\"\n    aggregate: \"sales_agg\"\n    key_column: \"product_id\"\n    change_detection_column: \"last_update\"\n    schedule: \"on_change\"\nThis setup: 1. Ingests historical CSV data (offline) + real-time Kafka messages (online) into a single sales table. 2. Aggregates by product_id, summing quantities and counting rows. 3. Publishes updates to the UI whenever new data arrives or old data is updated.",
+    "crumbs": [
+      "How-to Guides"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html",
+    "href": "core-concepts-and-architecture.html",
+    "title": "Core Concepts & Architecture",
+    "section": "",
+    "text": "HydroCube provides a near-real-time data pipeline, letting you ingest raw data from multiple sources, transform and aggregate it on schedule (or on demand), and then publish the results to connected clients. The diagram below shows the big picture in a vertical layout:\n\n\n\n\n\n%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%\nflowchart TB\n    subgraph Ingestion\n        A[\"File Sources (CSV, Parquet)\"] --&gt;|Directory Watch| DB[(DuckDB)]\n        B[\"Kafka (Streaming)\"] --&gt;|Consumer| DB\n    end\n\n    subgraph HydroCube\n        DB --&gt; AGG[\"Aggregator (Scheduled/On-Demand)\"]\n        AGG --&gt; MAT[\"Materialized Table (Aggregates)\"]\n        MAT --&gt;|Change Detection| PUB[\"Publisher (WebSockets)\"]\n        PUB --&gt; UI[\"FINOS Perspective (UI)\"]\n    end\n\n\n\n\n\n\n\nIngestion HydroCube watches directories for CSV or Parquet files and connects to streaming data (e.g., Kafka). Incoming rows are inserted into DuckDB tables, each tied to a dataset definition in your config.\nAggregation A lightweight “aggregator” runs SQL queries against DuckDB—either on a schedule or on demand—grouping data by dimension columns and computing measures (sum, count, average, etc.).\nPublishing Once aggregates are ready, the publisher pushes incremental changes (deltas) over WebSockets to the FINOS Perspective UI (or any other subscribing client). This means users see data updates in near real time.\n\nRead on for more detail about each piece.",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html#overview",
+    "href": "core-concepts-and-architecture.html#overview",
+    "title": "Core Concepts & Architecture",
+    "section": "",
+    "text": "HydroCube provides a near-real-time data pipeline, letting you ingest raw data from multiple sources, transform and aggregate it on schedule (or on demand), and then publish the results to connected clients. The diagram below shows the big picture in a vertical layout:\n\n\n\n\n\n%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%\nflowchart TB\n    subgraph Ingestion\n        A[\"File Sources (CSV, Parquet)\"] --&gt;|Directory Watch| DB[(DuckDB)]\n        B[\"Kafka (Streaming)\"] --&gt;|Consumer| DB\n    end\n\n    subgraph HydroCube\n        DB --&gt; AGG[\"Aggregator (Scheduled/On-Demand)\"]\n        AGG --&gt; MAT[\"Materialized Table (Aggregates)\"]\n        MAT --&gt;|Change Detection| PUB[\"Publisher (WebSockets)\"]\n        PUB --&gt; UI[\"FINOS Perspective (UI)\"]\n    end\n\n\n\n\n\n\n\nIngestion HydroCube watches directories for CSV or Parquet files and connects to streaming data (e.g., Kafka). Incoming rows are inserted into DuckDB tables, each tied to a dataset definition in your config.\nAggregation A lightweight “aggregator” runs SQL queries against DuckDB—either on a schedule or on demand—grouping data by dimension columns and computing measures (sum, count, average, etc.).\nPublishing Once aggregates are ready, the publisher pushes incremental changes (deltas) over WebSockets to the FINOS Perspective UI (or any other subscribing client). This means users see data updates in near real time.\n\nRead on for more detail about each piece.",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html#datasets-ingestion",
+    "href": "core-concepts-and-architecture.html#datasets-ingestion",
+    "title": "Core Concepts & Architecture",
+    "section": "1. Datasets (Ingestion)",
+    "text": "1. Datasets (Ingestion)\nA dataset in HydroCube is a configuration block that describes:\n\nFormat: csv, parquet, or kafka\nLocation: a directory/pattern or a Kafka topic/broker\nTable Name: where rows should be stored in DuckDB\n\nWhen HydroCube starts, it spawns the ingestion pipeline for each dataset. For file-based datasets, it uses a directory watcher—any new or updated files matching the pattern are (re)ingested into the specified table. For Kafka, it uses a consumer that continuously pulls new messages.\n\nInsert Timestamp\nEvery row ingested gets an insert_timestamp, which becomes crucial for change detection later on.",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html#aggregation",
+    "href": "core-concepts-and-architecture.html#aggregation",
+    "title": "Core Concepts & Architecture",
+    "section": "2. Aggregation",
+    "text": "2. Aggregation\nThe aggregator transforms raw data into summarized form (think OLAP-style group-bys and measures). HydroCube supports a “simple” aggregator config where you define:\n\nMeasures: e.g. SUM(quantity), COUNT(*), AVG(price)\nDimensions: All other columns become grouping keys by default (or you can specify them explicitly)\n\nWhen the aggregator runs:\n\nIt queries the base table (e.g., sales).\nGroups rows by each dimension column.\nCalculates the measures (sum, count, average, etc.).\nWrites the results to an aggregated table, along with a “last_update” value (like MAX(insert_timestamp)).\n\n(In future releases, you can define a custom aggregator with freeform SQL for advanced joins and transformations.)",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html#publishing",
+    "href": "core-concepts-and-architecture.html#publishing",
+    "title": "Core Concepts & Architecture",
+    "section": "3. Publishing",
+    "text": "3. Publishing\nHydroCube’s publisher watches the aggregated table. Whenever new or updated rows appear (based on last_update), it sends incremental updates over a WebSocket connection to any subscribed clients. Each row includes:\n\nKey column(s) for partial updates in the front-end (e.g. product_id)\nMeasure columns (e.g. total_quantity, avg_price)\nlast_update to track changes\n\n\nWebSockets & Subscriptions\nClients (like the FINOS Perspective UI) subscribe to a “cube” (an aggregator name or table). If no client is subscribed, HydroCube can skip the publisher work. If multiple clients subscribe, they all receive the updates in near real time.",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html#ui-reports",
+    "href": "core-concepts-and-architecture.html#ui-reports",
+    "title": "Core Concepts & Architecture",
+    "section": "4. UI & Reports",
+    "text": "4. UI & Reports\nHydroCube embeds a front-end built on FINOS Perspective, allowing interactive pivot tables, charts, and filters in your browser.\n\nAutomatic UI By default, starting HydroCube serves the Perspective UI at http://localhost:8080 (or your configured port).\nReports You can save specific views (pivot layouts, filters, etc.) as “reports.” Teams can share or reload an analysis state quickly.\n\n(The UI is optional—if you prefer, you can build your own front-end or integration using the WebSocket or future JSON API.)",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html#example-data-flow-in-detail",
+    "href": "core-concepts-and-architecture.html#example-data-flow-in-detail",
+    "title": "Core Concepts & Architecture",
+    "section": "5. Example Data Flow in Detail",
+    "text": "5. Example Data Flow in Detail\nBelow is a second diagram focusing on how the aggregator and publisher process interact in a top-to-bottom flow:\n\n\n\n\n\n%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%\nflowchart TB\n    A[\"DuckDB Base Table (with insert_timestamp)\"] --&gt; AGG[\"Aggregator\"]\n    AGG --&gt; M[\"Aggregated Table\"]\n    M --&gt;|Diff by last_update| PUB[\"Publisher\"]\n    PUB --&gt; W[\"WebSocket Stream (Arrow or JSON)\"]\n    W --&gt; C[\"Perspective or Custom Clients\"]\n\n\n\n\n\n\n\nBase Table Rows from CSV, Parquet, or Kafka land here, each with an insert_timestamp.\nAggregator Periodically or on demand, it calculates sums, counts, averages, etc., writing results to the aggregated table and tracking MAX(insert_timestamp) as last_update.\nPublisher Compares last_update to previously published rows. Only changes or new rows are sent over the WebSocket.\nClients The UI (Perspective) or any custom subscriber receives partial row updates in near real time.",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "core-concepts-and-architecture.html#summary-next-steps",
+    "href": "core-concepts-and-architecture.html#summary-next-steps",
+    "title": "Core Concepts & Architecture",
+    "section": "Summary & Next Steps",
+    "text": "Summary & Next Steps\n\nIngestion: You define datasets with file watchers or Kafka config.\nAggregation: A “simple aggregator” runs group-bys, storing results in a new table.\nPublishing: HydroCube uses WebSockets to broadcast changed data to subscribed clients.\n\nWhere to go next: - Configuration Reference: Detailed YAML fields, examples, and defaults. - How-To Guides: Step-by-step instructions for CSV ingestion, basic aggregates, UI usage, and more.",
+    "crumbs": [
+      "Core Concepts and Architecture"
+    ]
+  },
+  {
+    "objectID": "security-and-deployment.html",
+    "href": "security-and-deployment.html",
+    "title": "Security & Deployment",
+    "section": "",
+    "text": "This page explains how to run HydroCube in a secure, production-ready environment. We cover HTTPS configuration, optional OAuth-based authentication, Docker containerization, and best practices for reliability.\n\n\n\nBy default, HydroCube runs over HTTP on port 8080. To enable HTTPS, configure the following in your hydrocube.yaml:\nsecurity:\n  https:\n    enabled: true\n    cert_path: \"cert.pem\"\n    key_path: \"key.pem\"\n\n\n\nObtain a Certificate and Key\n\nFor production, use a certificate from a recognized CA (e.g., Let’s Encrypt).\nFor testing, you can generate a self-signed cert via OpenSSL:\nopenssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes\n\nPoint HydroCube to those files with cert_path and key_path.\nStart HydroCube as usual:\n./hydrocube --config hydrocube.yaml\nHydroCube will listen on an HTTPS port (default 8443 or specified in server.port if you set it).\n\n\n\n\nNavigate to https://localhost:8443. - If using self-signed certs, your browser will warn you. - If using a CA-signed cert, the connection should be secured and show a valid TLS lock icon.\n\n\n\n\n\nHydroCube can integrate with OAuth providers (like GitHub, Google, etc.) to require user login before accessing the UI or APIs.\nsecurity:\n  oauth:\n    enabled: true\n    provider: \"github\"\n    client_id: \"your_client_id\"\n    client_secret: \"your_client_secret\"\n    auth_url: \"https://github.com/login/oauth/authorize\"\n    token_url: \"https://github.com/login/oauth/access_token\"\n    redirect_url: \"http://yourdomain.com/auth/callback\"\n    scopes:\n      - \"read:user\"\n      - \"repo\"\n\n\n\nUser Accesses HydroCube’s UI at https://yourdomain.com.\nRedirect: HydroCube sends them to the OAuth provider’s login screen.\nLogin: After login, the provider redirects back to redirect_url with a token or code.\nToken Exchange: HydroCube verifies the token.\nUI Unlocks: The user can now view real-time dashboards.\n\n(Implementation specifics vary by provider. Ensure your redirect_url matches what you registered in your OAuth settings.)\n\n\n\n\nAlways combine OAuth with HTTPS.\nLimit requested scopes to the minimum needed for identification.\nConsider adding role-based or group-based checks in future if you need fine-grained access control.\n\n\n\n\n\n\nHydroCube is ideal for containerization since it’s a single binary with minimal dependencies. You can build your own image or use a published one (if provided).\n\n\nBelow is a simple Dockerfile for a distroless container:\n# --- Build Stage ---\nFROM rust:1.84 as builder\n\nWORKDIR /app\nCOPY . .\nRUN cargo build --release\n\n# --- Final Stage (Distroless) ---\nFROM gcr.io/distroless/cc\n\n# Copy the binary from the builder stage\nCOPY --from=builder /app/target/release/hydrocube /usr/local/bin/hydrocube\n\n# Copy config if desired, or mount at runtime\nCOPY hydrocube.yaml /etc/hydrocube.yaml\n\n# Default command: run HydroCube\nCMD [\"/usr/local/bin/hydrocube\", \"--config\", \"/etc/hydrocube.yaml\"]\n\n\n\n\nBuild the image:\ndocker build -t hydrocube:latest .\nRun the container:\ndocker run -p 8080:8080 hydrocube:latest\n\nBy default, it exposes HTTP on port 8080.\nIf using HTTPS, you might map 8443:8443.\n\n\n\n\n\nHydroCube uses DuckDB, which by default can store data in memory or in a file. If you want to persist data between container restarts:\n\nSet a file path for DuckDB in your config or code (e.g., /data/hydrocube.duckdb).\nMount a volume to /data/:\ndocker run -p 8080:8080 -v /my/local/data:/data hydrocube:latest\nThis ensures your DuckDB database and any logs remain available across restarts.\n\n\n\n\n\n\n\n\n\nConcurrency: DuckDB is embedded but supports concurrent read access. Writes can be queued behind a single writer. For most mid-sized workloads, this is plenty fast.\nMultiple Instances: If you need more concurrency, you could run multiple HydroCube instances behind a load balancer, though each instance has its own embedded DB. (A shared storage approach or external database might be considered in future expansions.)\n\n\n\n\n\nLogs: By default, HydroCube logs to stdout (info or debug level). Capture these logs in your container orchestration or file system.\nMetrics: Future versions may integrate with Prometheus or another metrics platform. In the meantime, you can track ingestion rates, aggregator runtimes, etc., by parsing logs or hooking into the code directly.\n\n\n\n\n\nRolling Updates: Because it’s a single binary, you can simply stop the old version and start the new one—assuming minimal downtime is acceptable.\nConfiguration Changes: If you change hydrocube.yaml, a restart is typically required to reload ingestion watchers, aggregator definitions, etc.\n\n\n\n\n\nSingle Node: HydroCube was designed to be lightweight and self-contained, so it’s not inherently multi-node or distributed.\nBackups: For mission-critical data, backup your DuckDB file or replicate the source data.\n\n\n\n\n\n\nBy combining HTTPS for secure transport, OAuth for user authentication, and Docker for container-based deployments, you can confidently run HydroCube in production environments. Keep in mind DuckDB’s single-writer concurrency model if you expect extremely high ingest rates, and consider additional monitoring or backups for mission-critical deployments.\nNext Steps: - Return to the Configuration Reference if you need more detail on security fields. - Check out the How-To Guides for practical setup examples.",
+    "crumbs": [
+      "Security and Deployment"
+    ]
+  },
+  {
+    "objectID": "security-and-deployment.html#https-configuration",
+    "href": "security-and-deployment.html#https-configuration",
+    "title": "Security & Deployment",
+    "section": "",
+    "text": "By default, HydroCube runs over HTTP on port 8080. To enable HTTPS, configure the following in your hydrocube.yaml:\nsecurity:\n  https:\n    enabled: true\n    cert_path: \"cert.pem\"\n    key_path: \"key.pem\"\n\n\n\nObtain a Certificate and Key\n\nFor production, use a certificate from a recognized CA (e.g., Let’s Encrypt).\nFor testing, you can generate a self-signed cert via OpenSSL:\nopenssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes\n\nPoint HydroCube to those files with cert_path and key_path.\nStart HydroCube as usual:\n./hydrocube --config hydrocube.yaml\nHydroCube will listen on an HTTPS port (default 8443 or specified in server.port if you set it).\n\n\n\n\nNavigate to https://localhost:8443. - If using self-signed certs, your browser will warn you. - If using a CA-signed cert, the connection should be secured and show a valid TLS lock icon.",
+    "crumbs": [
+      "Security and Deployment"
+    ]
+  },
+  {
+    "objectID": "security-and-deployment.html#oauth-for-authentication",
+    "href": "security-and-deployment.html#oauth-for-authentication",
+    "title": "Security & Deployment",
+    "section": "",
+    "text": "HydroCube can integrate with OAuth providers (like GitHub, Google, etc.) to require user login before accessing the UI or APIs.\nsecurity:\n  oauth:\n    enabled: true\n    provider: \"github\"\n    client_id: \"your_client_id\"\n    client_secret: \"your_client_secret\"\n    auth_url: \"https://github.com/login/oauth/authorize\"\n    token_url: \"https://github.com/login/oauth/access_token\"\n    redirect_url: \"http://yourdomain.com/auth/callback\"\n    scopes:\n      - \"read:user\"\n      - \"repo\"\n\n\n\nUser Accesses HydroCube’s UI at https://yourdomain.com.\nRedirect: HydroCube sends them to the OAuth provider’s login screen.\nLogin: After login, the provider redirects back to redirect_url with a token or code.\nToken Exchange: HydroCube verifies the token.\nUI Unlocks: The user can now view real-time dashboards.\n\n(Implementation specifics vary by provider. Ensure your redirect_url matches what you registered in your OAuth settings.)\n\n\n\n\nAlways combine OAuth with HTTPS.\nLimit requested scopes to the minimum needed for identification.\nConsider adding role-based or group-based checks in future if you need fine-grained access control.",
+    "crumbs": [
+      "Security and Deployment"
+    ]
+  },
+  {
+    "objectID": "security-and-deployment.html#docker-deployment",
+    "href": "security-and-deployment.html#docker-deployment",
+    "title": "Security & Deployment",
+    "section": "",
+    "text": "HydroCube is ideal for containerization since it’s a single binary with minimal dependencies. You can build your own image or use a published one (if provided).\n\n\nBelow is a simple Dockerfile for a distroless container:\n# --- Build Stage ---\nFROM rust:1.84 as builder\n\nWORKDIR /app\nCOPY . .\nRUN cargo build --release\n\n# --- Final Stage (Distroless) ---\nFROM gcr.io/distroless/cc\n\n# Copy the binary from the builder stage\nCOPY --from=builder /app/target/release/hydrocube /usr/local/bin/hydrocube\n\n# Copy config if desired, or mount at runtime\nCOPY hydrocube.yaml /etc/hydrocube.yaml\n\n# Default command: run HydroCube\nCMD [\"/usr/local/bin/hydrocube\", \"--config\", \"/etc/hydrocube.yaml\"]\n\n\n\n\nBuild the image:\ndocker build -t hydrocube:latest .\nRun the container:\ndocker run -p 8080:8080 hydrocube:latest\n\nBy default, it exposes HTTP on port 8080.\nIf using HTTPS, you might map 8443:8443.\n\n\n\n\n\nHydroCube uses DuckDB, which by default can store data in memory or in a file. If you want to persist data between container restarts:\n\nSet a file path for DuckDB in your config or code (e.g., /data/hydrocube.duckdb).\nMount a volume to /data/:\ndocker run -p 8080:8080 -v /my/local/data:/data hydrocube:latest\nThis ensures your DuckDB database and any logs remain available across restarts.",
+    "crumbs": [
+      "Security and Deployment"
+    ]
+  },
+  {
+    "objectID": "security-and-deployment.html#production-considerations",
+    "href": "security-and-deployment.html#production-considerations",
+    "title": "Security & Deployment",
+    "section": "",
+    "text": "Concurrency: DuckDB is embedded but supports concurrent read access. Writes can be queued behind a single writer. For most mid-sized workloads, this is plenty fast.\nMultiple Instances: If you need more concurrency, you could run multiple HydroCube instances behind a load balancer, though each instance has its own embedded DB. (A shared storage approach or external database might be considered in future expansions.)\n\n\n\n\n\nLogs: By default, HydroCube logs to stdout (info or debug level). Capture these logs in your container orchestration or file system.\nMetrics: Future versions may integrate with Prometheus or another metrics platform. In the meantime, you can track ingestion rates, aggregator runtimes, etc., by parsing logs or hooking into the code directly.\n\n\n\n\n\nRolling Updates: Because it’s a single binary, you can simply stop the old version and start the new one—assuming minimal downtime is acceptable.\nConfiguration Changes: If you change hydrocube.yaml, a restart is typically required to reload ingestion watchers, aggregator definitions, etc.\n\n\n\n\n\nSingle Node: HydroCube was designed to be lightweight and self-contained, so it’s not inherently multi-node or distributed.\nBackups: For mission-critical data, backup your DuckDB file or replicate the source data.",
+    "crumbs": [
+      "Security and Deployment"
+    ]
+  },
+  {
+    "objectID": "security-and-deployment.html#conclusion",
+    "href": "security-and-deployment.html#conclusion",
+    "title": "Security & Deployment",
+    "section": "",
+    "text": "By combining HTTPS for secure transport, OAuth for user authentication, and Docker for container-based deployments, you can confidently run HydroCube in production environments. Keep in mind DuckDB’s single-writer concurrency model if you expect extremely high ingest rates, and consider additional monitoring or backups for mission-critical deployments.\nNext Steps: - Return to the Configuration Reference if you need more detail on security fields. - Check out the How-To Guides for practical setup examples.",
+    "crumbs": [
+      "Security and Deployment"
+    ]
+  },
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "Welcome to HydroCube! This guide will walk you through installing and running your first HydroCube instance, either by downloading a prebuilt binary or building from source.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#installation",
+    "href": "getting-started.html#installation",
+    "title": "Getting Started",
+    "section": "Installation",
+    "text": "Installation\n\nDownload the Latest Release Visit GitHub Releases and choose the binary for your platform:\n\nLinux: x86_64-unknown-linux-gnu\nmacOS: x86_64-apple-darwin or aarch64-apple-darwin\nWindows: x86_64-pc-windows-msvc\n\nPlace the Executable in Your PATH For example, move the binary to /usr/local/bin on Linux or macOS, or simply keep it in your chosen directory and reference it by its full path.\n\n\nBuilding from Source\nIf you prefer to build HydroCube yourself:\ngit clone https://github.com/joefrost01/HydroCube.git\ncd HydroCube\ncargo build --release\nThis produces a hydrocube (or hydrocube.exe on Windows) binary in target/release.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#basic-usage",
+    "href": "getting-started.html#basic-usage",
+    "title": "Getting Started",
+    "section": "Basic Usage",
+    "text": "Basic Usage\nOnce you have the hydrocube binary:\n\nCreate a config.yaml (or use the built-in defaults if you prefer). For example:\ndatasets:\n  - name: \"test_data\"\n    format: \"csv\"\n    directory: \"/path/to/csvs\"\n    pattern: \"*.csv\"\nRun HydroCube:\n./hydrocube --config config.yaml\nHydroCube will watch /path/to/csvs/*.csv, load them into DuckDB, and serve its web UI at a default port (e.g., localhost:8080).\nOpen the UI: Navigate to the displayed URL (usually http://localhost:8080), where you can view and explore your data in real time using the FINOS Perspective interface.\n\n\nNext Steps - Check out the Core Concepts & Architecture to understand how datasets, aggregates, and publishers work. - Move on to the Configuration Reference for more advanced ingestion methods like Kafka or Parquet.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html",
+    "href": "contributor-developer-guide.html",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "Welcome! We appreciate your interest in contributing to HydroCube. This guide explains how to set up a development environment, build from source, run tests, and submit pull requests. Whether you’re fixing a small bug or adding a major feature, we hope this document makes your workflow easier.\n\n\n\n\nRust 1.84+ (or the latest stable toolchain). Install via rustup.\nGit for version control.\nOptional: A local Kafka instance if you plan to test Kafka ingestion.\nOptional: Docker, if you want to build & run HydroCube in a container.\n\nEnsure you have a GitHub account if you plan to submit issues or pull requests.\n\n\n\n\ngit clone https://github.com/joefrost01/HydroCube.git\ncd HydroCube\nYou now have the HydroCube code on your local machine. For a quick build test:\ncargo build --release\nThe compiled binary will appear in target/release/hydrocube.\n\n\n\n\nBelow is a simplified overview of the directories and files:\nHydroCube/\n├── src/\n│   ├── main.rs             # Entry point\n│   ├── config/             # Configuration structs & parsing\n│   ├── ingestion/          # Directory watchers, Kafka consumers\n│   ├── aggregator/         # Aggregation logic\n│   ├── publisher/          # WebSocket publishing\n│   ├── ui/                 # Embedded UI logic (Perspective)\n│   └── ...\n├── tests/                  # Integration tests\n├── docs/                   # Quarto docs (.qmd files)\n├── Cargo.toml              # Rust dependencies & metadata\n└── README.md               # Basic project overview\nMost core logic is under src/, organized by feature (ingestion, aggregator, publisher, etc.). Integration tests live in tests/, and docs in docs/.\n\n\n\n\n\n\ncargo build\nThis produces a debug build (target/debug/hydrocube), which is faster to compile but larger and less optimized.\n\n\n\ncargo build --release\nProduces an optimized binary in target/release/hydrocube. Best for production or performance testing.\n\n\n\nYou can run HydroCube directly:\n./target/debug/hydrocube --config my_config.yaml\nIf no config is provided, HydroCube either uses a default internal config or tries hydrocube.yaml in the current directory.\n\n\n\n\n\n\n\nEach module may have inline tests. Run them all with:\ncargo test\n\n\n\nThe tests/ folder contains integration tests that launch HydroCube in various scenarios (e.g., CSV ingestion, Kafka ingestion, aggregator checks). They’re also run with:\ncargo test\nIf you need to isolate a single test:\ncargo test test_csv_ingestion\n\n\n\nSome tests might require a local Kafka broker. You can use Docker or a local Kafka install. For instance:\ndocker run -p 9092:9092 -e ALLOW_PLAINTEXT_LISTENER=yes bitnami/kafka:latest\nThen run the test suite. Some Kafka tests may be skipped if Kafka isn’t available.\n\n\n\n\n\n\nFormatting: We use Rust’s built-in cargo fmt for code formatting. Please run it before committing.\nLinting: Run cargo clippy to catch common pitfalls and style issues.\nComments & Docs: Where possible, add doc comments (///) for public functions and modules. This helps generate reference documentation with cargo doc.\n\n\n\n\n\n\nFork the HydroCube repo and create a new branch for your feature or bug fix.\nWrite Code & Tests: Make your changes in a small, logical commit(s). Add or update tests if relevant.\nFormat & Lint: Ensure cargo fmt and cargo clippy show no critical issues.\nOpen a Pull Request:\n\nInclude a descriptive title and summary of changes.\nReference any related issues (e.g., “Fixes #123”).\nThe maintainers will review, request changes if needed, and eventually merge.\n\n\n\n\n\nCI: Our GitHub workflow typically runs cargo build --release, cargo test, and docs checks. Make sure your PR passes these.\nFeedback: Maintainers may ask for clarity in code, naming, or additional tests.\n\n\n\n\n\n\nWe use Quarto (.qmd files) in the docs/ folder. If you want to enhance the user docs or fix typos:\n\nEdit the relevant .qmd file.\nBuild the docs locally if you want to preview them:\nquarto preview docs/\nSubmit a pull request with your changes.\n\n\n\n\n\nWe maintain a Roadmap in the GitHub issues or a pinned discussion. Some highlights:\n\nCustom Aggregator: Allow user-defined SQL queries beyond the “simple aggregator.”\nAdditional Data Sources: PostgreSQL, ClickHouse, or CDC streams.\nAlerts / Triggers: Real-time alerting when aggregates cross a threshold.\nImproved Security: Role-based access control or multi-tenant support.\n\nFeel free to propose features or improvements—contributions are welcome!\n\n\n\n\nBy contributing to HydroCube, you’re helping shape a powerful, lightweight real-time analytics platform. Whether you open a small bug fix, write documentation, or implement a major feature, we appreciate your support.\nQuestions? Join us on GitHub Issues or open a discussion. We look forward to collaborating with you!",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#prerequisites",
+    "href": "contributor-developer-guide.html#prerequisites",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "Rust 1.84+ (or the latest stable toolchain). Install via rustup.\nGit for version control.\nOptional: A local Kafka instance if you plan to test Kafka ingestion.\nOptional: Docker, if you want to build & run HydroCube in a container.\n\nEnsure you have a GitHub account if you plan to submit issues or pull requests.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#cloning-the-repository",
+    "href": "contributor-developer-guide.html#cloning-the-repository",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "git clone https://github.com/joefrost01/HydroCube.git\ncd HydroCube\nYou now have the HydroCube code on your local machine. For a quick build test:\ncargo build --release\nThe compiled binary will appear in target/release/hydrocube.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#project-structure",
+    "href": "contributor-developer-guide.html#project-structure",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "Below is a simplified overview of the directories and files:\nHydroCube/\n├── src/\n│   ├── main.rs             # Entry point\n│   ├── config/             # Configuration structs & parsing\n│   ├── ingestion/          # Directory watchers, Kafka consumers\n│   ├── aggregator/         # Aggregation logic\n│   ├── publisher/          # WebSocket publishing\n│   ├── ui/                 # Embedded UI logic (Perspective)\n│   └── ...\n├── tests/                  # Integration tests\n├── docs/                   # Quarto docs (.qmd files)\n├── Cargo.toml              # Rust dependencies & metadata\n└── README.md               # Basic project overview\nMost core logic is under src/, organized by feature (ingestion, aggregator, publisher, etc.). Integration tests live in tests/, and docs in docs/.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#building-running",
+    "href": "contributor-developer-guide.html#building-running",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "cargo build\nThis produces a debug build (target/debug/hydrocube), which is faster to compile but larger and less optimized.\n\n\n\ncargo build --release\nProduces an optimized binary in target/release/hydrocube. Best for production or performance testing.\n\n\n\nYou can run HydroCube directly:\n./target/debug/hydrocube --config my_config.yaml\nIf no config is provided, HydroCube either uses a default internal config or tries hydrocube.yaml in the current directory.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#testing",
+    "href": "contributor-developer-guide.html#testing",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "Each module may have inline tests. Run them all with:\ncargo test\n\n\n\nThe tests/ folder contains integration tests that launch HydroCube in various scenarios (e.g., CSV ingestion, Kafka ingestion, aggregator checks). They’re also run with:\ncargo test\nIf you need to isolate a single test:\ncargo test test_csv_ingestion\n\n\n\nSome tests might require a local Kafka broker. You can use Docker or a local Kafka install. For instance:\ndocker run -p 9092:9092 -e ALLOW_PLAINTEXT_LISTENER=yes bitnami/kafka:latest\nThen run the test suite. Some Kafka tests may be skipped if Kafka isn’t available.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#code-style-standards",
+    "href": "contributor-developer-guide.html#code-style-standards",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "Formatting: We use Rust’s built-in cargo fmt for code formatting. Please run it before committing.\nLinting: Run cargo clippy to catch common pitfalls and style issues.\nComments & Docs: Where possible, add doc comments (///) for public functions and modules. This helps generate reference documentation with cargo doc.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#submitting-a-pull-request",
+    "href": "contributor-developer-guide.html#submitting-a-pull-request",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "Fork the HydroCube repo and create a new branch for your feature or bug fix.\nWrite Code & Tests: Make your changes in a small, logical commit(s). Add or update tests if relevant.\nFormat & Lint: Ensure cargo fmt and cargo clippy show no critical issues.\nOpen a Pull Request:\n\nInclude a descriptive title and summary of changes.\nReference any related issues (e.g., “Fixes #123”).\nThe maintainers will review, request changes if needed, and eventually merge.\n\n\n\n\n\nCI: Our GitHub workflow typically runs cargo build --release, cargo test, and docs checks. Make sure your PR passes these.\nFeedback: Maintainers may ask for clarity in code, naming, or additional tests.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#documentation-contributions",
+    "href": "contributor-developer-guide.html#documentation-contributions",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "We use Quarto (.qmd files) in the docs/ folder. If you want to enhance the user docs or fix typos:\n\nEdit the relevant .qmd file.\nBuild the docs locally if you want to preview them:\nquarto preview docs/\nSubmit a pull request with your changes.",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#roadmap-ideas",
+    "href": "contributor-developer-guide.html#roadmap-ideas",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "We maintain a Roadmap in the GitHub issues or a pinned discussion. Some highlights:\n\nCustom Aggregator: Allow user-defined SQL queries beyond the “simple aggregator.”\nAdditional Data Sources: PostgreSQL, ClickHouse, or CDC streams.\nAlerts / Triggers: Real-time alerting when aggregates cross a threshold.\nImproved Security: Role-based access control or multi-tenant support.\n\nFeel free to propose features or improvements—contributions are welcome!",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "contributor-developer-guide.html#thank-you-for-contributing",
+    "href": "contributor-developer-guide.html#thank-you-for-contributing",
+    "title": "Contributor & Developer Guide",
+    "section": "",
+    "text": "By contributing to HydroCube, you’re helping shape a powerful, lightweight real-time analytics platform. Whether you open a small bug fix, write documentation, or implement a major feature, we appreciate your support.\nQuestions? Join us on GitHub Issues or open a discussion. We look forward to collaborating with you!",
+    "crumbs": [
+      "Contributor / Developer Guide"
+    ]
+  },
+  {
+    "objectID": "roadmap.html",
+    "href": "roadmap.html",
+    "title": "Roadmap",
+    "section": "",
+    "text": "This page outlines major upcoming features and long-term goals for HydroCube. It’s not set in stone—priorities can shift based on user feedback and contributions. If you have new ideas or want to tackle a feature, please let us know by opening a GitHub issue.\n\n\n\n\n\n\nDescription: Allow advanced SQL definitions, including JOINs, CASE statements, and complex transforms.\nWhy It Matters: The current “simple aggregator” covers basic group-bys. Custom queries will let power users do on-the-fly calculations and merges (similar to ActivePivot’s calculated measures).\nStatus: In design phase; targeting next minor release.\n\n\n\n\n\nDescription: Let users define conditions (e.g., “when sum(quantity) &gt; 1000, send Slack/email alert”).\nWhy It Matters: Real-time analytics often needs real-time alerts, so you’re not just visualizing changes but also responding to them.\nStatus: Under discussion; awaiting design proposals from the community.\n\n\n\n\n\n\n\n\n\nDescription: Plugins for Postgres, ClickHouse, or CDC streams. Possibly letting HydroCube connect directly to an external DB or replicate changes in near real time.\nRationale: Many trading desks or enterprise systems rely on streaming from relational DBs, so native CDC integration (e.g., Debezium) would be valuable.\n\n\n\n\n\nDescription: Enable users to ask questions in plain English (or other languages), with HydroCube translating those queries into SQL automatically via large language models.\nWhy It Matters: Empowers non-technical stakeholders to discover insights without writing SQL, broadening HydroCube’s accessibility.\nStatus: Conceptual exploration. Implementation may involve an embedded or hosted LLM that can safely interpret user prompts and map them to DuckDB queries.\n\n\n\n\n\nDescription: Adding more granular user roles, dataset-level permissions, or multi-tenant separation.\nWhy It Matters: Larger teams or organizations might want stricter control over who can see or modify certain datasets or aggregates.\n\n\n\n\n\nDescription: Expose a simple REST or GraphQL endpoint for retrieving aggregated data, so that non-WebSocket clients or scripts can pull data programmatically.\nGoal: Complement the real-time WebSocket with a “pull” mechanism.\n\n\n\n\n\n\n\n\n\nDescription: Scale beyond a single-node embedded DuckDB instance, possibly using shared storage or partitioning.\nChallenge: Preserving real-time analytics speed while ensuring data consistency across nodes.\nPotential Approaches: Integrate a distributed store or replicate DuckDB files among nodes.\n\n\n\n\n\nDescription: Extend the FINOS Perspective UI with drag-and-drop components, custom charts, or theming.\nWhy: Empower non-technical users to create dashboards on the fly without editing config files.\n\n\n\n\n\nDescription: Tools to analyze queries and automatically suggest indexing, column reordering, or partitioning.\nBenefit: Simplify large-scale or complex usage for power users.\n\n\n\n\n\n\n\nCheck the Issue Tracker: We often label future work with enhancement or roadmap tags.\nOpen a Proposal: If you have a big idea—open a GitHub issue titled “Proposal: [Feature Name].” Include motivations, design sketches, or examples.\nDiscuss & Refine: We’ll review, offer feedback, and (if it aligns with HydroCube’s direction) merge it into the official roadmap.\n\n\n\n\n\n\nRelease Cadence: We aim for a minor release every ~4-6 weeks with improvements, fixes, and new features.\nVersioning: HydroCube follows SemVer where major changes or backward-incompatible updates increment the major version.\n\n\n\n\n\n\nGitHub Discussions: For feature brainstorming and design.\nGitHub Issues: For bug reports, small enhancements, or user support.\nPull Requests: If you’re ready to implement a feature from this roadmap, open a PR early and let’s collaborate!\n\nThank you for shaping HydroCube’s future!",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
+    "objectID": "roadmap.html#near-term-goals",
+    "href": "roadmap.html#near-term-goals",
+    "title": "Roadmap",
+    "section": "",
+    "text": "Description: Allow advanced SQL definitions, including JOINs, CASE statements, and complex transforms.\nWhy It Matters: The current “simple aggregator” covers basic group-bys. Custom queries will let power users do on-the-fly calculations and merges (similar to ActivePivot’s calculated measures).\nStatus: In design phase; targeting next minor release.\n\n\n\n\n\nDescription: Let users define conditions (e.g., “when sum(quantity) &gt; 1000, send Slack/email alert”).\nWhy It Matters: Real-time analytics often needs real-time alerts, so you’re not just visualizing changes but also responding to them.\nStatus: Under discussion; awaiting design proposals from the community.",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
+    "objectID": "roadmap.html#medium-term-plans",
+    "href": "roadmap.html#medium-term-plans",
+    "title": "Roadmap",
+    "section": "",
+    "text": "Description: Plugins for Postgres, ClickHouse, or CDC streams. Possibly letting HydroCube connect directly to an external DB or replicate changes in near real time.\nRationale: Many trading desks or enterprise systems rely on streaming from relational DBs, so native CDC integration (e.g., Debezium) would be valuable.\n\n\n\n\n\nDescription: Enable users to ask questions in plain English (or other languages), with HydroCube translating those queries into SQL automatically via large language models.\nWhy It Matters: Empowers non-technical stakeholders to discover insights without writing SQL, broadening HydroCube’s accessibility.\nStatus: Conceptual exploration. Implementation may involve an embedded or hosted LLM that can safely interpret user prompts and map them to DuckDB queries.\n\n\n\n\n\nDescription: Adding more granular user roles, dataset-level permissions, or multi-tenant separation.\nWhy It Matters: Larger teams or organizations might want stricter control over who can see or modify certain datasets or aggregates.\n\n\n\n\n\nDescription: Expose a simple REST or GraphQL endpoint for retrieving aggregated data, so that non-WebSocket clients or scripts can pull data programmatically.\nGoal: Complement the real-time WebSocket with a “pull” mechanism.",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
+    "objectID": "roadmap.html#long-term-vision",
+    "href": "roadmap.html#long-term-vision",
+    "title": "Roadmap",
+    "section": "",
+    "text": "Description: Scale beyond a single-node embedded DuckDB instance, possibly using shared storage or partitioning.\nChallenge: Preserving real-time analytics speed while ensuring data consistency across nodes.\nPotential Approaches: Integrate a distributed store or replicate DuckDB files among nodes.\n\n\n\n\n\nDescription: Extend the FINOS Perspective UI with drag-and-drop components, custom charts, or theming.\nWhy: Empower non-technical users to create dashboards on the fly without editing config files.\n\n\n\n\n\nDescription: Tools to analyze queries and automatically suggest indexing, column reordering, or partitioning.\nBenefit: Simplify large-scale or complex usage for power users.",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
+    "objectID": "roadmap.html#contributing-to-the-roadmap",
+    "href": "roadmap.html#contributing-to-the-roadmap",
+    "title": "Roadmap",
+    "section": "",
+    "text": "Check the Issue Tracker: We often label future work with enhancement or roadmap tags.\nOpen a Proposal: If you have a big idea—open a GitHub issue titled “Proposal: [Feature Name].” Include motivations, design sketches, or examples.\nDiscuss & Refine: We’ll review, offer feedback, and (if it aligns with HydroCube’s direction) merge it into the official roadmap.",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
+    "objectID": "roadmap.html#timelines-releases",
+    "href": "roadmap.html#timelines-releases",
+    "title": "Roadmap",
+    "section": "",
+    "text": "Release Cadence: We aim for a minor release every ~4-6 weeks with improvements, fixes, and new features.\nVersioning: HydroCube follows SemVer where major changes or backward-incompatible updates increment the major version.",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
+    "objectID": "roadmap.html#stay-involved",
+    "href": "roadmap.html#stay-involved",
+    "title": "Roadmap",
+    "section": "",
+    "text": "GitHub Discussions: For feature brainstorming and design.\nGitHub Issues: For bug reports, small enhancements, or user support.\nPull Requests: If you’re ready to implement a feature from this roadmap, open a PR early and let’s collaborate!\n\nThank you for shaping HydroCube’s future!",
+    "crumbs": [
+      "Roadmap"
     ]
   }
 ]

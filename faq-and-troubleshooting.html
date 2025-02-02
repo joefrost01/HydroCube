@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HydroCube Overview – HydroCube</title>
+<title>FAQ &amp; Troubleshooting – HydroCube</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,9 +68,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -117,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./faq-and-troubleshooting.html">FAQ and Troubleshooting</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -131,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -167,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./faq-and-troubleshooting.html" class="sidebar-item-text sidebar-link">
+  <a href="./faq-and-troubleshooting.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">FAQ and Troubleshooting</span></a>
   </div>
 </li>
@@ -193,13 +190,35 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#faq-troubleshooting" id="toc-faq-troubleshooting" class="nav-link active" data-scroll-target="#faq-troubleshooting">FAQ &amp; Troubleshooting</a>
   <ul class="collapse">
-  <li><a href="#why-hydrocube" id="toc-why-hydrocube" class="nav-link" data-scroll-target="#why-hydrocube">Why “HydroCube”?</a></li>
+  <li><a href="#ingestion" id="toc-ingestion" class="nav-link" data-scroll-target="#ingestion">1. Ingestion</a>
+  <ul class="collapse">
+  <li><a href="#my-csv-files-arent-being-loaded" id="toc-my-csv-files-arent-being-loaded" class="nav-link" data-scroll-target="#my-csv-files-arent-being-loaded">1.1. My CSV Files Aren’t Being Loaded</a></li>
+  <li><a href="#kafka-consumer-isnt-receiving-messages" id="toc-kafka-consumer-isnt-receiving-messages" class="nav-link" data-scroll-target="#kafka-consumer-isnt-receiving-messages">1.2. Kafka Consumer Isn’t Receiving Messages</a></li>
   </ul></li>
-  <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a></li>
-  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  <li><a href="#ui-websockets" id="toc-ui-websockets" class="nav-link" data-scroll-target="#ui-websockets">2. UI / WebSockets</a>
+  <ul class="collapse">
+  <li><a href="#ui-fails-to-load" id="toc-ui-fails-to-load" class="nav-link" data-scroll-target="#ui-fails-to-load">2.1. UI Fails to Load</a></li>
+  <li><a href="#real-time-updates-dont-appear" id="toc-real-time-updates-dont-appear" class="nav-link" data-scroll-target="#real-time-updates-dont-appear">2.2. Real-Time Updates Don’t Appear</a></li>
+  </ul></li>
+  <li><a href="#security-oauth" id="toc-security-oauth" class="nav-link" data-scroll-target="#security-oauth">3. Security &amp; OAuth</a>
+  <ul class="collapse">
+  <li><a href="#browser-warnings-about-ssl" id="toc-browser-warnings-about-ssl" class="nav-link" data-scroll-target="#browser-warnings-about-ssl">3.1. Browser Warnings About SSL</a></li>
+  <li><a href="#oauth-redirect-loops" id="toc-oauth-redirect-loops" class="nav-link" data-scroll-target="#oauth-redirect-loops">3.2. OAuth Redirect Loops</a></li>
+  </ul></li>
+  <li><a href="#performance-tips" id="toc-performance-tips" class="nav-link" data-scroll-target="#performance-tips">4. Performance Tips</a>
+  <ul class="collapse">
+  <li><a href="#large-csvs-take-too-long" id="toc-large-csvs-take-too-long" class="nav-link" data-scroll-target="#large-csvs-take-too-long">4.1. Large CSVs Take Too Long</a></li>
+  <li><a href="#high-frequency-kafka-streams" id="toc-high-frequency-kafka-streams" class="nav-link" data-scroll-target="#high-frequency-kafka-streams">4.2. High-Frequency Kafka Streams</a></li>
+  </ul></li>
+  <li><a href="#general-errors-logs" id="toc-general-errors-logs" class="nav-link" data-scroll-target="#general-errors-logs">5. General Errors &amp; Logs</a>
+  <ul class="collapse">
+  <li><a href="#checking-logs" id="toc-checking-logs" class="nav-link" data-scroll-target="#checking-logs">5.1. Checking Logs</a></li>
+  <li><a href="#common-log-messages" id="toc-common-log-messages" class="nav-link" data-scroll-target="#common-log-messages">5.2. Common Log Messages</a></li>
+  </ul></li>
+  <li><a href="#still-stuck" id="toc-still-stuck" class="nav-link" data-scroll-target="#still-stuck">6. Still Stuck?</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -208,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HydroCube Overview</h1>
+<h1 class="title">FAQ &amp; Troubleshooting</h1>
 </div>
 
 
@@ -225,71 +244,97 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p><strong>HydroCube</strong> is a <strong>near-real-time OLAP server</strong> designed to ingest, aggregate, and query data rapidly from multiple sources. Written in <strong>Rust</strong> and powered by <strong>DuckDB</strong>, it offers a fast, memory-efficient analytics engine that you can deploy as a <strong>single binary</strong>—no separate services or complex dependencies required. HydroCube’s UI, built on <strong>FINOS Perspective</strong>, provides rich visualizations for real-time analytics and collaborative data exploration.</p>
-<section id="why-hydrocube" class="level3">
-<h3 class="anchored" data-anchor-id="why-hydrocube">Why “HydroCube”?</h3>
-<p>We wanted a name that reflects both lightness and the concept of an analytics “cube.” - <strong>Hydro</strong>: Inspired by <strong>hydrogen</strong>, the lightest element—evoking HydroCube’s minimal footprint. It also evokes a sense of flow in the same way that your data flows through HydroCube - <strong>Cube</strong>: Signifying the <strong>OLAP cube</strong> concept, where data is sliced and diced across multiple dimensions.</p>
+<section id="faq-troubleshooting" class="level1">
+<h1>FAQ &amp; Troubleshooting</h1>
+<p>This page addresses common questions, errors, and performance tips for HydroCube. If you don’t see your issue here, feel free to <a href="https://github.com/joefrost01/HydroCube/issues">open a GitHub issue</a>.</p>
+<hr>
+<section id="ingestion" class="level2">
+<h2 class="anchored" data-anchor-id="ingestion">1. Ingestion</h2>
+<section id="my-csv-files-arent-being-loaded" class="level3">
+<h3 class="anchored" data-anchor-id="my-csv-files-arent-being-loaded">1.1. My CSV Files Aren’t Being Loaded</h3>
+<p><strong>Possible Causes</strong>: - The file pattern doesn’t match. For instance, <code>pattern: "*.csv"</code> but your file is <code>data.CSV</code> (uppercase). - The directory watcher isn’t triggered if the file has no changes. Try editing the file or create a new one.</p>
+<p><strong>Solutions</strong>: - Double-check your <code>directory</code> path and <code>pattern</code>. - Make sure you have write permissions on the directory. - Check HydroCube’s logs (stdout) for any errors.</p>
+</section>
+<section id="kafka-consumer-isnt-receiving-messages" class="level3">
+<h3 class="anchored" data-anchor-id="kafka-consumer-isnt-receiving-messages">1.2. Kafka Consumer Isn’t Receiving Messages</h3>
+<p><strong>Possible Causes</strong>: - Wrong broker address or port. - Topic name is incorrect. - Firewall or Docker networking issues.</p>
+<p><strong>Solutions</strong>: - Verify you can reach Kafka via <code>kafkacat</code> or a similar CLI tool. - Check that your <code>group_id</code> and <code>topic</code> match the actual Kafka setup. - Look at HydroCube’s logs for any “failed to connect” messages.</p>
+<hr>
 </section>
 </section>
-<section id="key-features" class="level2">
-<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
+<section id="ui-websockets" class="level2">
+<h2 class="anchored" data-anchor-id="ui-websockets">2. UI / WebSockets</h2>
+<section id="ui-fails-to-load" class="level3">
+<h3 class="anchored" data-anchor-id="ui-fails-to-load">2.1. UI Fails to Load</h3>
+<p><strong>Possible Causes</strong>: - HydroCube is running on HTTPS but you’re hitting an HTTP URL. - A firewall or reverse proxy is blocking the port.</p>
+<p><strong>Solutions</strong>: - Ensure you visit the correct scheme (HTTPS vs.&nbsp;HTTP) and port. - If using a proxy, confirm it’s forwarding requests properly.</p>
+</section>
+<section id="real-time-updates-dont-appear" class="level3">
+<h3 class="anchored" data-anchor-id="real-time-updates-dont-appear">2.2. Real-Time Updates Don’t Appear</h3>
+<p><strong>Possible Causes</strong>: - No aggregator or publisher defined for your dataset. - No new rows are actually arriving in DuckDB. - The user hasn’t toggled the subscription for that cube in the UI.</p>
+<p><strong>Solutions</strong>: - Check you have a <code>publishers:</code> block referencing an <code>aggregate:</code>. - In the UI, look for the “Subscribe” toggle. - Inspect logs for aggregator or WebSocket errors.</p>
+<hr>
+</section>
+</section>
+<section id="security-oauth" class="level2">
+<h2 class="anchored" data-anchor-id="security-oauth">3. Security &amp; OAuth</h2>
+<section id="browser-warnings-about-ssl" class="level3">
+<h3 class="anchored" data-anchor-id="browser-warnings-about-ssl">3.1. Browser Warnings About SSL</h3>
+<p>If you used a <strong>self-signed certificate</strong>, most browsers will warn you. This is normal for local testing. For production, use a CA-signed cert from Let’s Encrypt or another authority.</p>
+</section>
+<section id="oauth-redirect-loops" class="level3">
+<h3 class="anchored" data-anchor-id="oauth-redirect-loops">3.2. OAuth Redirect Loops</h3>
+<p><strong>Possible Causes</strong>: - <code>redirect_url</code> in your config doesn’t match what the provider expects. - The OAuth credentials are invalid or were revoked.</p>
+<p><strong>Solutions</strong>: - Update your OAuth provider’s app settings to match HydroCube’s <code>redirect_url</code>. - Double-check the <code>client_id</code> and <code>client_secret</code>.</p>
+<hr>
+</section>
+</section>
+<section id="performance-tips" class="level2">
+<h2 class="anchored" data-anchor-id="performance-tips">4. Performance Tips</h2>
+<section id="large-csvs-take-too-long" class="level3">
+<h3 class="anchored" data-anchor-id="large-csvs-take-too-long">4.1. Large CSVs Take Too Long</h3>
 <ul>
-<li><p><strong>Continuous Data Ingest</strong> Seamlessly pull from CSV, Parquet, JSON, or other file-based sources. Real-time ingestion from Kafka is in the works</p></li>
-<li><p><strong>Fast &amp; Memory-Efficient</strong> Uses <strong>DuckDB</strong>’s vectorized execution engine, allowing lightning-fast queries even on large datasets.</p></li>
-<li><p><strong>Full UI with FINOS Perspective</strong> An interactive, in-browser experience for visualizing real-time data. Slice, dice, pivot, and chart your data without extra tools.</p></li>
-<li><p><strong>Single-Binary Deployment</strong> Download and run—no external databases or separate web servers required. Perfect for minimal footprints or container-based deployments.</p></li>
-<li><p><strong>Written in Rust</strong> Leveraging Rust’s safety guarantees and concurrency model ensures robust performance and fewer runtime surprises.</p></li>
-<li><p><strong>Secure by Default</strong> Supports <strong>HTTPS</strong> out of the box, and can integrate with <strong>OAuth</strong> for authentication. Securely share analytics with your team.</p></li>
-<li><p><strong>Multi-User Friendly</strong> Enable multiple users to view and interact with real-time dashboards simultaneously.</p></li>
-<li><p><strong>Docker-Ready</strong> Bundle HydroCube as a <strong>distroless</strong> container—no OS overhead needed for a flexible and compact deployment.</p></li>
+<li><strong>Batch Inserts</strong>: HydroCube already batches inserts, but if you’re updating massive CSV files, consider splitting them into smaller chunks or using Parquet for more efficient loading.</li>
+<li><strong>Memory</strong>: Provide enough RAM for DuckDB to do vectorized processing.</li>
+<li><strong>SSD / Fast Storage</strong>: If your data file is huge, an SSD helps speed ingest.</li>
 </ul>
 </section>
-<section id="high-level-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h2>
-<p>Below is a simple Mermaid diagram illustrating how HydroCube fits into your data flow:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
-flowchart LR
-    subgraph Sources
-        A["CSV/Parquet Files"] --&gt;|File Watch| HC
-        B["Kafka (Coming soon)"] --&gt;|Consumer| HC
-    end
-    subgraph HydroCube
-        HC["HydroCube (Rust + DuckDB)"]
-        UI["FINOS Perspective (UI)"]
-    end
-    HC --&gt;|WebSockets| UI
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<ol type="1">
-<li><strong>Sources</strong>: You configure one or more datasets—local files (CSV, Parquet) or streaming data (Kafka).</li>
-<li><strong>HydroCube</strong>:
+<section id="high-frequency-kafka-streams" class="level3">
+<h3 class="anchored" data-anchor-id="high-frequency-kafka-streams">4.2. High-Frequency Kafka Streams</h3>
 <ul>
-<li>Loads raw data into <strong>DuckDB</strong> tables.</li>
-<li>Aggregates and transforms your data in near real time.</li>
-<li>Serves the embedded UI for exploration and dashboards.</li>
-</ul></li>
-<li><strong>UI</strong>: The <strong>FINOS Perspective</strong>-powered frontend connects via <strong>WebSockets</strong> for live updates to your analytics views.</li>
-</ol>
+<li><strong>One Writer Limit</strong>: DuckDB has a single-writer concurrency model, so extremely high message rates could form a backlog.</li>
+<li><strong>Partitioning or Sharding</strong>: If ingestion becomes a bottleneck, consider splitting topics or running multiple HydroCube instances (though each would have its own embedded DB).</li>
+</ul>
+<hr>
 </section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
+</section>
+<section id="general-errors-logs" class="level2">
+<h2 class="anchored" data-anchor-id="general-errors-logs">5. General Errors &amp; Logs</h2>
+<section id="checking-logs" class="level3">
+<h3 class="anchored" data-anchor-id="checking-logs">5.1. Checking Logs</h3>
+<p>HydroCube logs to <strong>stdout</strong> by default. You’ll see informational messages about ingestion, aggregator runs, and publisher updates. For debugging, you may want to run with higher verbosity or pipe logs into a monitoring system.</p>
+</section>
+<section id="common-log-messages" class="level3">
+<h3 class="anchored" data-anchor-id="common-log-messages">5.2. Common Log Messages</h3>
 <ul>
-<li>Head over to <strong><a href="./getting-started.html">Getting Started</a></strong> for installation instructions and your first HydroCube run.</li>
-<li>Explore how to configure ingestion, define aggregates, and publish live data to your dashboards.</li>
+<li><strong>“Ingested X rows from file …”</strong>: File watcher successfully loaded data.</li>
+<li><strong>“Kafka consumer error …”</strong>: A problem with broker connectivity or message parsing.</li>
+<li><strong>“Aggregator updated table …”</strong>: The aggregator just recalculated.</li>
+<li><strong>“WebSocket error …”</strong>: Potential network issues or unsubscribes.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="still-stuck" class="level2">
+<h2 class="anchored" data-anchor-id="still-stuck">6. Still Stuck?</h2>
+<ul>
+<li><strong>Check <a href="security-deployment.qmd">Security &amp; Deployment</a></strong> for more advanced setups.</li>
+<li><strong>Ask the Community</strong>: <a href="https://github.com/joefrost01/HydroCube/issues">GitHub Issues</a> or the project’s discussion boards.</li>
+<li><strong>Contribute</strong>: If you found a bug or want a new feature, please open a pull request or proposal!</li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

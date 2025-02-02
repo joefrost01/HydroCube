@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Getting Started – HydroCube</title>
+<title>How-To Guides – HydroCube</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -148,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting-started.html">Getting Started</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./how-to-guides.html">How-to Guides</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -168,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link active">
+  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
@@ -186,7 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./how-to-guides.html" class="sidebar-item-text sidebar-link">
+  <a href="./how-to-guides.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">How-to Guides</span></a>
   </div>
 </li>
@@ -224,11 +224,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a>
+  <li><a href="#how-to-guides" id="toc-how-to-guides" class="nav-link active" data-scroll-target="#how-to-guides">How-To Guides</a>
   <ul class="collapse">
-  <li><a href="#building-from-source" id="toc-building-from-source" class="nav-link" data-scroll-target="#building-from-source">Building from Source</a></li>
+  <li><a href="#ingesting-a-csv-dataset" id="toc-ingesting-a-csv-dataset" class="nav-link" data-scroll-target="#ingesting-a-csv-dataset">1. Ingesting a CSV Dataset</a>
+  <ul class="collapse">
+  <li><a href="#create-a-minimal-config" id="toc-create-a-minimal-config" class="nav-link" data-scroll-target="#create-a-minimal-config">1.1. Create a Minimal Config</a></li>
+  <li><a href="#run-hydrocube" id="toc-run-hydrocube" class="nav-link" data-scroll-target="#run-hydrocube">1.2. Run HydroCube</a></li>
+  <li><a href="#verify-in-the-ui" id="toc-verify-in-the-ui" class="nav-link" data-scroll-target="#verify-in-the-ui">1.3. Verify in the UI</a></li>
   </ul></li>
-  <li><a href="#basic-usage" id="toc-basic-usage" class="nav-link" data-scroll-target="#basic-usage">Basic Usage</a></li>
+  <li><a href="#ingesting-a-parquet-dataset" id="toc-ingesting-a-parquet-dataset" class="nav-link" data-scroll-target="#ingesting-a-parquet-dataset">2. Ingesting a Parquet Dataset</a>
+  <ul class="collapse">
+  <li><a href="#prepare-parquet-files" id="toc-prepare-parquet-files" class="nav-link" data-scroll-target="#prepare-parquet-files">2.1. Prepare Parquet Files</a></li>
+  <li><a href="#update-config" id="toc-update-config" class="nav-link" data-scroll-target="#update-config">2.2. Update Config</a></li>
+  <li><a href="#run-hydrocube-1" id="toc-run-hydrocube-1" class="nav-link" data-scroll-target="#run-hydrocube-1">2.3. Run HydroCube</a></li>
+  </ul></li>
+  <li><a href="#streaming-data-from-kafka" id="toc-streaming-data-from-kafka" class="nav-link" data-scroll-target="#streaming-data-from-kafka">3. Streaming Data from Kafka</a>
+  <ul class="collapse">
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">3.1. Prerequisites</a></li>
+  <li><a href="#config-snippet" id="toc-config-snippet" class="nav-link" data-scroll-target="#config-snippet">3.2. Config Snippet</a></li>
+  <li><a href="#running-testing" id="toc-running-testing" class="nav-link" data-scroll-target="#running-testing">3.3. Running &amp; Testing</a></li>
+  </ul></li>
+  <li><a href="#defining-an-aggregator" id="toc-defining-an-aggregator" class="nav-link" data-scroll-target="#defining-an-aggregator">4. Defining an Aggregator</a>
+  <ul class="collapse">
+  <li><a href="#basic-example" id="toc-basic-example" class="nav-link" data-scroll-target="#basic-example">4.1. Basic Example</a></li>
+  <li><a href="#checking-results" id="toc-checking-results" class="nav-link" data-scroll-target="#checking-results">4.2. Checking Results</a></li>
+  </ul></li>
+  <li><a href="#publishing-a-real-time-cube" id="toc-publishing-a-real-time-cube" class="nav-link" data-scroll-target="#publishing-a-real-time-cube">5. Publishing a Real-Time “Cube”</a>
+  <ul class="collapse">
+  <li><a href="#publisher-definition" id="toc-publisher-definition" class="nav-link" data-scroll-target="#publisher-definition">5.1. Publisher Definition</a></li>
+  <li><a href="#viewing-in-perspective" id="toc-viewing-in-perspective" class="nav-link" data-scroll-target="#viewing-in-perspective">5.2. Viewing in Perspective</a></li>
+  </ul></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">6. Putting It All Together</a></li>
+  </ul></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
   </ul>
 </nav>
     </div>
@@ -237,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Getting Started</h1>
+<h1 class="title">How-To Guides</h1>
 </div>
 
 
@@ -254,44 +282,181 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Welcome to <strong>HydroCube</strong>! This guide will walk you through installing and running your first HydroCube instance, either by downloading a prebuilt binary or building from source.</p>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<section id="how-to-guides" class="level1">
+<h1>How-To Guides</h1>
+<p>This section provides <strong>step-by-step tutorials</strong> for common HydroCube tasks. Each guide walks you through the required configuration, commands, and expected outcomes—so you can get productive quickly!</p>
+<section id="ingesting-a-csv-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="ingesting-a-csv-dataset">1. Ingesting a CSV Dataset</h2>
+<section id="create-a-minimal-config" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-minimal-config">1.1. Create a Minimal Config</h3>
 <ol type="1">
-<li><strong>Download the Latest Release</strong> Visit <a href="https://github.com/joefrost01/HydroCube/releases">GitHub Releases</a> and choose the binary for your platform:
-<ul>
-<li><strong>Linux</strong>: <code>x86_64-unknown-linux-gnu</code></li>
-<li><strong>macOS</strong>: <code>x86_64-apple-darwin</code> or <code>aarch64-apple-darwin</code></li>
-<li><strong>Windows</strong>: <code>x86_64-pc-windows-msvc</code></li>
-</ul></li>
-<li><strong>Place the Executable in Your PATH</strong> For example, move the binary to <code>/usr/local/bin</code> on Linux or macOS, or simply keep it in your chosen directory and reference it by its full path.</li>
-</ol>
-<section id="building-from-source" class="level3">
-<h3 class="anchored" data-anchor-id="building-from-source">Building from Source</h3>
-<p>If you prefer to build HydroCube yourself:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/joefrost01/HydroCube.git</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> HydroCube</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This produces a <code>hydrocube</code> (or <code>hydrocube.exe</code> on Windows) binary in <code>target/release</code>.</p>
-</section>
-</section>
-<section id="basic-usage" class="level2">
-<h2 class="anchored" data-anchor-id="basic-usage">Basic Usage</h2>
-<p>Once you have the <strong>hydrocube</strong> binary:</p>
-<ol type="1">
-<li><p><strong>Create a <code>config.yaml</code></strong> (or use the built-in defaults if you prefer). For example:</p>
+<li><p><strong>Make a directory</strong> (e.g., <code>./data/csv</code>) and place one or more CSV files inside it. For example, <code>sales.csv</code>:</p>
+<pre class="csv"><code>product_id,quantity,price
+A100,10,15.5
+B200,25,9.99</code></pre></li>
+<li><p><strong>Write a <code>hydrocube.yaml</code></strong> referencing the CSV directory:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasets</span><span class="kw">:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"test_data"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">format</span><span class="kw">:</span><span class="at"> </span><span class="st">"csv"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">directory</span><span class="kw">:</span><span class="at"> </span><span class="st">"/path/to/csvs"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pattern</span><span class="kw">:</span><span class="at"> </span><span class="st">"*.csv"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p><strong>Run HydroCube</strong>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./hydrocube</span> <span class="at">--config</span> config.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>HydroCube will watch <code>/path/to/csvs/*.csv</code>, load them into DuckDB, and serve its web UI at a default port (e.g., <code>localhost:8080</code>).</p></li>
-<li><p><strong>Open the UI</strong>: Navigate to the displayed URL (usually <code>http://localhost:8080</code>), where you can view and explore your data in real time using the FINOS Perspective interface.</p></li>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"offline_sales"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">format</span><span class="kw">:</span><span class="at"> </span><span class="st">"csv"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">directory</span><span class="kw">:</span><span class="at"> </span><span class="st">"./data/csv"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pattern</span><span class="kw">:</span><span class="at"> </span><span class="st">"*.csv"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That’s it! This tells HydroCube to watch the <code>./data/csv</code> folder for any <code>.csv</code> files and load them into a DuckDB table named <code>sales</code>.</p></li>
 </ol>
+</section>
+<section id="run-hydrocube" class="level3">
+<h3 class="anchored" data-anchor-id="run-hydrocube">1.2. Run HydroCube</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./hydrocube</span> <span class="at">--config</span> hydrocube.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>HydroCube will: 1. Start a <strong>directory watcher</strong> on <code>./data/csv</code>. 2. Parse each matching CSV file (like <code>sales.csv</code>) into the <code>sales</code> table in DuckDB. 3. Serve its UI (Perspective) at <code>http://localhost:8080</code>.</p>
+</section>
+<section id="verify-in-the-ui" class="level3">
+<h3 class="anchored" data-anchor-id="verify-in-the-ui">1.3. Verify in the UI</h3>
+<p>Open your browser to <code>http://localhost:8080</code>. - You should see HydroCube’s embedded FINOS Perspective UI. - Go to <strong>Datasets</strong> (or your equivalent navigation). You’ll see <code>sales</code>. - Explore the columns (<code>product_id</code>, <code>quantity</code>, <code>price</code>), then pivot or chart them as desired.</p>
 <hr>
-<p><strong>Next Steps</strong> - Check out the <strong><a href="overview.qmd">Core Concepts &amp; Architecture</a></strong> to understand how datasets, aggregates, and publishers work. - Move on to the <strong>Configuration Reference</strong> for more advanced ingestion methods like <strong>Kafka</strong> or <strong>Parquet</strong>.</p>
+</section>
+</section>
+<section id="ingesting-a-parquet-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="ingesting-a-parquet-dataset">2. Ingesting a Parquet Dataset</h2>
+<section id="prepare-parquet-files" class="level3">
+<h3 class="anchored" data-anchor-id="prepare-parquet-files">2.1. Prepare Parquet Files</h3>
+<p>Place one or more <code>.parquet</code> files in a directory, e.g.&nbsp;<code>./data/parquet</code>.</p>
+</section>
+<section id="update-config" class="level3">
+<h3 class="anchored" data-anchor-id="update-config">2.2. Update Config</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasets</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"parquet_data"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"my_parquet_table"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">format</span><span class="kw">:</span><span class="at"> </span><span class="st">"parquet"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">directory</span><span class="kw">:</span><span class="at"> </span><span class="st">"./data/parquet"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pattern</span><span class="kw">:</span><span class="at"> </span><span class="st">"*.parquet"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="run-hydrocube-1" class="level3">
+<h3 class="anchored" data-anchor-id="run-hydrocube-1">2.3. Run HydroCube</h3>
+<p>Same command:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./hydrocube</span> <span class="at">--config</span> hydrocube.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>HydroCube will detect <code>.parquet</code> files and load them into <code>my_parquet_table</code>. You can now query or visualize them in the UI.</p>
+<hr>
+</section>
+</section>
+<section id="streaming-data-from-kafka" class="level2">
+<h2 class="anchored" data-anchor-id="streaming-data-from-kafka">3. Streaming Data from Kafka</h2>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">3.1. Prerequisites</h3>
+<ol type="1">
+<li><strong>Kafka Broker</strong>: Make sure you have a Kafka instance running (e.g., <code>localhost:9092</code>).</li>
+<li><strong>Topic</strong>: For example, <code>sales_topic</code>.</li>
+<li><strong>Messages</strong>: Your producer is sending JSON or another format to <code>sales_topic</code>.</li>
+</ol>
+</section>
+<section id="config-snippet" class="level3">
+<h3 class="anchored" data-anchor-id="config-snippet">3.2. Config Snippet</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasets</span><span class="kw">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"realtime_sales"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">format</span><span class="kw">:</span><span class="at"> </span><span class="st">"kafka"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">kafka</span><span class="kw">:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">brokers</span><span class="kw">:</span><span class="at"> </span><span class="st">"localhost:9092"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">group_id</span><span class="kw">:</span><span class="at"> </span><span class="st">"hydrocube_sales_group"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">topic</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_topic"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This tells HydroCube to connect to <code>sales_topic</code>, reading messages into the <code>sales</code> table. If you also have <code>offline_sales</code> above, you’ll unify historical CSV data and real-time Kafka data in the same table.</p>
+</section>
+<section id="running-testing" class="level3">
+<h3 class="anchored" data-anchor-id="running-testing">3.3. Running &amp; Testing</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./hydrocube</span> <span class="at">--config</span> hydrocube.yaml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>HydroCube spawns a <strong>Kafka consumer</strong>.</li>
+<li>As messages arrive on <code>sales_topic</code>, HydroCube parses them (assuming JSON or another format you’ve implemented) and inserts them into DuckDB.</li>
+<li>The UI updates in near real time.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="defining-an-aggregator" class="level2">
+<h2 class="anchored" data-anchor-id="defining-an-aggregator">4. Defining an Aggregator</h2>
+<section id="basic-example" class="level3">
+<h3 class="anchored" data-anchor-id="basic-example">4.1. Basic Example</h3>
+<p>Let’s say you have a <code>sales</code> table with columns: - <code>product_id</code> (string) - <code>quantity</code> (int) - <code>price</code> (float) - <code>insert_timestamp</code> (timestamp, auto-added by HydroCube)</p>
+<p>Add an <strong>aggregates</strong> section to your config:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregates</span><span class="kw">:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_agg"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">measures</span><span class="kw">:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> </span><span class="st">"quantity"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">function</span><span class="kw">:</span><span class="at"> </span><span class="st">"sum"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> </span><span class="st">"*"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">function</span><span class="kw">:</span><span class="at"> </span><span class="st">"count"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This aggregator: 1. Groups by all non-measure columns (i.e., <code>product_id</code>, etc.). 2. Sums the <code>quantity</code> column for each product. 3. Also counts rows (<code>count(*)</code>). 4. Tracks the <code>last_update</code> as <code>MAX(insert_timestamp)</code>.</p>
+</section>
+<section id="checking-results" class="level3">
+<h3 class="anchored" data-anchor-id="checking-results">4.2. Checking Results</h3>
+<p>After you start HydroCube, it will create an internal aggregated table (e.g., <code>sales_agg_table</code>). You can query it from the UI or watch it update in real time if you add a publisher (see below).</p>
+<hr>
+</section>
+</section>
+<section id="publishing-a-real-time-cube" class="level2">
+<h2 class="anchored" data-anchor-id="publishing-a-real-time-cube">5. Publishing a Real-Time “Cube”</h2>
+<section id="publisher-definition" class="level3">
+<h3 class="anchored" data-anchor-id="publisher-definition">5.1. Publisher Definition</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">publishers</span><span class="kw">:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_cube"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">"simple"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">aggregate</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_agg"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">key_column</span><span class="kw">:</span><span class="at"> </span><span class="st">"product_id"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">change_detection_column</span><span class="kw">:</span><span class="at"> </span><span class="st">"last_update"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">schedule</span><span class="kw">:</span><span class="at"> </span><span class="st">"on_change"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This publisher references the <code>sales_agg</code> aggregator: - <strong><code>key_column</code></strong>: <code>product_id</code> is the unique key for Perspective partial row updates. - <strong><code>change_detection_column</code></strong>: <code>last_update</code> is used to see which rows have changed since the last publish. - <strong><code>schedule</code></strong>: <code>on_change</code> means it only publishes updates when new data arrives.</p>
+</section>
+<section id="viewing-in-perspective" class="level3">
+<h3 class="anchored" data-anchor-id="viewing-in-perspective">5.2. Viewing in Perspective</h3>
+<p>When you open the <strong>UI</strong> in your browser: - You’ll see a <strong>“sales_cube”</strong> listed among the available cubes/datasets. - Toggling the subscription on or off will connect you to the WebSocket feed. - As new data arrives in the base <code>sales</code> table, and the aggregator is updated, this publisher pushes deltas to Perspective in near real time.</p>
+<hr>
+</section>
+</section>
+<section id="putting-it-all-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-all-together">6. Putting It All Together</h2>
+<p>A single config might combine everything:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasets</span><span class="kw">:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"offline_sales"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">format</span><span class="kw">:</span><span class="at"> </span><span class="st">"csv"</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">directory</span><span class="kw">:</span><span class="at"> </span><span class="st">"./data/csv"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pattern</span><span class="kw">:</span><span class="at"> </span><span class="st">"*.csv"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"realtime_sales"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">format</span><span class="kw">:</span><span class="at"> </span><span class="st">"kafka"</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">kafka</span><span class="kw">:</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">brokers</span><span class="kw">:</span><span class="at"> </span><span class="st">"localhost:9092"</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">group_id</span><span class="kw">:</span><span class="at"> </span><span class="st">"hydrocube_sales"</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">topic</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_topic"</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregates</span><span class="kw">:</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_agg"</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">table_name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales"</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">measures</span><span class="kw">:</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> </span><span class="st">"quantity"</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">function</span><span class="kw">:</span><span class="at"> </span><span class="st">"sum"</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">column</span><span class="kw">:</span><span class="at"> </span><span class="st">"*"</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">function</span><span class="kw">:</span><span class="at"> </span><span class="st">"count"</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="fu">publishers</span><span class="kw">:</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_cube"</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">"simple"</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">aggregate</span><span class="kw">:</span><span class="at"> </span><span class="st">"sales_agg"</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">key_column</span><span class="kw">:</span><span class="at"> </span><span class="st">"product_id"</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">change_detection_column</span><span class="kw">:</span><span class="at"> </span><span class="st">"last_update"</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">schedule</span><span class="kw">:</span><span class="at"> </span><span class="st">"on_change"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This setup: 1. <strong>Ingests</strong> historical CSV data (offline) + real-time Kafka messages (online) into a <strong>single</strong> <code>sales</code> table. 2. <strong>Aggregates</strong> by <code>product_id</code>, summing quantities and counting rows. 3. <strong>Publishes</strong> updates to the UI whenever new data arrives or old data is updated.</p>
+<hr>
+</section>
+</section>
+<section id="next-steps" class="level1">
+<h1>Next Steps</h1>
+<ul>
+<li>Want to secure your deployment? Check out <strong><a href="security-deployment.qmd">Security &amp; Deployment</a></strong> (if you decide to create that doc).</li>
+<li>Curious about advanced aggregator logic or partial refresh? Keep an eye on our roadmap for <strong>custom aggregators</strong>.</li>
+<li><a href="https://github.com/joefrost01/HydroCube/issues">Join the community</a> for questions, bug reports, or ideas!</li>
+</ul>
 
 
 </section>
