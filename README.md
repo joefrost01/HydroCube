@@ -33,11 +33,7 @@ Check out the **[official documentation](https://joefrost01.github.io/HydroCube/
 Alternatively, clone this repository and build:
 
 ```bash
-git clone https://github.com/joefrost01/hydrocube.git
-cd hydrocube/frontend
-npm install
-npm run build
-cd ../backend
+git clone https://github.com/joefrost01/HydroCube.git
 cargo build --release
 ```
 
