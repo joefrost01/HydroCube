@@ -6,7 +6,7 @@ Welcome to **HydroCube**! Below are steps to install and run it.
 
 ## Installation
 
-1. **Download the latest release** from [GitHub Releases](https://github.com/joefrost01/hydrocube/releases).
+1. **Download the latest release** from [GitHub Releases](https://github.com/joefrost01/HydroCube/releases).
    - Linux: `x86_64-unknown-linux-gnu`
    - macOS: `x86_64-apple-darwin` or `aarch64-apple-darwin`
    - Windows: `x86_64-pc-windows-msvc`
@@ -17,11 +17,7 @@ Welcome to **HydroCube**! Below are steps to install and run it.
 Alternatively, clone this repository and build:
 
 ```bash
-git clone https://github.com/joefrost01/hydrocube.git
-cd hydrocube/frontend
-npm install
-npm run build
-cd ../backend
+git clone https://github.com/joefrost01/HydroCube.git
 cargo build --release
 ```
 
