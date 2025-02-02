@@ -1,0 +1,44 @@
+project:
+  type: website
+
+# Configure the website
+website:
+  title: "HydroCube"
+  # The navbar brand will display the logo + project name
+  navbar:
+    brand:
+      text: "HydroCube"
+      href: index.qmd
+    logo: "images/logo.webp"
+    search: true
+    right:
+      - icon: github
+        href: "https://github.com/joefrost01/hydrocube"
+      - text: "Download"
+        href: "https://github.com/joefrost01/hydrocube/releases"
+
+  # Define the left sidebar navigation structure
+  sidebar:
+    - contents:
+        - text: "Introduction"
+          href: index.qmd
+        - text: "Getting Started"
+          href: getting-started.qmd
+        - text: "Roadmap"
+          href: roadmap.qmd
+
+# Theme configuration
+format:
+  html:
+    theme:
+      light: sandstone
+      dark: darkly
+    toc: true
+    toc-location: right
+    css: styles.css
+
+# (Optional) Execute options if you have code in pages
+execute:
+  warning: false
+  echo: false
+
