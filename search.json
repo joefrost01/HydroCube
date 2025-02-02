@@ -1,0 +1,62 @@
+[
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "Welcome to HydroCube! Below are steps to install and run it.",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#installation",
+    "href": "getting-started.html#installation",
+    "title": "Getting Started",
+    "section": "Installation",
+    "text": "Installation\n\nDownload the latest release from GitHub Releases.\n\nLinux: x86_64-unknown-linux-gnu\nmacOS: x86_64-apple-darwin or aarch64-apple-darwin\nWindows: x86_64-pc-windows-msvc\n\nPlace the executable in your $PATH (e.g., /usr/local/bin) or reference it directly.\n\n\nBuilding from Source\nAlternatively, clone this repository and build:\ngit clone https://github.com/joefrost01/hydrocube.git\ncd hydrocube/frontend\nnpm install\nnpm run build\ncd ../backend\ncargo build --release",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#basic-usage",
+    "href": "getting-started.html#basic-usage",
+    "title": "Getting Started",
+    "section": "Basic Usage",
+    "text": "Basic Usage\n# Basic CSV to Parquet conversion\nhydrocube --config config.yaml",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "roadmap.html",
+    "href": "roadmap.html",
+    "title": "Roadmap",
+    "section": "",
+    "text": "Below are planned features and improvements:\n\nAdditional data formats\n\nAvro, Orc, Delta Lake, Arrow, and more.\n\nKafka ingest\n\nSupport for ingesting straight from Kafka topics.\n\nIngest filter\n\nLimit the data ingested by filtering.\n\nSave reports\n\nSerialise your reports for later use.",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "HydroCube Overview",
+    "section": "",
+    "text": "HydroCube is a near realtime OLAP server that allows you to ingest data from multiple sources and query it in a fast and memory-efficient way. It is designed to be easy to use, secure, and scalable. It is written in Rust and uses DuckDB for the query engine. It has a full UI built with FINOS Perspective.\nWhy HydroCube? It’s an analytics cube designed to be very light in every respect so we named it after the lightest element, Hydrogen. It’s also a cube, so we named it HydroCube.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#key-features",
+    "href": "index.html#key-features",
+    "title": "HydroCube Overview",
+    "section": "Key Features",
+    "text": "Key Features\n\nContinuous data ingest From multiple formats (CSV, Parquet, JSON)\nFast and Memory-Efficient: Uses DuckDB for the query engine\nFull UI: Uses FINOS Perspective for UI\nSingle Binary: Runs from a single binary, no dependencies, just point it at your data and run!\nWritten in Rust: Fast, safe, and concurrent\nOauth for Authentication: Bring the authentication method of your choice\nSecure: Uses HTTPS by default\nDocker Ready: No dependencies, ideally suited for distroless containers\nMulti User: Supports multiple users, ideal for teams that need up the minute data\n\nPlease see Getting Started to install and run HydroCube.",
+    "crumbs": [
+      "Introduction"
+    ]
+  }
+]
