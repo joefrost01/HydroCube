@@ -24,7 +24,7 @@
     "href": "getting-started.html#installation",
     "title": "Getting Started",
     "section": "Installation",
-    "text": "Installation\n\nDownload the latest release from GitHub Releases.\n\nLinux: x86_64-unknown-linux-gnu\nmacOS: x86_64-apple-darwin or aarch64-apple-darwin\nWindows: x86_64-pc-windows-msvc\n\nPlace the executable in your $PATH (e.g., /usr/local/bin) or reference it directly.\n\n\nBuilding from Source\nAlternatively, clone this repository and build:\ngit clone https://github.com/joefrost01/hydrocube.git\ncd hydrocube/frontend\nnpm install\nnpm run build\ncd ../backend\ncargo build --release",
+    "text": "Installation\n\nDownload the latest release from GitHub Releases.\n\nLinux: x86_64-unknown-linux-gnu\nmacOS: x86_64-apple-darwin or aarch64-apple-darwin\nWindows: x86_64-pc-windows-msvc\n\nPlace the executable in your $PATH (e.g., /usr/local/bin) or reference it directly.\n\n\nBuilding from Source\nAlternatively, clone this repository and build:\ngit clone https://github.com/joefrost01/HydroCube.git\ncargo build --release",
     "crumbs": [
       "Getting Started"
     ]
