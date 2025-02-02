@@ -1,0 +1,38 @@
+datasets:
+#  - name: "sales_data"
+#    directory: "/Users/josephfrost/code/hydrocube/data/csv"
+#    pattern: "*.csv"
+#    format: csv
+
+#  - name: "line_items"
+#    directory: "/Users/josephfrost/code/hydrocube/data/parquet"
+#    pattern: "lineitem.parquet"
+#    format: parquet
+
+  - name: "test"
+    directory: "/Users/josephfrost/code/HydroCube/data/parquet/test"
+    pattern: "*.parquet"
+    format: parquet
+
+#  - name: "ddb"
+#    directory: "/Users/josephfrost/code/hydrocube/data/parquet"
+#    pattern: "ddb.parquet"
+#    format: parquet
+
+security:
+  oauth:
+    enabled: false
+    provider: "github"
+    client_id: "your_client_id_here"
+    client_secret: "your_client_secret_here"
+    auth_url: "https://github.com/login/oauth/authorize"
+    token_url: "https://github.com/login/oauth/access_token"
+    redirect_url: "http://localhost:8080/auth/callback"
+    scopes:
+      - "read:user"
+      - "repo"
+
+  https:
+    enabled: false
+    cert_path: "cert.pem"
+    key_path: "key.pem"
