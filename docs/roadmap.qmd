@@ -1,0 +1,17 @@
+---
+title: "Roadmap"
+---
+
+Below are planned features and improvements:
+
+1. **Additional data formats**
+   - Avro, Orc, Delta Lake, Arrow, and more.
+
+2. **Kafka ingest**
+   - Support for ingesting straight from Kafka topics.
+
+3. **Ingest filter**
+   - Limit the data ingested by filtering.
+
+4. **Save reports**
+   - Serialise your reports for later use.

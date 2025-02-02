@@ -13,9 +13,9 @@ website:
     search: true
     right:
       - icon: github
-        href: "https://github.com/joefrost01/hydrocube"
+        href: "https://github.com/joefrost01/HydroCube"
       - text: "Download"
-        href: "https://github.com/joefrost01/hydrocube/releases"
+        href: "https://github.com/joefrost01/HydroCube/releases"
 
   # Define the left sidebar navigation structure
   sidebar:
@@ -31,7 +31,7 @@ website:
 format:
   html:
     theme:
-      light: sandstone
+      light: flatly
       dark: darkly
     toc: true
     toc-location: right

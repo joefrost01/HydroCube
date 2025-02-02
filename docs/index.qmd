@@ -1,0 +1,22 @@
+---
+title: "HydroCube Overview"
+---
+
+**HydroCube** is a near realtime OLAP server that allows you to ingest data from multiple sources and query it in a fast and memory-efficient way. It is designed to be easy to use, secure, and scalable. It is written in Rust and uses DuckDB for the query engine. It has a full UI built with FINOS Perspective.
+
+Why HydroCube?
+It's an analytics cube designed to be very light in every respect so we named it after the lightest element, Hydrogen. It's also a cube, so we named it HydroCube.
+
+## Key Features
+
+- **Continuous data ingest** From multiple formats (CSV, Parquet, JSON)
+- **Fast and Memory-Efficient**: Uses DuckDB for the query engine
+- **Full UI**: Uses FINOS Perspective for UI
+- **Single Binary**: Runs from a single binary, no dependencies, just point it at your data and run!
+- **Written in Rust**: Fast, safe, and concurrent
+- **Oauth for Authentication**: Bring the authentication method of your choice
+- **Secure**: Uses HTTPS by default
+- **Docker Ready**: No dependencies, ideally suited for distroless containers
+- **Multi User**: Supports multiple users, ideal for teams that need up the minute data
+
+Please see **[Getting Started](getting-started.qmd)** to install and run HydroCube.

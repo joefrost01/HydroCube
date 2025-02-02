@@ -1,0 +1,34 @@
+---
+title: "Getting Started"
+---
+
+Welcome to **HydroCube**! Below are steps to install and run it.
+
+## Installation
+
+1. **Download the latest release** from [GitHub Releases](https://github.com/joefrost01/hydrocube/releases).
+   - Linux: `x86_64-unknown-linux-gnu`
+   - macOS: `x86_64-apple-darwin` or `aarch64-apple-darwin`
+   - Windows: `x86_64-pc-windows-msvc`
+2. **Place the executable** in your `$PATH` (e.g., `/usr/local/bin`) or reference it directly.
+
+### Building from Source
+
+Alternatively, clone this repository and build:
+
+```bash
+git clone https://github.com/joefrost01/hydrocube.git
+cd hydrocube/frontend
+npm install
+npm run build
+cd ../backend
+cargo build --release
+```
+
+## Basic Usage
+
+```bash
+# Basic CSV to Parquet conversion
+hydrocube --config config.yaml
+```
+
