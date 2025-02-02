@@ -1,5 +1,15 @@
 [
   {
+    "objectID": "roadmap.html",
+    "href": "roadmap.html",
+    "title": "Roadmap",
+    "section": "",
+    "text": "Below are planned features and improvements:\n\nAdditional data formats\n\nAvro, Orc, Delta Lake, Arrow, and more.\n\nKafka ingest\n\nSupport for ingesting straight from Kafka topics.\n\nIngest filter\n\nLimit the data ingested by filtering.\n\nSave reports\n\nSerialise your reports for later use.",
+    "crumbs": [
+      "Roadmap"
+    ]
+  },
+  {
     "objectID": "getting-started.html",
     "href": "getting-started.html",
     "title": "Getting Started",
@@ -27,16 +37,6 @@
     "text": "Basic Usage\n# Basic CSV to Parquet conversion\nhydrocube --config config.yaml",
     "crumbs": [
       "Getting Started"
-    ]
-  },
-  {
-    "objectID": "roadmap.html",
-    "href": "roadmap.html",
-    "title": "Roadmap",
-    "section": "",
-    "text": "Below are planned features and improvements:\n\nAdditional data formats\n\nAvro, Orc, Delta Lake, Arrow, and more.\n\nKafka ingest\n\nSupport for ingesting straight from Kafka topics.\n\nIngest filter\n\nLimit the data ingested by filtering.\n\nSave reports\n\nSerialise your reports for later use.",
-    "crumbs": [
-      "Roadmap"
     ]
   },
   {
