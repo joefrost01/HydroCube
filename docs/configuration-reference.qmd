@@ -1,0 +1,308 @@
+---
+title: "Configuration Reference"
+---
+
+# Configuration Reference
+
+This document describes all the major fields and sections in HydroCube’s YAML configuration. By default, HydroCube looks for a file named `hydrocube.yaml`, but you can specify a different path with `--config myfile.yaml`.
+
+## Overview
+
+A typical HydroCube config might look like:
+
+```yaml
+datasets:
+  - name: "example_csv"
+    table_name: "example_data"
+    format: "csv"
+    directory: "./data/csv"
+    pattern: "*.csv"
+
+  - name: "streaming_trades"
+    table_name: "trades"
+    format: "kafka"
+    kafka:
+      brokers: "localhost:9092"
+      group_id: "hydrocube_trades_group"
+      topic: "trade_events"
+
+security:
+  oauth:
+    enabled: false
+    provider: "github"
+    # ...
+  https:
+    enabled: false
+    cert_path: "cert.pem"
+    key_path: "key.pem"
+
+aggregates:
+  - name: "sales_agg"
+    table_name: "sales"
+    measures:
+      - column: "quantity"
+        function: "sum"
+      - column: "*"
+        function: "count"
+
+publishers:
+  - name: "sales_cube"
+    type: "simple"
+    aggregate: "sales_agg"
+    key_column: "product_id"
+    change_detection_column: "last_update"
+    schedule: "every_30_seconds"
+```
+
+Below, we break down each section in detail.
+
+---
+
+## 1. Datasets
+
+Each entry in `datasets:` defines one ingestion pipeline—pointing to a source (file-based or Kafka) that is loaded into a **DuckDB table**.
+
+### Common Fields
+
+- **`name`** (string): A friendly identifier for the dataset.
+- **`table_name`** (string): The DuckDB table where ingested rows are stored.
+- **`format`** (string): Either `csv`, `parquet`, or `kafka`. (Future formats may include `json`, `websockets`, etc.)
+
+### File-Based Datasets
+
+If `format` is `csv` or `parquet`, these fields apply:
+
+- **`directory`** (string): Path to the directory containing files.
+- **`pattern`** (string): File pattern to watch (e.g. `*.csv` or `data_*.parquet`).
+
+HydroCube uses a **directory watcher** to detect new or updated files. Any matching file is loaded into DuckDB. The entire file may be reloaded if it changes—incremental logic will arrive in future versions.
+
+#### Example (CSV)
+
+```yaml
+- name: "my_csv_data"
+  table_name: "my_table"
+  format: "csv"
+  directory: "/path/to/csvs"
+  pattern: "*.csv"
+```
+
+#### Example (Parquet)
+
+```yaml
+- name: "my_parquet_data"
+  table_name: "my_table"
+  format: "parquet"
+  directory: "/path/to/parquets"
+  pattern: "*.parquet"
+```
+
+### Kafka Datasets
+
+For streaming data, use `format: "kafka"` and define a `kafka:` object:
+
+- **`brokers`** (string): Comma-separated list of Kafka broker addresses (e.g. `localhost:9092`).
+- **`group_id`** (string): The Kafka consumer group ID (ensures exactly-once or at-least-once semantics).
+- **`topic`** (string): Which topic to subscribe to.
+  *(For multiple topics, either define multiple datasets or an array of topics if your code supports it.)*
+- **`schema`** (optional): If you want to parse JSON fields explicitly, you might define columns and `json_path` entries here. (Implementation details may vary.)
+
+```yaml
+- name: "trades_stream"
+  table_name: "trades"
+  format: "kafka"
+  kafka:
+    brokers: "localhost:9092"
+    group_id: "hydrocube_trades"
+    topic: "trade_events"
+    # schema: # Optional future feature
+    #   - column: "symbol"
+    #     type: "VARCHAR"
+    #     json_path: "$.symbol"
+```
+
+---
+
+## 2. Security
+
+HydroCube can operate over **HTTPS** and optionally integrate with **OAuth** for user authentication.
+
+### HTTPS Section
+
+```yaml
+security:
+  https:
+    enabled: true
+    cert_path: "cert.pem"
+    key_path: "key.pem"
+```
+
+- **`enabled`** (bool): If `true`, HydroCube listens on HTTPS instead of HTTP.
+- **`cert_path`** (string): Path to your SSL certificate.
+- **`key_path`** (string): Path to the matching private key.
+
+### OAuth Section
+
+```yaml
+security:
+  oauth:
+    enabled: false
+    provider: "github"
+    client_id: "your_client_id"
+    client_secret: "your_client_secret"
+    auth_url: "https://github.com/login/oauth/authorize"
+    token_url: "https://github.com/login/oauth/access_token"
+    redirect_url: "http://localhost:8080/auth/callback"
+    scopes:
+      - "read:user"
+      - "repo"
+```
+
+- **`enabled`** (bool): If `true`, OAuth checks are performed upon UI or API access.
+- **`provider`** (string): e.g. `github`, `google`, etc.
+- **`client_id`, `client_secret`**: Credentials from your OAuth provider.
+- **`auth_url`, `token_url`**: OAuth endpoints (varies by provider).
+- **`redirect_url`**: Where the OAuth flow returns users after login.
+- **`scopes`** (list of strings): Additional permissions.
+
+*(If you disable OAuth, HydroCube runs without external authentication—fine for local testing, not recommended for production.)*
+
+---
+
+## 3. Aggregates
+
+HydroCube has a simple aggregator feature where you define:
+
+- **`name`** (string): The aggregator’s name.
+- **`table_name`** (string): Which DuckDB base table to read from.
+- **`measures`** (list): Each measure is a `(column, function)` pair.
+- **(Optional)** dimension columns or advanced settings.
+
+**Example**
+
+```yaml
+aggregates:
+  - name: "sales_agg"
+    table_name: "sales"
+    measures:
+      - column: "quantity"
+        function: "sum"
+      - column: "*"
+        function: "count"
+```
+
+### How Aggregation Works
+
+1. HydroCube runs the aggregator query on a schedule or on demand.
+2. It groups by all columns *not listed* as measures (or you can explicitly specify dimensions in the future).
+3. The aggregator writes the results to an internal aggregated table, e.g. `sales_agg_table`, including a `last_update` based on `MAX(insert_timestamp)`.
+
+*(Future features may allow custom SQL aggregators or partial refresh logic.)*
+
+---
+
+## 4. Publishers
+
+A **publisher** defines how aggregated data is pushed to subscribers. You can have multiple publishers, each referencing an aggregator (or a custom query in the future).
+
+- **`name`** (string): Unique name of the publisher.
+- **`type`** (string): Currently `"simple"`. A future `"custom"` type will allow user-defined SQL.
+- **`aggregate`** (string): Which aggregator to read from.
+- **`key_column`** (string): The column used as a unique key for partial updates in the UI.
+- **`change_detection_column`** (string): Typically `"last_update"`.
+- **`schedule`** (string, optional): e.g. `"every_30_seconds"` or `"on_change"`.
+
+**Example**
+
+```yaml
+publishers:
+  - name: "sales_cube"
+    type: "simple"
+    aggregate: "sales_agg"
+    key_column: "product_id"
+    change_detection_column: "last_update"
+    schedule: "on_change"
+```
+
+### Publish Logic
+
+- **simple**: The publisher queries the aggregated table regularly (or only when data changes) and sends updated rows to connected WebSocket clients.
+- **Custom** (future): The user provides a SQL statement. They must also specify how to detect changes and which column is used as the key.
+
+---
+
+## 5. Miscellaneous / Global Settings
+
+You may have other top-level fields (e.g. `server_port`, logging configs, etc.). For instance:
+
+```yaml
+server:
+  port: 8080
+  # Possibly more settings
+```
+
+If not explicitly defined, HydroCube picks **sensible defaults** (like `8080` for HTTP, `8443` for HTTPS, etc.).
+
+---
+
+## 6. Putting It All Together
+
+Below is a **full example** combining everything:
+
+```yaml
+# hydrocube.yaml
+
+server:
+  port: 8080
+
+datasets:
+  - name: "offline_sales"
+    table_name: "sales"
+    format: "csv"
+    directory: "./data/csv"
+    pattern: "*.csv"
+
+  - name: "realtime_sales"
+    table_name: "sales"
+    format: "kafka"
+    kafka:
+      brokers: "localhost:9092"
+      group_id: "hydrocube_sales_group"
+      topic: "sales_topic"
+
+security:
+  https:
+    enabled: false
+  oauth:
+    enabled: false
+
+aggregates:
+  - name: "sales_agg"
+    table_name: "sales"
+    measures:
+      - column: "quantity"
+        function: "sum"
+      - column: "*"
+        function: "count"
+
+publishers:
+  - name: "sales_cube"
+    type: "simple"
+    aggregate: "sales_agg"
+    key_column: "product_id"
+    change_detection_column: "last_update"
+    schedule: "on_change"
+```
+
+With this config:
+
+1. HydroCube ingests CSV files from `./data/csv` into a `sales` table.
+2. It also ingests real-time messages from Kafka topic `sales_topic` into the **same** `sales` table.
+3. The aggregator `sales_agg` runs a group-by on `sales`, summing `quantity`.
+4. The publisher `sales_cube` pushes changes (using `last_update` for detection) to any UI subscribers, keyed by `product_id`.
+
+---
+
+## Conclusion
+
+This reference should help you **configure HydroCube** for various ingestion sources, secure it (if desired), define aggregations, and publish real-time updates. For more practical examples, see the **[How-To Guides](how-to-guides.qmd)** or the **[Core Concepts & Architecture](core-architecture.qmd)** section to understand how everything fits together.

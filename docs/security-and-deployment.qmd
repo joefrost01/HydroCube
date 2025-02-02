@@ -1,0 +1,168 @@
+---
+title: "Security & Deployment"
+---
+
+# Security & Deployment
+
+This page explains how to run HydroCube in a **secure, production-ready** environment. We cover HTTPS configuration, optional OAuth-based authentication, Docker containerization, and best practices for reliability.
+
+---
+
+## 1. HTTPS Configuration
+
+By default, HydroCube runs over **HTTP** on port 8080. To enable **HTTPS**, configure the following in your `hydrocube.yaml`:
+
+```yaml
+security:
+  https:
+    enabled: true
+    cert_path: "cert.pem"
+    key_path: "key.pem"
+```
+
+### Steps
+
+1. **Obtain a Certificate and Key**
+   - For production, use a certificate from a recognized CA (e.g., Let’s Encrypt).
+   - For testing, you can generate a self-signed cert via OpenSSL:
+     ```bash
+     openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+     ```
+2. **Point HydroCube** to those files with `cert_path` and `key_path`.
+3. **Start HydroCube** as usual:
+   ```bash
+   ./hydrocube --config hydrocube.yaml
+   ```
+   HydroCube will listen on an HTTPS port (default 8443 or specified in `server.port` if you set it).
+
+### Verifying
+
+Navigate to `https://localhost:8443`.
+- If using self-signed certs, your browser will warn you.
+- If using a CA-signed cert, the connection should be secured and show a valid TLS lock icon.
+
+---
+
+## 2. OAuth for Authentication
+
+HydroCube can integrate with **OAuth** providers (like GitHub, Google, etc.) to require user login before accessing the UI or APIs.
+
+```yaml
+security:
+  oauth:
+    enabled: true
+    provider: "github"
+    client_id: "your_client_id"
+    client_secret: "your_client_secret"
+    auth_url: "https://github.com/login/oauth/authorize"
+    token_url: "https://github.com/login/oauth/access_token"
+    redirect_url: "http://yourdomain.com/auth/callback"
+    scopes:
+      - "read:user"
+      - "repo"
+```
+
+### Flow
+
+1. **User Accesses** HydroCube’s UI at `https://yourdomain.com`.
+2. **Redirect**: HydroCube sends them to the OAuth provider’s login screen.
+3. **Login**: After login, the provider redirects back to `redirect_url` with a token or code.
+4. **Token Exchange**: HydroCube verifies the token.
+5. **UI Unlocks**: The user can now view real-time dashboards.
+
+*(Implementation specifics vary by provider. Ensure your `redirect_url` matches what you registered in your OAuth settings.)*
+
+### Best Practices
+
+- Always combine OAuth with **HTTPS**.
+- Limit requested scopes to the minimum needed for identification.
+- Consider adding **role-based** or **group-based** checks in future if you need fine-grained access control.
+
+---
+
+## 3. Docker Deployment
+
+HydroCube is ideal for containerization since it’s a **single binary** with minimal dependencies. You can build your own image or use a published one (if provided).
+
+### 3.1. Example Dockerfile
+
+Below is a simple Dockerfile for a **distroless** container:
+
+```dockerfile
+# --- Build Stage ---
+FROM rust:1.84 as builder
+
+WORKDIR /app
+COPY . .
+RUN cargo build --release
+
+# --- Final Stage (Distroless) ---
+FROM gcr.io/distroless/cc
+
+# Copy the binary from the builder stage
+COPY --from=builder /app/target/release/hydrocube /usr/local/bin/hydrocube
+
+# Copy config if desired, or mount at runtime
+COPY hydrocube.yaml /etc/hydrocube.yaml
+
+# Default command: run HydroCube
+CMD ["/usr/local/bin/hydrocube", "--config", "/etc/hydrocube.yaml"]
+```
+
+### 3.2. Building & Running
+
+1. **Build the image**:
+   ```bash
+   docker build -t hydrocube:latest .
+   ```
+2. **Run the container**:
+   ```bash
+   docker run -p 8080:8080 hydrocube:latest
+   ```
+   - By default, it exposes HTTP on port 8080.
+   - If using HTTPS, you might map `8443:8443`.
+
+### 3.3. Volumes & Data Persistence
+
+HydroCube uses **DuckDB**, which by default can store data in memory or in a file. If you want to persist data between container restarts:
+
+1. **Set a file path** for DuckDB in your config or code (e.g., `/data/hydrocube.duckdb`).
+2. **Mount a volume** to `/data/`:
+   ```bash
+   docker run -p 8080:8080 -v /my/local/data:/data hydrocube:latest
+   ```
+   This ensures your DuckDB database and any logs remain available across restarts.
+
+---
+
+## 4. Production Considerations
+
+### 4.1. Scaling & Performance
+
+- **Concurrency**: DuckDB is embedded but supports concurrent read access. Writes can be queued behind a single writer. For most mid-sized workloads, this is plenty fast.
+- **Multiple Instances**: If you need more concurrency, you could run multiple HydroCube instances behind a load balancer, though each instance has its own embedded DB. (A shared storage approach or external database might be considered in future expansions.)
+
+### 4.2. Monitoring & Logging
+
+- **Logs**: By default, HydroCube logs to stdout (info or debug level). Capture these logs in your container orchestration or file system.
+- **Metrics**: Future versions may integrate with Prometheus or another metrics platform. In the meantime, you can track ingestion rates, aggregator runtimes, etc., by parsing logs or hooking into the code directly.
+
+### 4.3. Updates & Downtime
+
+- **Rolling Updates**: Because it’s a single binary, you can simply stop the old version and start the new one—assuming minimal downtime is acceptable.
+- **Configuration Changes**: If you change `hydrocube.yaml`, a restart is typically required to reload ingestion watchers, aggregator definitions, etc.
+
+### 4.4. High Availability
+
+- **Single Node**: HydroCube was designed to be lightweight and self-contained, so it’s not inherently multi-node or distributed.
+- **Backups**: For mission-critical data, backup your DuckDB file or replicate the source data.
+
+---
+
+## Conclusion
+
+By combining **HTTPS** for secure transport, **OAuth** for user authentication, and **Docker** for container-based deployments, you can confidently run HydroCube in production environments. Keep in mind DuckDB’s single-writer concurrency model if you expect extremely high ingest rates, and consider additional monitoring or backups for mission-critical deployments.
+
+**Next Steps**:
+- Return to the **[Configuration Reference](config-reference.qmd)** if you need more detail on security fields.
+- Check out the **[How-To Guides](how-to-guides.qmd)** for practical setup examples.

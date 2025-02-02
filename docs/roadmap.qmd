@@ -2,16 +2,83 @@
 title: "Roadmap"
 ---
 
-Below are planned features and improvements:
+# HydroCube Roadmap
 
-1. **Additional data formats**
-   - Avro, Orc, Delta Lake, Arrow, and more.
+This page outlines major **upcoming features** and **long-term goals** for HydroCube. It’s not set in stone—priorities can shift based on user feedback and contributions. If you have new ideas or want to tackle a feature, please let us know by [opening a GitHub issue](https://github.com/joefrost01/HydroCube/issues).
 
-2. **Kafka ingest**
-   - Support for ingesting straight from Kafka topics.
+---
 
-3. **Ingest filter**
-   - Limit the data ingested by filtering.
+## 1. Near-Term Goals
 
-4. **Save reports**
-   - Serialise your reports for later use.
+### 1.1. Custom Aggregator Queries
+- **Description**: Allow advanced SQL definitions, including JOINs, CASE statements, and complex transforms.
+- **Why It Matters**: The current “simple aggregator” covers basic group-bys. Custom queries will let power users do on-the-fly calculations and merges (similar to ActivePivot’s *calculated measures*).
+- **Status**: In design phase; targeting next minor release.
+
+### 1.2. Alerts & Trigger Logic
+- **Description**: Let users define conditions (e.g., “when sum(quantity) > 1000, send Slack/email alert”).
+- **Why It Matters**: Real-time analytics often needs real-time alerts, so you’re not just visualizing changes but also **responding** to them.
+- **Status**: Under discussion; awaiting design proposals from the community.
+
+---
+
+## 2. Medium-Term Plans
+
+### 2.1. Additional Data Sources
+- **Description**: Plugins for Postgres, ClickHouse, or CDC streams. Possibly letting HydroCube connect directly to an external DB or replicate changes in near real time.
+- **Rationale**: Many trading desks or enterprise systems rely on streaming from relational DBs, so native CDC integration (e.g., Debezium) would be valuable.
+
+### 2.2. LLM-Based Natural Language Querying
+- **Description**: Enable users to ask questions in plain English (or other languages), with HydroCube translating those queries into SQL automatically via large language models.
+- **Why It Matters**: Empowers non-technical stakeholders to discover insights without writing SQL, broadening HydroCube’s accessibility.
+- **Status**: Conceptual exploration. Implementation may involve an embedded or hosted LLM that can safely interpret user prompts and map them to DuckDB queries.
+
+### 2.3. Multi-Tenant / Role-Based Security
+- **Description**: Adding more granular user roles, dataset-level permissions, or multi-tenant separation.
+- **Why It Matters**: Larger teams or organizations might want stricter control over who can see or modify certain datasets or aggregates.
+
+### 2.4. JSON/REST API
+- **Description**: Expose a simple REST or GraphQL endpoint for retrieving aggregated data, so that non-WebSocket clients or scripts can pull data programmatically.
+- **Goal**: Complement the real-time WebSocket with a “pull” mechanism.
+
+---
+
+## 3. Long-Term Vision
+
+### 3.1. Distributed / Clustered Mode
+- **Description**: Scale beyond a single-node embedded DuckDB instance, possibly using shared storage or partitioning.
+- **Challenge**: Preserving real-time analytics speed while ensuring data consistency across nodes.
+- **Potential Approaches**: Integrate a distributed store or replicate DuckDB files among nodes.
+
+### 3.2. UI Builder Enhancements
+- **Description**: Extend the FINOS Perspective UI with drag-and-drop components, custom charts, or theming.
+- **Why**: Empower non-technical users to create dashboards on the fly without editing config files.
+
+### 3.3. Automated Tuning
+- **Description**: Tools to analyze queries and automatically suggest indexing, column reordering, or partitioning.
+- **Benefit**: Simplify large-scale or complex usage for power users.
+
+---
+
+## 4. Contributing to the Roadmap
+
+1. **Check the Issue Tracker**: We often label future work with `enhancement` or `roadmap` tags.
+2. **Open a Proposal**: If you have a big idea—open a GitHub issue titled “Proposal: [Feature Name].” Include motivations, design sketches, or examples.
+3. **Discuss & Refine**: We’ll review, offer feedback, and (if it aligns with HydroCube’s direction) merge it into the official roadmap.
+
+---
+
+## 5. Timelines & Releases
+
+- **Release Cadence**: We aim for a minor release every ~4-6 weeks with improvements, fixes, and new features.
+- **Versioning**: HydroCube follows [SemVer](https://semver.org/) where major changes or backward-incompatible updates increment the major version.
+
+---
+
+## 6. Stay Involved
+
+- **GitHub Discussions**: For feature brainstorming and design.
+- **GitHub Issues**: For bug reports, small enhancements, or user support.
+- **Pull Requests**: If you’re ready to implement a feature from this roadmap, open a PR early and let’s collaborate!
+
+Thank you for shaping HydroCube’s future!

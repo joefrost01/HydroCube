@@ -1,0 +1,133 @@
+---
+title: "Core Concepts & Architecture"
+---
+
+## Overview
+
+**HydroCube** provides a near-real-time data pipeline, letting you ingest raw data from multiple sources, transform and aggregate it on schedule (or on demand), and then publish the results to connected clients. The diagram below shows the big picture in a **vertical** layout:
+
+```{mermaid}
+%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
+flowchart TB
+    subgraph Ingestion
+        A["File Sources (CSV, Parquet)"] -->|Directory Watch| DB[(DuckDB)]
+        B["Kafka (Streaming)"] -->|Consumer| DB
+    end
+
+    subgraph HydroCube
+        DB --> AGG["Aggregator (Scheduled/On-Demand)"]
+        AGG --> MAT["Materialized Table (Aggregates)"]
+        MAT -->|Change Detection| PUB["Publisher (WebSockets)"]
+        PUB --> UI["FINOS Perspective (UI)"]
+    end
+```
+
+1. **Ingestion**
+   HydroCube watches directories for CSV or Parquet files and connects to streaming data (e.g., Kafka). Incoming rows are inserted into **DuckDB** tables, each tied to a dataset definition in your config.
+
+2. **Aggregation**
+   A lightweight “aggregator” runs SQL queries against DuckDB—either on a schedule or on demand—grouping data by dimension columns and computing measures (sum, count, average, etc.).
+
+3. **Publishing**
+   Once aggregates are ready, the **publisher** pushes incremental changes (deltas) over WebSockets to the **FINOS Perspective** UI (or any other subscribing client). This means users see data updates in near real time.
+
+Read on for more detail about each piece.
+
+---
+
+## 1. Datasets (Ingestion)
+
+A **dataset** in HydroCube is a configuration block that describes:
+
+- **Format**: `csv`, `parquet`, or `kafka`
+- **Location**: a directory/pattern or a Kafka topic/broker
+- **Table Name**: where rows should be stored in DuckDB
+
+When HydroCube starts, it spawns the ingestion pipeline for each dataset. For file-based datasets, it uses a **directory watcher**—any new or updated files matching the pattern are (re)ingested into the specified table. For Kafka, it uses a **consumer** that continuously pulls new messages.
+
+### Insert Timestamp
+
+Every row ingested gets an `insert_timestamp`, which becomes crucial for **change detection** later on.
+
+---
+
+## 2. Aggregation
+
+The **aggregator** transforms raw data into summarized form (think OLAP-style group-bys and measures). HydroCube supports a “simple” aggregator config where you define:
+
+- **Measures**: e.g. `SUM(quantity)`, `COUNT(*)`, `AVG(price)`
+- **Dimensions**: All other columns become grouping keys by default (or you can specify them explicitly)
+
+When the aggregator runs:
+
+1. It queries the base table (e.g., `sales`).
+2. Groups rows by each dimension column.
+3. Calculates the measures (sum, count, average, etc.).
+4. Writes the results to an **aggregated table**, along with a “last_update” value (like `MAX(insert_timestamp)`).
+
+*(In future releases, you can define a **custom aggregator** with freeform SQL for advanced joins and transformations.)*
+
+---
+
+## 3. Publishing
+
+HydroCube’s publisher watches the **aggregated table**. Whenever new or updated rows appear (based on `last_update`), it sends **incremental updates** over a WebSocket connection to any subscribed clients. Each row includes:
+
+- **Key column(s)** for partial updates in the front-end (e.g. `product_id`)
+- **Measure columns** (e.g. `total_quantity`, `avg_price`)
+- **`last_update`** to track changes
+
+### WebSockets & Subscriptions
+
+Clients (like the FINOS Perspective UI) subscribe to a “cube” (an aggregator name or table). If no client is subscribed, HydroCube can skip the publisher work. If multiple clients subscribe, they all receive the updates in near real time.
+
+---
+
+## 4. UI & Reports
+
+HydroCube embeds a front-end built on **FINOS Perspective**, allowing interactive pivot tables, charts, and filters in your browser.
+
+1. **Automatic UI**
+   By default, starting HydroCube serves the Perspective UI at `http://localhost:8080` (or your configured port).
+
+2. **Reports**
+   You can save specific **views** (pivot layouts, filters, etc.) as “reports.” Teams can share or reload an analysis state quickly.
+
+*(The UI is optional—if you prefer, you can build your own front-end or integration using the **WebSocket** or future JSON API.)*
+
+---
+
+## 5. Example Data Flow in Detail
+
+Below is a second diagram focusing on how the aggregator and publisher process interact in a top-to-bottom flow:
+
+```{mermaid}
+%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
+flowchart TB
+    A["DuckDB Base Table (with insert_timestamp)"] --> AGG["Aggregator"]
+    AGG --> M["Aggregated Table"]
+    M -->|Diff by last_update| PUB["Publisher"]
+    PUB --> W["WebSocket Stream (Arrow or JSON)"]
+    W --> C["Perspective or Custom Clients"]
+```
+
+1. **Base Table**
+   Rows from CSV, Parquet, or Kafka land here, each with an `insert_timestamp`.
+2. **Aggregator**
+   Periodically or on demand, it calculates sums, counts, averages, etc., writing results to the aggregated table and tracking `MAX(insert_timestamp)` as `last_update`.
+3. **Publisher**
+   Compares `last_update` to previously published rows. Only changes or new rows are sent over the WebSocket.
+4. **Clients**
+   The UI (Perspective) or any custom subscriber receives partial row updates in near real time.
+
+---
+
+## Summary & Next Steps
+
+- **Ingestion**: You define **datasets** with file watchers or Kafka config.
+- **Aggregation**: A “simple aggregator” runs group-bys, storing results in a new table.
+- **Publishing**: HydroCube uses WebSockets to broadcast changed data to subscribed clients.
+
+**Where to go next**:
+- **[Configuration Reference](config-reference.qmd)**: Detailed YAML fields, examples, and defaults.
+- **[How-To Guides](how-to-guides.qmd)**: Step-by-step instructions for CSV ingestion, basic aggregates, UI usage, and more.

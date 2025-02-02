@@ -3,59 +3,65 @@
 
 # HydroCube
 
-**HydroCube** is a near realtime OLAP server that allows you to ingest data from multiple sources and query it in a fast and memory-efficient way. It is designed to be easy to use, secure, and scalable. It is written in Rust and uses DuckDB for the query engine. It has a full UI built with FINOS Perspective.
+**HydroCube** is a **near-real-time OLAP server** that ingests data from multiple sources (CSV, Parquet, Kafka, and more) and runs lightning-fast queries in **DuckDB**. Written in **Rust** and bundled with a **FINOS Perspective** UI, HydroCube offers a single-binary deployment that’s **secure**, **scalable**, and **easy to use**—no extra components required.
+
+## Highlights
+
+- **Continuous Ingestion**  
+  Pull data from CSV, Parquet, JSON, or Kafka.
+- **Blazing-Fast Queries**  
+  Relies on **DuckDB** for vectorized execution and minimal memory overhead.
+- **Embeddable UI**  
+  Built-in **FINOS Perspective** for pivoting, charting, and slicing data in real time.
+- **One Binary**  
+  Rust-based and self-contained—just download and run, or drop into a **Docker** container.
+- **Security & Auth**  
+  Supports **HTTPS** by default, plus **OAuth** for authentication.
+- **Multi-User**  
+  Share up-to-date analytics across your team with real-time WebSocket updates.
 
 ## Documentation
 
-Check out the **[official documentation](https://joefrost01.github.io/HydroCube/)** for a quick start and usage guides.
+For **installation**, **configuration**, and **how-to guides**, check out the **[official docs](https://joefrost01.github.io/HydroCube/)**.
 
-## Features
-- **Continuous data ingest** From multiple formats (CSV, Parquet, JSON)
-- **Fast and Memory-Efficient**: Uses DuckDB for the query engine
-- **Full UI**: Uses FINOS Perspective for UI
-- **Single Binary**: Runs from a single binary, no dependencies, just point it at your data and run!
-- **Written in Rust**: Fast, safe, and concurrent
-- **Oauth for Authentication**: Bring the authentication method of your choice
-- **Secure**: Uses HTTPS by default
-- **Docker Ready**: No dependencies, ideally suited for distroless containers
-- **Multi User**: Supports multiple users, ideal for teams that need up the minute data
+## Quick Installation
 
-## Installation
+1. **Grab the Latest Release**  
+   From [GitHub Releases](https://github.com/joefrost01/HydroCube/releases) for Linux, macOS, or Windows.
+2. **Run the Binary**  
+   Place it in your `$PATH` or reference it directly.
 
-1. **Download the latest release** from [GitHub Releases](https://github.com/joefrost01/HydroCube/releases).
-    - Linux: `x86_64-unknown-linux-gnu`
-    - macOS: `x86_64-apple-darwin` or `aarch64-apple-darwin`
-    - Windows: `x86_64-pc-windows-msvc`
-2. **Place the executable** in your `$PATH` (e.g., `/usr/local/bin`) or reference it directly.
-
-### Building from Source
-
-Alternatively, clone this repository and build:
+## Building from Source
 
 ```bash
 git clone https://github.com/joefrost01/HydroCube.git
+cd HydroCube
 cargo build --release
 ```
 
-## Basic Usage
+This produces a `hydrocube` (or `hydrocube.exe`) in `target/release`.
+
+## Usage
+
+Run HydroCube with a simple YAML config:
 
 ```bash
-hydrocube --config config.yaml
+./hydrocube --config my_config.yaml
 ```
+
+By default, it serves the Perspective UI at `http://localhost:8080`.  
+Check the docs for advanced ingestion setups, security, and deployment best practices.
 
 ## Roadmap
 
-Below are planned features and improvements:
+- **Custom Aggregator Queries** – Advanced SQL transformations beyond simple group-bys.
+- **Alerts & Triggers** – Real-time notifications when aggregates cross thresholds.
+- **Additional Data Sources** – Postgres, ClickHouse, CDC streams, etc.
+- **Natural Language Querying** – LLM-based interface to let users ask “plain English” questions.
+- **Multi-Tenant Security** – Role-based permissions and dataset-level access control.
 
-1. **Additional data formats**
-    - Avro, Orc, Delta Lake, Arrow, and more.
+View the full roadmap in the [docs](https://joefrost01.github.io/HydroCube/) or our [GitHub Issues](https://github.com/joefrost01/HydroCube/issues).
 
-2. **Kafka ingest**
-    - Support for ingesting straight from Kafka topics.
+---
 
-3. **Ingest filter**
-    - Limit the data ingested by filtering.
-
-4. **Save reports**
-    - Serialise your reports for later use.
-
+© 2025 HydroCube – **Lightweight, Real-Time Analytics**. Contributions welcome! Check the [Contributor Guide](https://joefrost01.github.io/HydroCube/) for details.

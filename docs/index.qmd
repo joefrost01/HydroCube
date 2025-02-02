@@ -2,21 +2,70 @@
 title: "HydroCube Overview"
 ---
 
-**HydroCube** is a near realtime OLAP server that allows you to ingest data from multiple sources and query it in a fast and memory-efficient way. It is designed to be easy to use, secure, and scalable. It is written in Rust and uses DuckDB for the query engine. It has a full UI built with FINOS Perspective.
+## Introduction
 
-Why HydroCube?
-It's an analytics cube designed to be very light in every respect so we named it after the lightest element, Hydrogen. It's also a cube, so we named it HydroCube.
+**HydroCube** is a **near-real-time OLAP server** designed to ingest, aggregate, and query data rapidly from multiple sources. Written in **Rust** and powered by **DuckDB**, it offers a fast, memory-efficient analytics engine that you can deploy as a **single binary**—no separate services or complex dependencies required. HydroCube’s UI, built on **FINOS Perspective**, provides rich visualizations for real-time analytics and collaborative data exploration.
+
+### Why “HydroCube”?
+
+We wanted a name that reflects both lightness and the concept of an analytics “cube.”
+- **Hydro**: Inspired by **hydrogen**, the lightest element—evoking HydroCube’s minimal footprint.  It also evokes a sense of flow in the same way that your data flows through HydroCube
+- **Cube**: Signifying the **OLAP cube** concept, where data is sliced and diced across multiple dimensions.
+
 
 ## Key Features
 
-- **Continuous data ingest** From multiple formats (CSV, Parquet, JSON)
-- **Fast and Memory-Efficient**: Uses DuckDB for the query engine
-- **Full UI**: Uses FINOS Perspective for UI
-- **Single Binary**: Runs from a single binary, no dependencies, just point it at your data and run!
-- **Written in Rust**: Fast, safe, and concurrent
-- **Oauth for Authentication**: Bring the authentication method of your choice
-- **Secure**: Uses HTTPS by default
-- **Docker Ready**: No dependencies, ideally suited for distroless containers
-- **Multi User**: Supports multiple users, ideal for teams that need up the minute data
+- **Continuous Data Ingest**
+  Seamlessly pull from CSV, Parquet, JSON, or other file-based sources. Real-time ingestion from Kafka is in the works
 
-Please see **[Getting Started](getting-started.qmd)** to install and run HydroCube.
+- **Fast & Memory-Efficient**
+  Uses **DuckDB**’s vectorized execution engine, allowing lightning-fast queries even on large datasets.
+
+- **Full UI with FINOS Perspective**
+  An interactive, in-browser experience for visualizing real-time data. Slice, dice, pivot, and chart your data without extra tools.
+
+- **Single-Binary Deployment**
+  Download and run—no external databases or separate web servers required. Perfect for minimal footprints or container-based deployments.
+
+- **Written in Rust**
+  Leveraging Rust’s safety guarantees and concurrency model ensures robust performance and fewer runtime surprises.
+
+- **Secure by Default**
+  Supports **HTTPS** out of the box, and can integrate with **OAuth** for authentication. Securely share analytics with your team.
+
+- **Multi-User Friendly**
+  Enable multiple users to view and interact with real-time dashboards simultaneously.
+
+- **Docker-Ready**
+  Bundle HydroCube as a **distroless** container—no OS overhead needed for a flexible and compact deployment.
+
+## High-Level Architecture
+
+Below is a simple Mermaid diagram illustrating how HydroCube fits into your data flow:
+
+```{mermaid}
+%%{init: {'theme': 'neutral', 'themeCSS': '.node rect { rx: 10; ry: 10; }'}}%%
+flowchart LR
+    subgraph Sources
+        A["CSV/Parquet Files"] -->|File Watch| HC
+        B["Kafka (Coming soon)"] -->|Consumer| HC
+    end
+    subgraph HydroCube
+        HC["HydroCube (Rust + DuckDB)"]
+        UI["FINOS Perspective (UI)"]
+    end
+    HC -->|WebSockets| UI
+```
+
+
+1. **Sources**: You configure one or more datasets—local files (CSV, Parquet) or streaming data (Kafka).
+2. **HydroCube**:
+   - Loads raw data into **DuckDB** tables.
+   - Aggregates and transforms your data in near real time.
+   - Serves the embedded UI for exploration and dashboards.
+3. **UI**: The **FINOS Perspective**-powered frontend connects via **WebSockets** for live updates to your analytics views.
+
+## Next Steps
+
+- Head over to **[Getting Started](getting-started.qmd)** for installation instructions and your first HydroCube run.
+- Explore how to configure ingestion, define aggregates, and publish live data to your dashboards.

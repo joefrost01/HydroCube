@@ -1,0 +1,184 @@
+---
+title: "Contributor & Developer Guide"
+---
+
+# Contributor & Developer Guide
+
+Welcome! We appreciate your interest in contributing to **HydroCube**. This guide explains how to set up a development environment, build from source, run tests, and submit pull requests. Whether you’re fixing a small bug or adding a major feature, we hope this document makes your workflow easier.
+
+---
+
+## 1. Prerequisites
+
+- **Rust 1.84+** (or the latest stable toolchain). Install via [rustup](https://www.rust-lang.org/tools/install).
+- **Git** for version control.
+- **Optional**: A local [Kafka](https://kafka.apache.org/) instance if you plan to test Kafka ingestion.
+- **Optional**: Docker, if you want to build & run HydroCube in a container.
+
+Ensure you have a **GitHub** account if you plan to submit issues or pull requests.
+
+---
+
+## 2. Cloning the Repository
+
+```bash
+git clone https://github.com/joefrost01/HydroCube.git
+cd HydroCube
+```
+
+You now have the HydroCube code on your local machine. For a quick build test:
+
+```bash
+cargo build --release
+```
+
+The compiled binary will appear in `target/release/hydrocube`.
+
+---
+
+## 3. Project Structure
+
+Below is a simplified overview of the directories and files:
+
+```
+HydroCube/
+├── src/
+│   ├── main.rs             # Entry point
+│   ├── config/             # Configuration structs & parsing
+│   ├── ingestion/          # Directory watchers, Kafka consumers
+│   ├── aggregator/         # Aggregation logic
+│   ├── publisher/          # WebSocket publishing
+│   ├── ui/                 # Embedded UI logic (Perspective)
+│   └── ...
+├── tests/                  # Integration tests
+├── docs/                   # Quarto docs (.qmd files)
+├── Cargo.toml              # Rust dependencies & metadata
+└── README.md               # Basic project overview
+```
+
+Most core logic is under `src/`, organized by feature (ingestion, aggregator, publisher, etc.). Integration tests live in `tests/`, and docs in `docs/`.
+
+---
+
+## 4. Building & Running
+
+### 4.1. Standard Development Build
+
+```bash
+cargo build
+```
+
+This produces a **debug** build (`target/debug/hydrocube`), which is faster to compile but larger and less optimized.
+
+### 4.2. Release Build
+
+```bash
+cargo build --release
+```
+
+Produces an optimized binary in `target/release/hydrocube`. Best for production or performance testing.
+
+### 4.3. Running HydroCube
+
+You can run HydroCube directly:
+
+```bash
+./target/debug/hydrocube --config my_config.yaml
+```
+
+If no config is provided, HydroCube either uses a default internal config or tries `hydrocube.yaml` in the current directory.
+
+---
+
+## 5. Testing
+
+### 5.1. Unit Tests
+
+Each module may have inline tests. Run them all with:
+
+```bash
+cargo test
+```
+
+### 5.2. Integration Tests
+
+The `tests/` folder contains integration tests that launch HydroCube in various scenarios (e.g., CSV ingestion, Kafka ingestion, aggregator checks). They’re also run with:
+
+```bash
+cargo test
+```
+
+If you need to isolate a single test:
+
+```bash
+cargo test test_csv_ingestion
+```
+
+### 5.3. Test with Kafka
+
+Some tests might require a local Kafka broker. You can use Docker or a local Kafka install. For instance:
+
+```bash
+docker run -p 9092:9092 -e ALLOW_PLAINTEXT_LISTENER=yes bitnami/kafka:latest
+```
+
+Then run the test suite. Some Kafka tests may be skipped if Kafka isn’t available.
+
+---
+
+## 6. Code Style & Standards
+
+- **Formatting**: We use Rust’s built-in `cargo fmt` for code formatting. Please run it before committing.
+- **Linting**: Run `cargo clippy` to catch common pitfalls and style issues.
+- **Comments & Docs**: Where possible, add doc comments (`///`) for public functions and modules. This helps generate reference documentation with `cargo doc`.
+
+---
+
+## 7. Submitting a Pull Request
+
+1. **Fork** the HydroCube repo and create a new branch for your feature or bug fix.
+2. **Write Code & Tests**: Make your changes in a small, logical commit(s). Add or update tests if relevant.
+3. **Format & Lint**: Ensure `cargo fmt` and `cargo clippy` show no critical issues.
+4. **Open a Pull Request**:
+   - Include a descriptive title and summary of changes.
+   - Reference any related issues (e.g., “Fixes #123”).
+   - The maintainers will review, request changes if needed, and eventually merge.
+
+### Review & Merge
+
+- **CI**: Our GitHub workflow typically runs `cargo build --release`, `cargo test`, and docs checks. Make sure your PR passes these.
+- **Feedback**: Maintainers may ask for clarity in code, naming, or additional tests.
+
+---
+
+## 8. Documentation Contributions
+
+We use **Quarto** (`.qmd` files) in the `docs/` folder. If you want to enhance the user docs or fix typos:
+
+1. **Edit the relevant `.qmd`** file.
+2. **Build the docs** locally if you want to preview them:
+   ```bash
+   quarto preview docs/
+   ```
+3. **Submit a pull request** with your changes.
+
+---
+
+## 9. Roadmap & Ideas
+
+We maintain a **Roadmap** in the [GitHub issues](https://github.com/joefrost01/HydroCube/issues) or a pinned discussion. Some highlights:
+
+- **Custom Aggregator**: Allow user-defined SQL queries beyond the “simple aggregator.”
+- **Additional Data Sources**: PostgreSQL, ClickHouse, or CDC streams.
+- **Alerts / Triggers**: Real-time alerting when aggregates cross a threshold.
+- **Improved Security**: Role-based access control or multi-tenant support.
+
+Feel free to propose features or improvements—contributions are welcome!
+
+---
+
+## 10. Thank You for Contributing!
+
+By contributing to HydroCube, you’re helping shape a powerful, lightweight real-time analytics platform. Whether you open a small bug fix, write documentation, or implement a major feature, we appreciate your support.
+
+**Questions?** Join us on GitHub [Issues](https://github.com/joefrost01/HydroCube/issues) or open a discussion. We look forward to collaborating with you!

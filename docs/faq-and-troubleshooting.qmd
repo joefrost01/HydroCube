@@ -1,0 +1,117 @@
+---
+title: "FAQ & Troubleshooting"
+---
+
+# FAQ & Troubleshooting
+
+This page addresses common questions, errors, and performance tips for HydroCube. If you don’t see your issue here, feel free to [open a GitHub issue](https://github.com/joefrost01/HydroCube/issues).
+
+---
+
+## 1. Ingestion
+
+### 1.1. My CSV Files Aren’t Being Loaded
+
+**Possible Causes**:
+- The file pattern doesn’t match. For instance, `pattern: "*.csv"` but your file is `data.CSV` (uppercase).
+- The directory watcher isn’t triggered if the file has no changes. Try editing the file or create a new one.
+
+**Solutions**:
+- Double-check your `directory` path and `pattern`.
+- Make sure you have write permissions on the directory.
+- Check HydroCube’s logs (stdout) for any errors.
+
+### 1.2. Kafka Consumer Isn’t Receiving Messages
+
+**Possible Causes**:
+- Wrong broker address or port.
+- Topic name is incorrect.
+- Firewall or Docker networking issues.
+
+**Solutions**:
+- Verify you can reach Kafka via `kafkacat` or a similar CLI tool.
+- Check that your `group_id` and `topic` match the actual Kafka setup.
+- Look at HydroCube’s logs for any “failed to connect” messages.
+
+---
+
+## 2. UI / WebSockets
+
+### 2.1. UI Fails to Load
+
+**Possible Causes**:
+- HydroCube is running on HTTPS but you’re hitting an HTTP URL.
+- A firewall or reverse proxy is blocking the port.
+
+**Solutions**:
+- Ensure you visit the correct scheme (HTTPS vs. HTTP) and port.
+- If using a proxy, confirm it’s forwarding requests properly.
+
+### 2.2. Real-Time Updates Don’t Appear
+
+**Possible Causes**:
+- No aggregator or publisher defined for your dataset.
+- No new rows are actually arriving in DuckDB.
+- The user hasn’t toggled the subscription for that cube in the UI.
+
+**Solutions**:
+- Check you have a `publishers:` block referencing an `aggregate:`.
+- In the UI, look for the “Subscribe” toggle.
+- Inspect logs for aggregator or WebSocket errors.
+
+---
+
+## 3. Security & OAuth
+
+### 3.1. Browser Warnings About SSL
+
+If you used a **self-signed certificate**, most browsers will warn you. This is normal for local testing. For production, use a CA-signed cert from Let’s Encrypt or another authority.
+
+### 3.2. OAuth Redirect Loops
+
+**Possible Causes**:
+- `redirect_url` in your config doesn’t match what the provider expects.
+- The OAuth credentials are invalid or were revoked.
+
+**Solutions**:
+- Update your OAuth provider’s app settings to match HydroCube’s `redirect_url`.
+- Double-check the `client_id` and `client_secret`.
+
+---
+
+## 4. Performance Tips
+
+### 4.1. Large CSVs Take Too Long
+
+- **Batch Inserts**: HydroCube already batches inserts, but if you’re updating massive CSV files, consider splitting them into smaller chunks or using Parquet for more efficient loading.
+- **Memory**: Provide enough RAM for DuckDB to do vectorized processing.
+- **SSD / Fast Storage**: If your data file is huge, an SSD helps speed ingest.
+
+### 4.2. High-Frequency Kafka Streams
+
+- **One Writer Limit**: DuckDB has a single-writer concurrency model, so extremely high message rates could form a backlog.
+- **Partitioning or Sharding**: If ingestion becomes a bottleneck, consider splitting topics or running multiple HydroCube instances (though each would have its own embedded DB).
+
+---
+
+## 5. General Errors & Logs
+
+### 5.1. Checking Logs
+
+HydroCube logs to **stdout** by default. You’ll see informational messages about ingestion, aggregator runs, and publisher updates. For debugging, you may want to run with higher verbosity or pipe logs into a monitoring system.
+
+### 5.2. Common Log Messages
+
+- **“Ingested X rows from file ...”**: File watcher successfully loaded data.
+- **“Kafka consumer error ...”**: A problem with broker connectivity or message parsing.
+- **“Aggregator updated table ...”**: The aggregator just recalculated.
+- **“WebSocket error ...”**: Potential network issues or unsubscribes.
+
+---
+
+## 6. Still Stuck?
+
+- **Check [Security & Deployment](security-deployment.qmd)** for more advanced setups.
+- **Ask the Community**: [GitHub Issues](https://github.com/joefrost01/HydroCube/issues) or the project’s discussion boards.
+- **Contribute**: If you found a bug or want a new feature, please open a pull request or proposal!
+

@@ -1,0 +1,230 @@
+---
+title: "How-To Guides"
+---
+
+# How-To Guides
+
+This section provides **step-by-step tutorials** for common HydroCube tasks. Each guide walks you through the required configuration, commands, and expected outcomes—so you can get productive quickly!
+
+## 1. Ingesting a CSV Dataset
+
+### 1.1. Create a Minimal Config
+
+1. **Make a directory** (e.g., `./data/csv`) and place one or more CSV files inside it. For example, `sales.csv`:
+
+   ```csv
+   product_id,quantity,price
+   A100,10,15.5
+   B200,25,9.99
+   ```
+
+2. **Write a `hydrocube.yaml`** referencing the CSV directory:
+
+   ```yaml
+   datasets:
+     - name: "offline_sales"
+       table_name: "sales"
+       format: "csv"
+       directory: "./data/csv"
+       pattern: "*.csv"
+   ```
+
+   That’s it! This tells HydroCube to watch the `./data/csv` folder for any `.csv` files and load them into a DuckDB table named `sales`.
+
+### 1.2. Run HydroCube
+
+```bash
+./hydrocube --config hydrocube.yaml
+```
+
+HydroCube will:
+1. Start a **directory watcher** on `./data/csv`.
+2. Parse each matching CSV file (like `sales.csv`) into the `sales` table in DuckDB.
+3. Serve its UI (Perspective) at `http://localhost:8080`.
+
+### 1.3. Verify in the UI
+
+Open your browser to `http://localhost:8080`.
+- You should see HydroCube’s embedded FINOS Perspective UI.
+- Go to **Datasets** (or your equivalent navigation). You’ll see `sales`.
+- Explore the columns (`product_id`, `quantity`, `price`), then pivot or chart them as desired.
+
+---
+
+## 2. Ingesting a Parquet Dataset
+
+### 2.1. Prepare Parquet Files
+
+Place one or more `.parquet` files in a directory, e.g. `./data/parquet`.
+
+### 2.2. Update Config
+
+```yaml
+datasets:
+  - name: "parquet_data"
+    table_name: "my_parquet_table"
+    format: "parquet"
+    directory: "./data/parquet"
+    pattern: "*.parquet"
+```
+
+### 2.3. Run HydroCube
+
+Same command:
+
+```bash
+./hydrocube --config hydrocube.yaml
+```
+
+HydroCube will detect `.parquet` files and load them into `my_parquet_table`. You can now query or visualize them in the UI.
+
+---
+
+## 3. Streaming Data from Kafka
+
+### 3.1. Prerequisites
+
+1. **Kafka Broker**: Make sure you have a Kafka instance running (e.g., `localhost:9092`).
+2. **Topic**: For example, `sales_topic`.
+3. **Messages**: Your producer is sending JSON or another format to `sales_topic`.
+
+### 3.2. Config Snippet
+
+```yaml
+datasets:
+  - name: "realtime_sales"
+    table_name: "sales"
+    format: "kafka"
+    kafka:
+      brokers: "localhost:9092"
+      group_id: "hydrocube_sales_group"
+      topic: "sales_topic"
+```
+
+This tells HydroCube to connect to `sales_topic`, reading messages into the `sales` table. If you also have `offline_sales` above, you’ll unify historical CSV data and real-time Kafka data in the same table.
+
+### 3.3. Running & Testing
+
+```bash
+./hydrocube --config hydrocube.yaml
+```
+
+- HydroCube spawns a **Kafka consumer**.
+- As messages arrive on `sales_topic`, HydroCube parses them (assuming JSON or another format you’ve implemented) and inserts them into DuckDB.
+- The UI updates in near real time.
+
+---
+
+## 4. Defining an Aggregator
+
+### 4.1. Basic Example
+
+Let’s say you have a `sales` table with columns:
+- `product_id` (string)
+- `quantity` (int)
+- `price` (float)
+- `insert_timestamp` (timestamp, auto-added by HydroCube)
+
+Add an **aggregates** section to your config:
+
+```yaml
+aggregates:
+  - name: "sales_agg"
+    table_name: "sales"
+    measures:
+      - column: "quantity"
+        function: "sum"
+      - column: "*"
+        function: "count"
+```
+
+This aggregator:
+1. Groups by all non-measure columns (i.e., `product_id`, etc.).
+2. Sums the `quantity` column for each product.
+3. Also counts rows (`count(*)`).
+4. Tracks the `last_update` as `MAX(insert_timestamp)`.
+
+### 4.2. Checking Results
+
+After you start HydroCube, it will create an internal aggregated table (e.g., `sales_agg_table`). You can query it from the UI or watch it update in real time if you add a publisher (see below).
+
+---
+
+## 5. Publishing a Real-Time “Cube”
+
+### 5.1. Publisher Definition
+
+```yaml
+publishers:
+  - name: "sales_cube"
+    type: "simple"
+    aggregate: "sales_agg"
+    key_column: "product_id"
+    change_detection_column: "last_update"
+    schedule: "on_change"
+```
+
+This publisher references the `sales_agg` aggregator:
+- **`key_column`**: `product_id` is the unique key for Perspective partial row updates.
+- **`change_detection_column`**: `last_update` is used to see which rows have changed since the last publish.
+- **`schedule`**: `on_change` means it only publishes updates when new data arrives.
+
+### 5.2. Viewing in Perspective
+
+When you open the **UI** in your browser:
+- You’ll see a **“sales_cube”** listed among the available cubes/datasets.
+- Toggling the subscription on or off will connect you to the WebSocket feed.
+- As new data arrives in the base `sales` table, and the aggregator is updated, this publisher pushes deltas to Perspective in near real time.
+
+---
+
+## 6. Putting It All Together
+
+A single config might combine everything:
+
+```yaml
+datasets:
+  - name: "offline_sales"
+    table_name: "sales"
+    format: "csv"
+    directory: "./data/csv"
+    pattern: "*.csv"
+
+  - name: "realtime_sales"
+    table_name: "sales"
+    format: "kafka"
+    kafka:
+      brokers: "localhost:9092"
+      group_id: "hydrocube_sales"
+      topic: "sales_topic"
+
+aggregates:
+  - name: "sales_agg"
+    table_name: "sales"
+    measures:
+      - column: "quantity"
+        function: "sum"
+      - column: "*"
+        function: "count"
+
+publishers:
+  - name: "sales_cube"
+    type: "simple"
+    aggregate: "sales_agg"
+    key_column: "product_id"
+    change_detection_column: "last_update"
+    schedule: "on_change"
+```
+
+This setup:
+1. **Ingests** historical CSV data (offline) + real-time Kafka messages (online) into a **single** `sales` table.
+2. **Aggregates** by `product_id`, summing quantities and counting rows.
+3. **Publishes** updates to the UI whenever new data arrives or old data is updated.
+
+---
+
+# Next Steps
+
+- Want to secure your deployment? Check out **[Security & Deployment](security-deployment.qmd)** (if you decide to create that doc).
+- Curious about advanced aggregator logic or partial refresh? Keep an eye on our roadmap for **custom aggregators**.
+- [Join the community](https://github.com/joefrost01/HydroCube/issues) for questions, bug reports, or ideas!

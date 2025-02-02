@@ -2,29 +2,55 @@
 title: "Getting Started"
 ---
 
-Welcome to **HydroCube**! Below are steps to install and run it.
+Welcome to **HydroCube**! This guide will walk you through installing and running your first HydroCube instance, either by downloading a prebuilt binary or building from source.
 
 ## Installation
 
-1. **Download the latest release** from [GitHub Releases](https://github.com/joefrost01/HydroCube/releases).
-   - Linux: `x86_64-unknown-linux-gnu`
-   - macOS: `x86_64-apple-darwin` or `aarch64-apple-darwin`
-   - Windows: `x86_64-pc-windows-msvc`
-2. **Place the executable** in your `$PATH` (e.g., `/usr/local/bin`) or reference it directly.
+1. **Download the Latest Release**
+   Visit [GitHub Releases](https://github.com/joefrost01/HydroCube/releases) and choose the binary for your platform:
+   - **Linux**: `x86_64-unknown-linux-gnu`
+   - **macOS**: `x86_64-apple-darwin` or `aarch64-apple-darwin`
+   - **Windows**: `x86_64-pc-windows-msvc`
+
+2. **Place the Executable in Your PATH**
+   For example, move the binary to `/usr/local/bin` on Linux or macOS, or simply keep it in your chosen directory and reference it by its full path.
 
 ### Building from Source
 
-Alternatively, clone this repository and build:
+If you prefer to build HydroCube yourself:
 
 ```bash
 git clone https://github.com/joefrost01/HydroCube.git
+cd HydroCube
 cargo build --release
 ```
 
+This produces a `hydrocube` (or `hydrocube.exe` on Windows) binary in `target/release`.
+
 ## Basic Usage
 
-```bash
-# Basic CSV to Parquet conversion
-hydrocube --config config.yaml
-```
+Once you have the **hydrocube** binary:
 
+1. **Create a `config.yaml`** (or use the built-in defaults if you prefer). For example:
+   ```yaml
+   datasets:
+     - name: "test_data"
+       format: "csv"
+       directory: "/path/to/csvs"
+       pattern: "*.csv"
+   ```
+
+2. **Run HydroCube**:
+   ```bash
+   ./hydrocube --config config.yaml
+   ```
+   HydroCube will watch `/path/to/csvs/*.csv`, load them into DuckDB, and serve its web UI at a default port (e.g., `localhost:8080`).
+
+3. **Open the UI**:
+   Navigate to the displayed URL (usually `http://localhost:8080`), where you can view and explore your data in real time using the FINOS Perspective interface.
+
+---
+
+**Next Steps**
+- Check out the **[Core Concepts & Architecture](overview.qmd)** to understand how datasets, aggregates, and publishers work.
+- Move on to the **Configuration Reference** for more advanced ingestion methods like **Kafka** or **Parquet**.
