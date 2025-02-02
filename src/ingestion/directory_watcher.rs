@@ -84,6 +84,9 @@ pub async fn directory_watcher(
                         println!("Successfully ingested JSON dataset {}", dataset_clone.name);
                     }
                 }
+                FileFormat::Kafka => {
+                    todo!("Implement Kafka ingestion here");
+                }
             }
         });
     }

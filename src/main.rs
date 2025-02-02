@@ -11,7 +11,7 @@ use std::fs;
 use r2d2::Pool;
 use rustls::crypto::{self, CryptoProvider};
 use crate::config::cli::Cli;
-use crate::config::config::AppConfig;
+use crate::config::config::{AppConfig, FileFormat};
 use crate::db::db_pool::DuckDBConnectionManager;
 use crate::ingestion::directory_watcher::directory_watcher;
 use crate::server::web_server;
@@ -40,13 +40,24 @@ async fn main() -> Result<()> {
     // Spawn directory watchers for each dataset.
     for dataset in config_data.datasets.clone() {
         let pool_clone = pool.clone();
-        let watch_directory = dataset.directory.clone();
-        tokio::spawn(async move {
-            if let Err(e) = directory_watcher(&watch_directory, pool_clone, dataset).await {
-                eprintln!("Directory watcher error: {:?}", e);
-            }
-        });
+
+        // Here `dataset` is an owned DatasetConfig if your config_data.datasets is a Vec<DatasetConfig>
+        // But let's still clone what we need so they outlive this for-loop.
+
+        if let Some(dir) = dataset.directory.clone() {
+            // Now `dir` is a String owned by us, not a borrowed reference.
+            let dataset_cloned = dataset.clone();
+
+            tokio::spawn(async move {
+                // We have owned `dir` (String) and owned `dataset_cloned` (DatasetConfig).
+                // No lifetime issues: they live within this async task.
+                if let Err(e) = directory_watcher(&dir, pool_clone, dataset_cloned).await {
+                    eprintln!("Directory watcher error: {:?}", e);
+                }
+            });
+        }
     }
+
 
     // (Optional) Set up OAuth if enabled.
     if config_data.security.oauth.enabled {

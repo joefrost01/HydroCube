@@ -6,19 +6,20 @@ pub fn ingest_dataset(conn: &Connection, dataset: &DatasetConfig) -> Result<()> 
     match dataset.format {
         FileFormat::Csv => ingest_csv(conn, dataset),
         FileFormat::Parquet => ingest_parquet(conn, dataset),
-        FileFormat::Json => ingest_json(conn, dataset),
+        FileFormat::Json => ingest_json(conn, dataset), // Add this line
+        FileFormat::Kafka => todo!("Implement Kafka ingestion here"),
     }
 }
 
 pub fn ingest_csv(conn: &Connection, dataset: &DatasetConfig) -> Result<()> {
+    let directory = dataset.directory.as_deref().unwrap_or(".");
+    let pattern = dataset.pattern.as_deref().unwrap_or("*.csv");
     let sql = format!(
         r#"
         CREATE TABLE IF NOT EXISTS "{table_name}" AS
         SELECT * FROM read_csv_auto('{directory}/{pattern}');
         "#,
         table_name = dataset.name,
-        directory = dataset.directory,
-        pattern = dataset.pattern
     );
 
     conn.execute(&sql, [])?;
@@ -26,14 +27,14 @@ pub fn ingest_csv(conn: &Connection, dataset: &DatasetConfig) -> Result<()> {
 }
 
 pub fn ingest_parquet(conn: &Connection, dataset: &DatasetConfig) -> Result<()> {
+    let directory = dataset.directory.as_deref().unwrap_or(".");
+    let pattern = dataset.pattern.as_deref().unwrap_or("*.parquet");
     let sql = format!(
         r#"
         CREATE TABLE IF NOT EXISTS "{table_name}" AS
         SELECT * FROM parquet_scan('{directory}/{pattern}');
         "#,
         table_name = dataset.name,
-        directory = dataset.directory,
-        pattern = dataset.pattern
     );
 
     conn.execute(&sql, [])?;
@@ -41,18 +42,14 @@ pub fn ingest_parquet(conn: &Connection, dataset: &DatasetConfig) -> Result<()> 
 }
 
 pub fn ingest_json(conn: &Connection, dataset: &DatasetConfig) -> Result<()> {
-    // There's no built-in "read_json_auto", but you can do something similar:
-    // e.g., using the JSON extension or the read_ndjson_auto function in newer DuckDB versions
-    // For example:
-    /*
+    let directory = dataset.directory.as_deref().unwrap_or(".");
+    let pattern = dataset.pattern.as_deref().unwrap_or("*.json");
     conn.execute("INSTALL httpfs; LOAD httpfs;", [])?;
     let sql = format!(
         "CREATE TABLE \"{table_name}\" AS
          SELECT * FROM read_ndjson_auto('{directory}/{pattern}')",
-        ...
+        table_name = dataset.name,
     );
-    */
-    // For now, stub it out:
-    println!("JSON ingestion not implemented yet!");
+    conn.execute(&sql, [])?;
     Ok(())
 }

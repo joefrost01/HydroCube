@@ -20,6 +20,7 @@ rustls = { version = "0.23.22", features = ["ring"] }
 rustls-pemfile = "2.2.0"
 notify = "8.0.0"
 tokio = { version = "1", features = ["full"] }
+rdkafka = { version = "0.37.0", features = ["cmake-build"] }
 arrow = "53.4.0"
 r2d2 = "0.8.10"
 

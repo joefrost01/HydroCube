@@ -14,6 +14,21 @@ datasets:
     pattern: "*.parquet"
     format: parquet
 
+  - name: "sales_kafka"
+    format: "kafka"
+    kafka:
+      brokers: "localhost:9092"
+      group_id: "hydrocube_sales_group"
+      topic: "Sales"
+      table_name: "sales"
+      schema:
+        - column: "product"
+          field_type: "VARCHAR"
+          json_path: "$.product"
+        - column: "quantity"
+          field_type: "INTEGER"
+          json_path: "$.quantity"
+
 #  - name: "ddb"
 #    directory: "/Users/josephfrost/code/hydrocube/data/parquet"
 #    pattern: "ddb.parquet"

@@ -1,3 +1,4 @@
+use rustls::quic::Tag;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -9,9 +10,18 @@ pub struct AppConfig {
 #[derive(Debug, Deserialize, Clone)]
 pub struct DatasetConfig {
     pub name: String,
-    pub directory: String,
-    pub pattern: String,
+
+    // These only apply for file-based formats, so make them optional.
+    #[serde(default)]
+    pub directory: Option<String>,
+    #[serde(default)]
+    pub pattern: Option<String>,
+
     pub format: FileFormat,
+
+    // If the format is Kafka, this field will hold Kafka-specific settings.
+    #[serde(default)]
+    pub kafka: Option<KafkaTopicConfig>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -20,7 +30,35 @@ pub enum FileFormat {
     Csv,
     Parquet,
     Json,
+    Kafka, // New variant for Kafka-based ingestion
 }
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct KafkaTopicConfig {
+    pub brokers: String,
+    pub group_id: String,
+    pub topic: String,
+    pub schema: Vec<SchemaField>,
+    pub table_name: String,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct SchemaField {
+    /// The name of the column in DuckDB
+    pub column: String,
+
+    /// The DuckDB type for this column (e.g. VARCHAR, INTEGER, DOUBLE)
+    pub field_type: String,
+
+    /// A JSON path expression or key pointing to the field in the Kafka message
+    pub json_path: String,
+}
+
+
+// ------------------------------------------------------
+// Security-related structs (unchanged, except for minor
+// formatting or comments).
+// ------------------------------------------------------
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct SecurityConfig {
