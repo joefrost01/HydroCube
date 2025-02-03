@@ -22,7 +22,7 @@ Ensure you have a **GitHub** account if you plan to submit issues or pull reques
 ## 2. Cloning the Repository
 
 ```bash
-git clone https://github.com/joefrost01/HydroCube.git
+git clone https://github.com/neural-chilli/HydroCube.git
 cd HydroCube
 ```
 
@@ -166,7 +166,7 @@ We use **Quarto** (`.qmd` files) in the `docs/` folder. If you want to enhance t
 
 ## 9. Roadmap & Ideas
 
-We maintain a **Roadmap** in the [GitHub issues](https://github.com/joefrost01/HydroCube/issues) or a pinned discussion. Some highlights:
+We maintain a **Roadmap** in the [GitHub issues](https://github.com/neural-chilli/HydroCube/issues) or a pinned discussion. Some highlights:
 
 - **Custom Aggregator**: Allow user-defined SQL queries beyond the “simple aggregator.”
 - **Additional Data Sources**: PostgreSQL, ClickHouse, or CDC streams.
@@ -181,4 +181,4 @@ Feel free to propose features or improvements—contributions are welcome!
 
 By contributing to HydroCube, you’re helping shape a powerful, lightweight real-time analytics platform. Whether you open a small bug fix, write documentation, or implement a major feature, we appreciate your support.
 
-**Questions?** Join us on GitHub [Issues](https://github.com/joefrost01/HydroCube/issues) or open a discussion. We look forward to collaborating with you!
+**Questions?** Join us on GitHub [Issues](https://github.com/neural-chilli/HydroCube/issues) or open a discussion. We look forward to collaborating with you!

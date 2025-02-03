@@ -1,5 +1,5 @@
-[![CI Pipeline](https://github.com/joefrost01/HydroCube/actions/workflows/build.yml/badge.svg)](https://github.com/joefrost01/HydroCube/actions/workflows/build.yml)
-[![Quarto Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://joefrost01.github.io/HydroCube/)
+[![CI Pipeline](https://github.com/neural-chilli/HydroCube/actions/workflows/build.yml/badge.svg)](https://github.com/neural-chilli/HydroCube/actions/workflows/build.yml)
+[![Quarto Docs](https://img.shields.io/badge/docs-online-blue.svg)](https://neural-chilli.github.io/HydroCube/)
 
 # HydroCube
 
@@ -22,19 +22,19 @@
 
 ## Documentation
 
-For **installation**, **configuration**, and **how-to guides**, check out the **[official docs](https://joefrost01.github.io/HydroCube/)**.
+For **installation**, **configuration**, and **how-to guides**, check out the **[official docs](https://neural-chilli.github.io/HydroCube/)**.
 
 ## Quick Installation
 
 1. **Grab the Latest Release**  
-   From [GitHub Releases](https://github.com/joefrost01/HydroCube/releases) for Linux, macOS, or Windows.
+   From [GitHub Releases](https://github.com/neural-chilli/HydroCube/releases) for Linux, macOS, or Windows.
 2. **Run the Binary**  
    Place it in your `$PATH` or reference it directly.
 
 ## Building from Source
 
 ```bash
-git clone https://github.com/joefrost01/HydroCube.git
+git clone https://github.com/neural-chilli/HydroCube.git
 cd HydroCube
 cargo build --release
 ```
@@ -60,8 +60,8 @@ Check the docs for advanced ingestion setups, security, and deployment best prac
 - **Natural Language Querying** – LLM-based interface to let users ask “plain English” questions.
 - **Multi-Tenant Security** – Role-based permissions and dataset-level access control.
 
-View the full roadmap in the [docs](https://joefrost01.github.io/HydroCube/) or our [GitHub Issues](https://github.com/joefrost01/HydroCube/issues).
+View the full roadmap in the [docs](https://neural-chilli.github.io/HydroCube/) or our [GitHub Issues](https://github.com/neural-chilli/HydroCube/issues).
 
 ---
 
-© 2025 HydroCube – **Lightweight, Real-Time Analytics**. Contributions welcome! Check the [Contributor Guide](https://joefrost01.github.io/HydroCube/) for details.
+© 2025 HydroCube – **Lightweight, Real-Time Analytics**. Contributions welcome! Check the [Contributor Guide](https://neural-chilli.github.io/HydroCube/) for details.

@@ -13,9 +13,9 @@ website:
     search: true
     right:
       - icon: github
-        href: "https://github.com/joefrost01/HydroCube"
+        href: "https://github.com/neural-chilli/HydroCube"
       - text: "Download"
-        href: "https://github.com/joefrost01/HydroCube/releases"
+        href: "https://github.com/neural-chilli/HydroCube/releases"
 
   # Define the left sidebar navigation structure
   sidebar:

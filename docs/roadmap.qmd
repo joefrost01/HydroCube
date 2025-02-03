@@ -4,7 +4,7 @@ title: "Roadmap"
 
 # HydroCube Roadmap
 
-This page outlines major **upcoming features** and **long-term goals** for HydroCube. It’s not set in stone—priorities can shift based on user feedback and contributions. If you have new ideas or want to tackle a feature, please let us know by [opening a GitHub issue](https://github.com/joefrost01/HydroCube/issues).
+This page outlines major **upcoming features** and **long-term goals** for HydroCube. It’s not set in stone—priorities can shift based on user feedback and contributions. If you have new ideas or want to tackle a feature, please let us know by [opening a GitHub issue](https://github.com/neural-chilli/HydroCube/issues).
 
 ---
 

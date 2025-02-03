@@ -7,7 +7,7 @@ Welcome to **HydroCube**! This guide will walk you through installing and runnin
 ## Installation
 
 1. **Download the Latest Release**
-   Visit [GitHub Releases](https://github.com/joefrost01/HydroCube/releases) and choose the binary for your platform:
+   Visit [GitHub Releases](https://github.com/neural-chilli/HydroCube/releases) and choose the binary for your platform:
    - **Linux**: `x86_64-unknown-linux-gnu`
    - **macOS**: `x86_64-apple-darwin` or `aarch64-apple-darwin`
    - **Windows**: `x86_64-pc-windows-msvc`
@@ -20,7 +20,7 @@ Welcome to **HydroCube**! This guide will walk you through installing and runnin
 If you prefer to build HydroCube yourself:
 
 ```bash
-git clone https://github.com/joefrost01/HydroCube.git
+git clone https://github.com/neural-chilli/HydroCube.git
 cd HydroCube
 cargo build --release
 ```

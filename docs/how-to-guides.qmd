@@ -227,4 +227,4 @@ This setup:
 
 - Want to secure your deployment? Check out **[Security & Deployment](security-deployment.qmd)** (if you decide to create that doc).
 - Curious about advanced aggregator logic or partial refresh? Keep an eye on our roadmap for **custom aggregators**.
-- [Join the community](https://github.com/joefrost01/HydroCube/issues) for questions, bug reports, or ideas!
+- [Join the community](https://github.com/neural-chilli/HydroCube/issues) for questions, bug reports, or ideas!
