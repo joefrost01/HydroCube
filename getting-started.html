@@ -128,12 +128,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/joefrost01/HydroCube"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/neural-chilli/HydroCube"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/joefrost01/HydroCube/releases"> 
+    <a class="nav-link" href="https://github.com/neural-chilli/HydroCube/releases"> 
 <span class="menu-text">Download</span></a>
   </li>  
 </ul>
@@ -258,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <ol type="1">
-<li><strong>Download the Latest Release</strong> Visit <a href="https://github.com/joefrost01/HydroCube/releases">GitHub Releases</a> and choose the binary for your platform:
+<li><strong>Download the Latest Release</strong> Visit <a href="https://github.com/neural-chilli/HydroCube/releases">GitHub Releases</a> and choose the binary for your platform:
 <ul>
 <li><strong>Linux</strong>: <code>x86_64-unknown-linux-gnu</code></li>
 <li><strong>macOS</strong>: <code>x86_64-apple-darwin</code> or <code>aarch64-apple-darwin</code></li>
@@ -269,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="building-from-source" class="level3">
 <h3 class="anchored" data-anchor-id="building-from-source">Building from Source</h3>
 <p>If you prefer to build HydroCube yourself:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/joefrost01/HydroCube.git</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/neural-chilli/HydroCube.git</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> HydroCube</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This produces a <code>hydrocube</code> (or <code>hydrocube.exe</code> on Windows) binary in <code>target/release</code>.</p>
@@ -531,7 +531,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/joefrost01\.github\.io\/HydroCube\/");
+      var filterRegex = new RegExp("https:\/\/neural-chilli\.github\.io\/HydroCube\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

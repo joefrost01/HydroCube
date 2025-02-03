@@ -1,1 +1,1 @@
-Sitemap: https://joefrost01.github.io/HydroCube/sitemap.xml
+Sitemap: https://neural-chilli.github.io/HydroCube/sitemap.xml
